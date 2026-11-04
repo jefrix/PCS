@@ -7,6 +7,7 @@ Interactive shop reference for two hot-water pressure washers: **5355J** and **8
 - **Exploded view:** Three.js models of each whole machine, water pump, oil burner, unloader and trigger gun. Includes an explode slider, running motion, water and fuel flow, and clickable parts.
 - **Troubleshoot:** every symptom table from both manuals, as a checklist. Each cause links to the part in 3D, the procedure and the part number.
 - **Parts:** all transcribed rows, kits and tools, with search, filters and a copyable order list.
+- **Tools:** tools and supplies for each machine, with what the manuals list and what the work implies, and a tick list for what the shop has.
 - **Maintenance:** schedule driven by the hour meter, service record, and step-by-step procedures.
 - **Specs and manual errors:** printed specs, torque values, and places where the manuals conflict.
 

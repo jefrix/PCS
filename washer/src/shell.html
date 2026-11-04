@@ -9,7 +9,7 @@
  <div class="stats" id="stats"></div>
 </div></header>
 <nav class="tabs gut" aria-label="Sections"><div>
- <a href="#view" data-t="view">Exploded view</a><a href="#troubleshoot" data-t="troubleshoot">Troubleshoot</a><a href="#parts" data-t="parts">Parts</a><a href="#maintenance" data-t="maintenance">Maintenance</a><a href="#specs" data-t="specs">Specs and manual errors</a>
+ <a href="#view" data-t="view">Exploded view</a><a href="#troubleshoot" data-t="troubleshoot">Troubleshoot</a><a href="#parts" data-t="parts">Parts</a><a href="#tools" data-t="tools">Tools</a><a href="#maintenance" data-t="maintenance">Maintenance</a><a href="#specs" data-t="specs">Specs and manual errors</a>
 </div></nav>
 <main class="gut">
 <section id="tab-view"><div class="bench"><div style="min-width:0">
@@ -34,6 +34,11 @@
    <h3 style="margin:6px 0">Kits and consumables</h3><div class="kits" id="kits"></div>
    <div class="tablewrap" style="max-height:72vh;overflow:auto"><table class="parts"><thead><tr><th class="num">Item</th><th>Part number</th><th>Description</th><th class="num">Qty</th><th></th><th></th></tr></thead><tbody id="partsBody"></tbody></table></div>
   </div><aside class="order" id="orderBox"></aside></div></section>
+<section id="tab-tools" hidden>
+ <div class="tool-head"><div><h2>Tools and supplies</h2><p class="mute" style="margin:4px 0 0;max-width:70ch">What it takes to repair and maintain this machine. Most of the list applies to both machines. Tick what the shop has. Ticks stay in this browser. Engine service is not covered: the manuals list only filter part numbers, so use the Honda owner's manual.</p></div>
+  <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span id="toolSum" style="font-variant-numeric:tabular-nums;font-weight:600"></span><button class="btn" id="copyMissing" type="button">Copy what's missing</button></div></div>
+ <textarea id="missingText" readonly hidden rows="6" style="width:100%;margin-bottom:10px" aria-label="Missing items"></textarea>
+ <div id="toolBox" style="display:flex;flex-direction:column;gap:18px"></div></section>
 <section id="tab-maintenance" hidden>
  <form class="meter" id="hourForm"><div><label class="lab" for="hourIn">Hour meter reading</label><br><input id="hourIn" inputmode="decimal" autocomplete="off"></div><button class="btn" type="submit">Save reading</button><div style="flex:1;min-width:200px"><div id="dueSummary" style="font-size:1.05rem"></div><div style="font-size:.84rem;color:var(--plate-mute)" id="storeNote"></div></div></form>
  <div class="maint"><div class="card sched"><h2>Schedule</h2><div id="schedule"></div></div>

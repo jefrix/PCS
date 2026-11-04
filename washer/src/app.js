@@ -27,7 +27,7 @@ function troublesFor(ref){const out=[];TROUBLE.forEach(g=>{if(g.only&&g.only!==S
 function procsFor(ref){return Object.entries(PROCS).filter(([k,p])=>p.loc===ref);}
 const ALLPN=(()=>{const o={};for(const m in MACHINES){MACHINES[m].assemblies.forEach(a=>a.parts.forEach(r=>{if(r[1]){(o[r[1]]=o[r[1]]||new Set()).add(m);}}));MACHINES[m].kits.forEach(k=>{(o[k[0]]=o[k[0]]||new Set()).add(m);});}return o;})();
 function otherMachine(pn){const s=ALLPN[pn];if(!s)return null;const others=[...s].filter(x=>x!==S.machine);return others[0]||null;}
-function descOf(pn){if(!pn)return'';for(const a of M().assemblies)for(const r of a.parts)if(r[1]===pn)return r[2];const k=M().kits.find(k=>k[0]===pn);return k?k[1]:'';}
+function descOf(pn){if(!pn)return'';for(const a of M().assemblies)for(const r of a.parts)if(r[1]===pn)return r[2];const k=M().kits.find(k=>k[0]===pn);if(k)return k[1];const tl=TOOLS.find(x=>x[0]===pn);return tl?tl[1]:'';}
 function addOrder(pn,desc){const k=S.machine+'|'+pn;const o=S.order[k]||{q:0,pn,desc:desc||descOf(pn),machine:S.machine};o.q++;S.order[k]=o;LS.set('order',S.order);renderOrder();toast(pn+' added to order list');}
 function pnChip(pn){if(!pn)return'';return `<span class="tag"><span class="pn">${esc(pn)}</span><button type="button" data-order="${esc(pn)}" aria-label="Add ${esc(pn)} to order list" title="Add to order list">+</button></span>`;}
 
@@ -104,6 +104,13 @@ function renderOrder(){const box=$('#orderBox');if(!box)return;const rows=Object
  box.innerHTML=`<h3>Order list</h3>`+(rows.length?rows.map(([k,o])=>`<div class="ord-row"><div><span class="pn"><b>${esc(o.pn)}</b></span> <span class="badge">${esc(o.machine)}</span><br>${esc(o.desc)}</div><div class="qty"><button data-qty="${esc(k)}" data-d="-1" aria-label="One less">-</button><span style="min-width:2ch;text-align:center">${o.q}</span><button data-qty="${esc(k)}" data-d="1" aria-label="One more">+</button></div></div>`).join('')+`<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn pri" id="copyOrder">Copy list</button><button class="btn" id="clearOrder">Clear</button></div><textarea id="orderText" readonly hidden rows="5" style="width:100%"></textarea>`:`<p class="mute" style="margin:0">Press + on any part, kit or diagnosis to build a list for your dealer. It stays in this browser.</p>`)+
  `<div><h3 style="margin-top:6px">Service tools</h3><ul style="list-style:none;padding:0;margin:6px 0 0;display:flex;flex-direction:column;gap:4px;font-size:.88rem">${TOOLS.map(t=>`<li><span class="pn">${esc(t[0])}</span> ${esc(t[1])}</li>`).join('')}</ul></div>`;}
 
+/* ---------- tools ---------- */
+let HAVE=LS.get('have',{});
+function toolRows(){return TOOL_GROUPS.flatMap(g=>g.rows.filter(r=>!r.only||r.only===S.machine).map(r=>({g,r,key:r.pn||r.t,use:typeof r.use==='string'?r.use:r.use[S.machine]})));}
+function renderTools(){const all=toolRows(),have=all.filter(x=>HAVE[x.key]).length;
+ $('#toolSum').textContent=`${have} of ${all.length} on hand for the ${S.machine}`;
+ $('#toolBox').innerHTML=TOOL_GROUPS.map(g=>{const rows=all.filter(x=>x.g===g);if(!rows.length)return'';return `<div class="tool-group"><h3>${esc(g.t)}</h3>${g.note?`<p class="mute" style="margin:2px 0 8px;font-size:.9rem">${esc(g.note)}</p>`:''}<div class="tablewrap"><table class="parts"><thead><tr><th style="width:44px">Have</th><th>Tool or supply</th><th>Part number</th><th>Used for</th><th></th></tr></thead><tbody>${rows.map(({r,key,use},i)=>{const id=`tool-${g.id}-${i}`;return `<tr><td><input type="checkbox" id="${id}" data-have="${esc(key)}" ${HAVE[key]?'checked':''} aria-label="Have ${esc(r.t)}" style="accent-color:var(--accent)"></td><td>${esc(r.t)}</td><td class="pn">${r.pn?esc(r.pn):'<span class="mute">not printed</span>'}</td><td>${esc(use)}</td><td style="white-space:nowrap">${r.proc?`<button class="btn sm" data-proc="${r.proc}">Steps</button> `:''}${r.pn?`<button class="btn sm" data-order="${esc(r.pn)}" aria-label="Add ${esc(r.pn)} to order list">+ Order</button>`:''}</td></tr>`;}).join('')}</tbody></table></div></div>`;}).join('');}
+
 /* ---------- maintenance ---------- */
 const today=()=>new Date().toISOString().slice(0,10);
 function lastDone(id){const rows=S.log.filter(r=>r.machine===S.machine&&r.task===id).sort((a,b)=>(a.date<b.date?1:-1));return rows[0]||null;}
@@ -142,7 +149,7 @@ function renderPlate(){const m=M();$$('.seg button').forEach(b=>b.setAttribute('
  $('#stats').innerHTML=m.plate.map(p=>`<div><u>${esc(p[0])}</u><b>${esc(p[1])}</b><i>${esc(p[2])}</i></div>`).join('');}
 function setTab(t){S.tab=t;LS.set('tab',t);$$('main>section').forEach(s=>s.hidden=s.id!=='tab-'+t);$$('nav.tabs a').forEach(a=>{if(a.dataset.t===t)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});try{if(location.hash.slice(1)!==t)history.replaceState(null,'','#'+t);}catch(e){try{location.hash=t;}catch(_){}}
  if(viewer)viewer.paused=t!=='view';if(t==='view'){ensureViewer();if(viewer)viewer.resize();}
- if(t==='troubleshoot'){renderFinder();renderDiag();}if(t==='parts')renderParts();if(t==='maintenance')renderMaint();if(t==='specs')renderSpecs();}
+ if(t==='troubleshoot'){renderFinder();renderDiag();}if(t==='parts')renderParts();if(t==='tools')renderTools();if(t==='maintenance')renderMaint();if(t==='specs')renderSpecs();}
 function setMachine(id){S.machine=id;LS.set('machine',id);S.trail=[];renderPlate();if(viewer)loadScene(S.scene);else renderNodePanel();setTab(S.tab);}
 
 document.addEventListener('click',e=>{const t=e.target.closest('button,a');if(!t)return;const d=t.dataset;
@@ -165,6 +172,7 @@ document.addEventListener('click',e=>{const t=e.target.closest('button,a');if(!t
  if(d.done){prefillLog(d.done);return;}
  if(d.dellog){Store.delLog(d.dellog);return;}
  if(t.id==='copyOrder'){const txt=Object.values(S.order).filter(o=>o.q>0).map(o=>`${o.q} x ${o.pn}  ${o.desc}  (${o.machine})`).join('\n');const ta=$('#orderText');ta.value=txt;const fb=()=>{ta.hidden=false;ta.select();toast('Select and copy the text below');};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(()=>toast('Order list copied'),fb);else fb();return;}
+ if(t.id==='copyMissing'){const txt=toolRows().filter(x=>!HAVE[x.key]).map(x=>`${x.r.t}${x.r.pn?' ('+x.r.pn+')':''}`).join('\n');const fb=()=>{const ta=$('#missingText');ta.value=txt;ta.hidden=false;ta.select();toast('Select and copy the text below');};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(()=>toast('Missing items copied'),fb);else fb();return;}
  if(t.id==='clearOrder'){S.order={};LS.set('order',S.order);renderOrder();return;}
  if(t.id==='run'&&viewer){viewer.state.rate=viewer.state.rate?0:1;syncRunLabel();return;}
  if(t.id==='resetView'&&viewer){viewer.camera.position.set(...viewer.fit0.p);viewer.controls.target.set(...viewer.fit0.t);viewer.select(null,false);S.sel=null;renderNodePanel();return;}
@@ -176,6 +184,7 @@ document.addEventListener('input',e=>{const t=e.target;
  if(t.id==='ex'&&viewer){viewer.setExplode(+t.value);}
  if(t.id==='speed'&&viewer){const v=+t.value;viewer.state.rate=v;syncRunLabel();}
  if(t.id==='tq')renderFinder();
+ if(t.dataset&&t.dataset.have!==undefined){HAVE[t.dataset.have]=t.checked;LS.set('have',HAVE);const all=toolRows();$('#toolSum').textContent=`${all.filter(x=>HAVE[x.key]).length} of ${all.length} on hand for the ${S.machine}`;}
  if(t.id==='pq'){S.q=t.value;renderParts();}
  if(t.id==='asmSel'){S.asm=t.value;renderParts();}
  if(t.dataset&&t.dataset.step!==undefined&&S.drawer){(S.drawerChecks[S.drawer]=S.drawerChecks[S.drawer]||{})[t.dataset.step]=t.checked;}
@@ -184,11 +193,11 @@ document.addEventListener('submit',e=>{e.preventDefault();const f=e.target;
  if(f.id==='hourForm'){const v=$('#hourIn').value;if(v===''||isNaN(+v)||+v<0){toast('Enter the reading from the hour meter, such as 412.5');return;}Store.setHours(S.machine,+v);renderMaint();toast('Hour meter saved');}
  if(f.id==='logForm'){const task=$('#logTask').value,it=SCHEDULE.flatMap(g=>g.items).find(i=>i.id===task);const row={machine:S.machine,task,label:it?it.t:'Other service',date:$('#logDate').value||today(),hours:$('#logHours').value,by:$('#logBy').value.trim(),notes:$('#logNotes').value.trim()};Store.addLog(row);f.reset();$('#logDate').value=today();toast('Service logged');}
 });
-window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(['view','troubleshoot','parts','maintenance','specs'].includes(h)&&h!==S.tab)setTab(h);});
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(['view','troubleshoot','parts','tools','maintenance','specs'].includes(h)&&h!==S.tab)setTab(h);});
 try{const qm=new URLSearchParams(location.search).get('m');if(qm&&MACHINES[qm]){S.machine=qm;LS.set('machine',qm);}}catch(e){}
 Store.loadLocal();renderPlate();
 $('#sceneTabs').innerHTML=SCENES.map(s=>`<button class="chip" data-scene="${s[0]}" aria-pressed="${s[0]==='machine'}">${s[1]}</button>`).join('');
 $('#logDate').value=today();
-const h0=location.hash.slice(1);setTab(['view','troubleshoot','parts','maintenance','specs'].includes(h0)?h0:'view');
+const h0=location.hash.slice(1);setTab(['view','troubleshoot','parts','tools','maintenance','specs'].includes(h0)?h0:'view');
 Store.init();
 window.__viewer=()=>viewer;
