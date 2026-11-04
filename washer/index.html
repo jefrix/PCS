@@ -1,0 +1,1290 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body><title>Proline Washer Bench</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>/* Layout concept: a service bench. A stamped machine data plate on top, one working surface below per job. */
+:root{
+ --bg:#e6ebea;--panel:#f7f9f8;--panel2:#edf1f0;--ink:#13242c;--mute:#51656e;--line:#c2cdcf;--accent:#0a6a8e;--accent-ink:#fff;
+ --plate:#1b3540;--plate-ink:#e8f1f2;--plate-mute:#a3bbc2;--view:#2a3d46;--view2:#141f25;
+ --ok:#1f7a4d;--warn:#a86a00;--bad:#b3261e;--ok-bg:#dcefe5;--warn-bg:#f7ebd0;--bad-bg:#f9e0dd;
+ --sys-water:#0a7ea8;--sys-fuel:#a86a00;--sys-heat:#c4481c;--sys-drive:#6a4fa0;--sys-elec:#8a7a00;--sys-frame:#4e5f67;
+ --display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;--body:"Barlow","Helvetica Neue",Arial,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1518;--panel:#162025;--panel2:#1c282e;--ink:#e3ecee;--mute:#93a7af;--line:#2d3d44;--accent:#4db8de;--accent-ink:#06222c;--plate:#10262f;--plate-ink:#e8f1f2;--plate-mute:#8fa9b1;--view:#22323a;--view2:#0d1417;--ok:#58c48f;--warn:#e2ab3f;--bad:#f0837a;--ok-bg:#14332a;--warn-bg:#33290f;--bad-bg:#3b1a18;--sys-water:#4db8de;--sys-fuel:#e2ab3f;--sys-heat:#f0834f;--sys-drive:#a98fe0;--sys-elec:#d8c94a;--sys-frame:#93a7af;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1518;--panel:#162025;--panel2:#1c282e;--ink:#e3ecee;--mute:#93a7af;--line:#2d3d44;--accent:#4db8de;--accent-ink:#06222c;--plate:#10262f;--plate-ink:#e8f1f2;--plate-mute:#8fa9b1;--view:#22323a;--view2:#0d1417;--ok:#58c48f;--warn:#e2ab3f;--bad:#f0837a;--ok-bg:#14332a;--warn-bg:#33290f;--bad-bg:#3b1a18;--sys-water:#4db8de;--sys-fuel:#e2ab3f;--sys-heat:#f0834f;--sys-drive:#a98fe0;--sys-elec:#d8c94a;--sys-frame:#93a7af;color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 var(--body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--plate)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--display);line-height:1.05;margin:0;text-wrap:balance}
+h2{font-size:1.9rem;font-weight:800;letter-spacing:.01em}
+h3{font-size:1.25rem;font-weight:700;letter-spacing:.015em}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.pn{font-family:var(--mono);font-size:.86em;white-space:nowrap}
+.mute{color:var(--mute)}
+.lab{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--mute);font-weight:600}
+
+/* data plate */
+.plate{background:var(--plate);color:var(--plate-ink);padding-block:14px 0}
+.plate-in{display:flex;flex-wrap:wrap;gap:14px 30px;align-items:flex-end;max-width:1560px;margin:auto}
+.brand{min-width:0}
+.brand .lab{color:var(--plate-mute)}
+.brand .lab a{color:var(--plate-ink);margin-right:10px}
+.brand h1{font-size:2.5rem;font-weight:800;letter-spacing:.02em;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.brand h1 small{font:500 .92rem var(--body);color:var(--plate-mute);letter-spacing:0}
+.seg{display:inline-flex;border:1px solid var(--plate-mute);border-radius:3px;overflow:hidden}
+.seg button{background:none;border:0;padding:7px 16px;color:var(--plate-ink);font:800 1.15rem var(--display);letter-spacing:.04em}
+.seg button[aria-pressed=true]{background:var(--plate-ink);color:var(--plate)}
+.stats{display:flex;flex-wrap:wrap;gap:6px 26px;flex:1;min-width:260px;justify-content:flex-end}
+.stats div{display:flex;flex-direction:column;font-variant-numeric:tabular-nums}
+.stats b{font:700 1.5rem var(--display);letter-spacing:.02em}
+.stats i{font:normal .72rem var(--body);color:var(--plate-mute)}
+.stats u{text-decoration:none;font:600 .68rem var(--body);letter-spacing:.09em;text-transform:uppercase;color:var(--plate-mute)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--plate);border-bottom:1px solid #0006}
+nav.tabs div{display:flex;gap:2px;max-width:1560px;margin:auto;overflow-x:auto;scrollbar-width:none}
+nav.tabs a{color:var(--plate-mute);text-decoration:none;padding:9px 16px 8px;font:700 1.12rem var(--display);letter-spacing:.04em;white-space:nowrap;border-bottom:3px solid transparent}
+nav.tabs a[aria-current=page]{color:var(--plate-ink);border-bottom-color:var(--plate-ink)}
+main{max-width:1560px;margin:auto;padding-block:16px 48px}
+section[hidden]{display:none}
+
+/* exploded view */
+.bench{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:14px;align-items:start}
+.scene-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:6px 12px;font-weight:600;font-size:.92rem;line-height:1.2}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chip:hover{border-color:var(--accent)}
+.stage{position:relative;height:min(70vh,700px);min-height:420px;background:radial-gradient(circle at 50% 40%,var(--view),var(--view2));border:1px solid var(--line);overflow:hidden;touch-action:none}
+#gl{position:absolute;inset:0}
+#gl canvas{display:block}
+#ov{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+#ov svg{position:absolute;inset:0;width:100%;height:100%}
+#ov line{stroke:#c7d6da;stroke-width:.8;opacity:.6}
+#ov line.on{stroke:#6fd0f0;stroke-width:1.6;opacity:1}
+.bln{position:absolute;left:0;top:0;pointer-events:auto;background:var(--panel);border:1.3px solid var(--ink);color:var(--ink);padding:0;display:flex;align-items:center;will-change:transform;white-space:nowrap}
+.bln b{display:block;min-width:22px;height:22px;line-height:20px;text-align:center;font:600 .72rem/20px var(--mono);border-radius:50%}
+.bln:not(.pill){border-radius:13px}
+.bln:not(.pill) span{display:none;padding:0 9px 0 2px;font-size:.78rem}
+.bln:not(.pill):hover span,.bln:not(.pill).on span{display:inline}
+.bln.pill{border-radius:2px;padding:1px 6px;font-size:.72rem;font-weight:600}
+.bln.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);z-index:3}
+.hint{font-size:.8rem;color:var(--mute);margin:6px 0 0}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;background:var(--panel);border:1px solid var(--line);border-top:0;padding:10px 12px}
+.ctl label{display:flex;align-items:center;gap:8px;font-size:.9rem}
+.ctl .sl{flex:1;min-width:210px}
+.ctl input[type=range]{flex:1;min-width:90px;accent-color:var(--accent)}
+.btn{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:7px 12px;font-weight:600;font-size:.9rem;line-height:1.2}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.pri:hover{color:var(--accent-ink);filter:brightness(1.08)}
+.btn.sm{padding:3px 8px;font-size:.8rem}
+.side{background:var(--panel);border:1px solid var(--line);padding:14px;display:flex;flex-direction:column;gap:12px;max-height:calc(min(70vh,700px) + 106px);overflow:auto;min-width:0}
+.side ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px}
+.linkish{background:none;border:0;padding:0;color:var(--accent);text-align:left;text-decoration:underline;text-underline-offset:2px;font-size:.92rem}
+.mini{width:100%;border-collapse:collapse;font-size:.85rem}
+.mini td,.mini th{padding:4px 5px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.mini th{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--mute);font-weight:600}
+.pathlist{counter-reset:s}
+.pathlist li{counter-increment:s;display:flex;gap:8px;font-size:.92rem}
+.pathlist li::before{content:counter(s);font:600 .72rem/20px var(--mono);min-width:20px;height:20px;text-align:center;border:1px solid var(--line);border-radius:50%}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:baseline}
+
+/* trouble */
+.tshoot{display:grid;grid-template-columns:330px minmax(0,1fr);gap:18px;align-items:start}
+.finder{background:var(--panel);border:1px solid var(--line);padding:12px;position:sticky;top:60px;max-height:calc(100vh - 76px);overflow:auto}
+.finder input{width:100%;padding:8px 10px;border:1px solid var(--line);background:var(--bg);border-radius:3px}
+.finder h3{font-size:1.02rem;margin:14px 0 5px;display:flex;align-items:center}
+.sym{display:block;width:100%;text-align:left;background:none;border:0;padding:5px 7px;border-radius:2px;font-size:.93rem}
+.sym:hover{background:var(--panel2)}
+.sym[aria-current=true]{background:var(--ink);color:var(--bg)}
+.diag{min-width:0;display:flex;flex-direction:column;gap:12px}
+.diag-h{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;justify-content:space-between}
+.trail{display:flex;flex-wrap:wrap;gap:4px;font-size:.84rem;align-items:center}
+.cause{background:var(--panel);border:1px solid var(--line);padding:11px 13px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px}
+.cause.found{border-color:var(--bad);background:var(--bad-bg)}
+.cause.clear{opacity:.62}
+.cause h4{margin:0;font-size:1rem;font-weight:600}
+.cause p{margin:2px 0 0;font-size:.94rem;max-width:68ch}
+.acts{display:flex;flex-wrap:wrap;gap:6px;align-items:center;grid-column:1/-1;font-size:.86rem}
+.state{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;align-self:start}
+.state button{background:var(--panel);border:0;padding:4px 9px;font-size:.8rem;font-weight:600;border-left:1px solid var(--line);white-space:nowrap}
+.state button:first-child{border-left:0}
+.state button[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.tag{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:3px;padding:1px 3px 1px 7px;background:var(--panel2)}
+.tag button{background:var(--panel);border:1px solid var(--line);border-radius:2px;font-size:.75rem;padding:0 5px;font-weight:700}
+.warnbox{border:1.5px solid var(--bad);background:var(--bad-bg);padding:9px 12px;font-size:.94rem;max-width:80ch}
+.note{border:1px solid var(--warn);background:var(--warn-bg);padding:7px 10px;font-size:.88rem}
+
+/* parts */
+.parts-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:16px;align-items:start}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.toolbar input,.toolbar select{padding:7px 10px;background:var(--panel);border:1px solid var(--line);border-radius:3px;min-width:0}
+.toolbar input{flex:1 1 220px}
+.tablewrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line)}
+table.parts{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums}
+.parts th,.parts td{padding:5px 9px;border-bottom:1px solid var(--line);text-align:left}
+.parts thead th{position:sticky;top:0;background:var(--panel2);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:600;z-index:1}
+.parts tr.asm td{background:var(--panel2);font:700 1.05rem var(--display);letter-spacing:.02em;padding-top:9px;border-left:4px solid var(--sysc,var(--line))}
+.parts tr:hover td:not(.nah){background:var(--panel2)}
+.parts .num{text-align:right}
+.badge{font-size:.68rem;border:1px solid var(--line);padding:0 5px;border-radius:2px;color:var(--mute);white-space:nowrap}
+.order{background:var(--panel);border:1px solid var(--line);padding:12px;position:sticky;top:60px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.ord-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;border-bottom:1px solid var(--line);padding-bottom:6px;font-size:.88rem}
+.qty{display:flex;align-items:center;gap:4px}
+.qty button{width:24px;height:24px;background:var(--panel2);border:1px solid var(--line);border-radius:2px;line-height:1}
+.kits{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin-bottom:14px}
+.kit{background:var(--panel);border:1px solid var(--line);padding:8px 10px;font-size:.88rem;display:flex;flex-direction:column;gap:4px}
+.kit .row{display:flex;justify-content:space-between;gap:6px;align-items:center}
+
+/* maintenance */
+.maint{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);padding:14px;min-width:0}
+.meter{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:14px;background:var(--plate);color:var(--plate-ink);padding:12px 14px}
+.meter .lab{color:var(--plate-mute)}
+.meter input{background:#0a1a20;border:1px solid var(--plate-mute);color:#ffd77a;font:600 1.7rem var(--mono);width:9.5ch;padding:3px 8px;border-radius:2px;text-align:right}
+.sched h3{margin:14px 0 6px}
+.task{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:6px 12px;padding:8px 0;border-top:1px solid var(--line);align-items:center}
+.pillst{font-size:.74rem;font-weight:700;padding:3px 7px;border-radius:2px;text-align:center;letter-spacing:.03em}
+.pillst.ok{background:var(--ok-bg);color:var(--ok)}
+.pillst.due{background:var(--warn-bg);color:var(--warn)}
+.pillst.over{background:var(--bad-bg);color:var(--bad)}
+.pillst.cond{background:var(--panel2);color:var(--mute)}
+.task small{display:block;color:var(--mute);font-size:.82rem}
+form.log{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+form.log label{display:flex;flex-direction:column;gap:2px;font-size:.8rem;color:var(--mute);min-width:0}
+form.log input,form.log select,form.log textarea{padding:6px 8px;background:var(--bg);border:1px solid var(--line);border-radius:2px;color:var(--ink);width:100%}
+form.log .wide{grid-column:1/-1}
+.proc-list{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));margin-top:10px}
+.proc-list ul{list-style:none;padding:0;margin:4px 0 0;display:flex;flex-direction:column;gap:4px}
+
+/* drawer */
+.drawer{position:fixed;inset:0 0 0 auto;width:min(520px,100%);background:var(--panel);border-left:1px solid var(--line);z-index:30;padding:calc(16px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 24px 18px;overflow:auto;box-shadow:-16px 0 40px #0005;display:flex;flex-direction:column;gap:10px}
+.drawer ol{padding-left:0;margin:0;list-style:none;display:flex;flex-direction:column;gap:2px}
+.drawer li label{display:grid;grid-template-columns:22px 26px minmax(0,1fr);gap:4px;padding:6px 0;border-bottom:1px solid var(--line);font-size:.96rem;align-items:start}
+.drawer li input{margin-top:4px;accent-color:var(--accent)}
+.drawer li b{font:600 .78rem/1.8 var(--mono);color:var(--mute)}
+.drawer li input:checked ~ span{color:var(--mute);text-decoration:line-through}
+
+/* specs */
+.specs{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:14px}
+.flags{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:10px;margin-block:10px 20px}
+.flag{border:1px solid var(--warn);background:var(--warn-bg);padding:9px 12px;font-size:.92rem}
+.flag b{display:block}
+.foot{font-size:.82rem;color:var(--mute);margin-top:24px;max-width:90ch}
+.toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:7px 14px;border-radius:3px;z-index:40;font-size:.9rem}
+
+@media (max-width:1040px){
+ .bench,.tshoot,.parts-grid,.maint{grid-template-columns:minmax(0,1fr)}
+ .side{max-height:none}
+ .finder,.order{position:static;max-height:none}
+ .stats{justify-content:flex-start}
+ .finder .symlist{max-height:300px;overflow:auto}
+}
+@media (max-width:560px){
+ .ctl .sl{flex:1 1 100%}
+ .brand h1{font-size:2rem}
+ .stage{height:62vh;min-height:360px}
+ .stats b{font-size:1.2rem}
+ .stats{gap:6px 16px}
+ .task{grid-template-columns:78px minmax(0,1fr)}
+ .task .acts2{grid-column:1/-1}
+ .cause{grid-template-columns:minmax(0,1fr)}
+ .bln.pill{font-size:.64rem}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+<header class="plate gut"><div class="plate-in">
+ <div class="brand"><div class="lab"><a href="../">PCS home</a>Proline Commercial Services, washer bench</div>
+  <h1><span class="seg" role="group" aria-label="Choose machine"><button type="button" data-m="5355J" aria-pressed="true">5355J</button><button type="button" data-m="8405HNL" aria-pressed="false">8405HNL</button></span><small id="plateSub"></small></h1></div>
+ <div class="stats" id="stats"></div>
+</div></header>
+<nav class="tabs gut" aria-label="Sections"><div>
+ <a href="#view" data-t="view">Exploded view</a><a href="#troubleshoot" data-t="troubleshoot">Troubleshoot</a><a href="#parts" data-t="parts">Parts</a><a href="#maintenance" data-t="maintenance">Maintenance</a><a href="#specs" data-t="specs">Specs and manual errors</a>
+</div></nav>
+<main class="gut">
+<section id="tab-view"><div class="bench"><div style="min-width:0">
+  <div class="scene-tabs" id="sceneTabs"></div>
+  <div class="stage" id="stage"><div id="gl"></div><div id="ov"><svg aria-hidden="true"></svg></div></div>
+  <div class="ctl">
+   <label class="sl" for="ex"><span class="lab">Assembled</span><input id="ex" type="range" min="0" max="1" step="0.005" value="0.55" aria-label="Explode amount"><span class="lab">Exploded</span></label>
+   <button class="btn pri" id="run" type="button">Stop motion</button>
+   <span style="display:flex;gap:4px"><button class="chip" data-flow="water" aria-pressed="true" type="button"><span class="dot" style="background:var(--sys-water)"></span>Water</button><button class="chip" data-flow="fuel" aria-pressed="false" type="button"><span class="dot" style="background:var(--sys-fuel)"></span>Fuel</button></span>
+   <button class="chip" id="labels" aria-pressed="true" type="button">Labels</button>
+   <button class="btn" id="resetView" type="button">Reset view</button>
+   <span id="gunRow" hidden style="display:inline-flex;gap:8px;align-items:center"><button class="btn" id="gunBtn" type="button">Close gun</button><span class="mute" id="gunState" style="font-size:.86rem">Gun open: flow goes to the wand</span></span>
+  </div><p class="hint">Drag to orbit, scroll or pinch to zoom. Schematic model laid out from the manual drawings and printed dimensions. Motion is slowed down.</p></div>
+  <aside class="side" id="nodePanel" aria-live="polite"></aside>
+ </div></section>
+<section id="tab-troubleshoot" hidden><div class="tshoot">
+  <div class="finder"><label class="lab" for="tq">What is the machine doing?</label><input id="tq" type="search" placeholder="Smoke, knocking, no heat, nozzle" style="margin-top:4px"><div id="symList" class="symlist"></div></div>
+  <div class="diag" id="diag"></div></div></section>
+<section id="tab-parts" hidden><div class="parts-grid"><div style="min-width:0">
+   <div class="toolbar"><input id="pq" type="search" placeholder="Search part number or description" aria-label="Search parts"><select id="asmSel" aria-label="Assembly"></select><span class="mute" id="partCount" style="font-size:.88rem;font-variant-numeric:tabular-nums"></span></div>
+   <div class="toolbar" id="sysChips"></div>
+   <h3 style="margin:6px 0">Kits and consumables</h3><div class="kits" id="kits"></div>
+   <div class="tablewrap" style="max-height:72vh;overflow:auto"><table class="parts"><thead><tr><th class="num">Item</th><th>Part number</th><th>Description</th><th class="num">Qty</th><th></th><th></th></tr></thead><tbody id="partsBody"></tbody></table></div>
+  </div><aside class="order" id="orderBox"></aside></div></section>
+<section id="tab-maintenance" hidden>
+ <form class="meter" id="hourForm"><div><label class="lab" for="hourIn">Hour meter reading</label><br><input id="hourIn" inputmode="decimal" autocomplete="off"></div><button class="btn" type="submit">Save reading</button><div style="flex:1;min-width:200px"><div id="dueSummary" style="font-size:1.05rem"></div><div style="font-size:.84rem;color:var(--plate-mute)" id="storeNote"></div></div></form>
+ <div class="maint"><div class="card sched"><h2>Schedule</h2><div id="schedule"></div></div>
+  <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+   <div class="card"><h2>Log service</h2><form class="log" id="logForm" style="margin-top:8px">
+     <label class="wide" for="logTask">Type of service<select id="logTask"></select></label>
+     <label for="logDate">Month/Day/Year<input id="logDate" type="date" required></label>
+     <label for="logHours">Operating hours<input id="logHours" inputmode="decimal"></label>
+     <label for="logBy">By<input id="logBy" placeholder="Initials"></label>
+     <label for="logNotes">Oil brand and type, notes<input id="logNotes"></label>
+     <div class="wide"><button class="btn pri" type="submit">Add to record</button></div></form>
+    <div class="tablewrap" style="margin-top:12px;border:0"><table class="mini"><thead><tr><th>Date</th><th>Hours</th><th>Service</th><th>By</th><th></th></tr></thead><tbody id="logRows"></tbody></table></div></div>
+   <div class="card"><h2>Procedures</h2><div class="proc-list" id="procLib"></div></div>
+  </div></div></section>
+<section id="tab-specs" hidden><div id="specBox"></div></section>
+<p class="foot">Built from the two Alkota service manuals for the 5355J and 8405HNL. PDF page numbers refer to those files. Unofficial shop reference, not an Alkota publication. The 3D models are schematic and are not manufacturer CAD. Follow the manuals and your safety program for any service.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js"></script>
+<script>/* Transcribed from the two service manuals. pg = PDF page number. */
+const SYS = {
+  water:{name:'Water',var:'--sys-water'}, fuel:{name:'Burner fuel',var:'--sys-fuel'},
+  heat:{name:'Heat & coil',var:'--sys-heat'}, drive:{name:'Engine & drive',var:'--sys-drive'},
+  elec:{name:'Electrical',var:'--sys-elec'}, frame:{name:'Frame & panels',var:'--sys-frame'}
+};
+const GUN_PARTS = [
+ [1,'C07-01300-08','O-ring, 1/16 CS x 5/16 ID',1,'gun:inlet'],[2,'C07-01425','Filter, water',1,'gun:inlet'],
+ [3,'J06-00121-07','O-ring, 3/32 CS x 1/8 ID',1,'gun:seat'],[4,'J06-00121-15','Ball, SS 5/16',1,'gun:ball'],
+ [5,'J06-00132-19','Screw, self tap, 3.5 x 18 mm',7,'gun:handle'],[6,'J06-00158-01','Fitting, discharge, 1/4 FNPT',1,'gun:discharge'],
+ [7,'J06-00158-02','Pin, trigger, 5 x 27.5 mm',1,'gun:trigger'],[8,'J06-00158-03','Cam',1,'gun:cam'],
+ [9,'J06-00158-04','Trigger',1,'gun:trigger'],[10,'J06-00158-05','Latch, safety',1,'gun:latch'],
+ [11,'J06-00158-06','Fitting, inlet, 3/8 FNPT',1,'gun:inlet'],[12,'J06-00158-08A','Seat, valve',1,'gun:seat'],
+ [13,'J06-00158-09','Washer, flat',1,'gun:seat'],[14,'J06-00158-10','Washer, flat, brass',1,'gun:seat'],
+ [15,'J06-00158-11','Housing, valve',1,'gun:valve'],[16,'J06-00158-12A','Retainer, valve',1,'gun:retainer'],
+ [17,'J06-00158-13','Spring, compression',1,'gun:spring'],[18,'J06-00158-14','Pin, valve, 4 x 44 mm',1,'gun:pin'],
+ [19,'J06-99158A','Housing, handle',1,'gun:handle']];
+const FILTER_PARTS = [
+ [1,'V04-00308-02','Housing, upper',1],[2,'V04-00308-07','Assembly, drain',1],[3,'V04-00308-06','Bowl, amber, 3 in',1],
+ [4,'V04-00308-01','Element, filter',1],[5,'V04-00308-05','O-ring, 3/32 CS x 2 1/2 ID',1],[6,'C07-01300-08','O-ring, 1/16 CS x 5/16 ID',1],
+ [7,'V04-00308-08','Plug, pipe',1],[8,'V04-00308-03','Ring, flat',1],[9,'V04-00308-K','Kit, replacement bowl',1],[10,'V04-00308-04','Assembly, vent',1]];
+
+const FILTER_PARTS_J = FILTER_PARTS.map(r=>r[0]===3?[3,'V04-00308-K','Bowl, amber, 3 in',1]:r[0]===6?[6,'V04-01300-08','O-ring, 1/16 CS x 5/16 ID',1]:r);
+const MACHINES = {
+'5355J':{
+ id:'5355J',series:'12 Volt GED Series',pn:'5355J-000000',rev:'2023-12-13',file:'5355J service manual',
+ plate:[['Flow','5.0','gal/min'],['Pressure','3,500','psi'],['Temp rise','105','°F'],['Heat','345,000','Btu/h'],['Engine','20','hp GX630'],['Weight','785','lb']],
+ size:'48 × 34 × 38 15/32 in',
+ specs:[
+  ['Performance',[['Discharge volume','5.0 gal/m · 18.9 L/m'],['Pump head pressure','3,500 psi · 241 bar'],['Temperature rise','105 °F at 5.0 gal/m'],['Smoke (Bacharach)','#1 or #2'],['Carbon monoxide allowed','0.01 %'],['Heat input','345,000 Btu/h · 87,142 kcal/h']]],
+  ['General',[['Inlet water pressure','10 psi minimum. Over 65 psi may need a regulator'],['Spray tip','#5.5, 15°, JA0-15055-2'],['Hose','3/8 in x 100 ft, 3401-00709'],['Coil','14 in OD x 1/2 in ID x 126 ft, Schedule 80'],['Coil back pressure','5 psi new. Descale at 50 psi'],['Pump belts','BX43, R02-00747']]],
+  ['Engine',[['Engine','Honda GX630, 20 hp, F05-00528'],['Charge rate','20 A'],['Speed','3,600 rpm'],['Fuel','Unleaded, 86 octane or higher'],['Air filter','F05-00478-03'],['Muffler','F05-00606-02']]],
+  ['Burner',[['Burner','V00-173340 (no fuel solenoid) or V00-173341 (with solenoid)'],['Voltage','12 VDC, 1/8 hp'],['Fuel','Kerosene, #1 or #2 diesel'],['Fuel pressure','125 psi · 9 bar'],['Nozzle','2.25 gph, 80° B, V2.25 80DB'],['Consumption','2.52 gal/h · 9.5 L/h']]],
+  ['Pump',[['Pump','N07-00224 (TS1021), triplex'],['Rated','4.5 gal/m, 3,500 psi at 1,125 rpm'],['Max inlet pressure','125 psi'],['Max fluid temperature','165 °F'],['Crankcase oil','40.6 oz'],['Plunger bore / stroke','20 mm / 12 mm']]]],
+ torque:[['Valve plug (41)',95.9],['Mount to crankcase (24)',29.4],['Connecting rod cap (8)',14.7],['Plunger screw to crosshead (42)',14.7],['Rear crankcase cover (27)',7.3],['Head to crankcase (38)',22.1],['Bearing retainer (1)',14.7],['Oil level indicator (29)',14.7]],
+ torqueNote:'Install a new copper washer and flinger washer whenever the plunger nut comes off.',
+ keys:{nozzle:'V2.25 80DB',filter:'V04-00308-01',bowlKit:'V04-00308-K',cad:'V04-00401',igniter:'V-101308-001',fuelPump:'V00-14283',motor:'V-21993-006',fan:'V00-101350-001',coupling:'V-101119-001',airOuter:'V-20602-002',airInner:'V-20601-002',gunAsm:'V-30537-011',electrodeR:'V-100597-002',electrodeL:'V-100598-002',insulator:'V00-12574',oilLine:'V00-14452-1',valves:'N07-99001',packing:'N07-99028',plunger:'N07-40040',oilSeal:'N07-99002',crankSeal:'N07-99003',rod:'N04-60038',bearing:'N07-60022',unloader:'C07-04506',unloaderKit:'C07-9904504',relief:'C03-00509-45',belt:'R02-00747',inletScreen:'C04-00120',pressureSw:'F04-00790',burnerSw:'F04-00693',relay:'FA5-00063',plungerKit:'N07-99006',tip:'JA0-15055-2',gunKit:'J06-99158C',strainerCover:'V00-14283-2',strainer:'V00-14283-5',sight:'N07-20029',dipstick:'N07-40024',solenoid:'F04-00979',thermostat:'FA4-00811'},
+ pdf:{pumpMaint:25,plunger:26,packing:27,head:28,pumpSpec:29,pumpParts:30,kits:31,unloader:33,unloaderSpec:34,unloaderTrouble:35,unloaderParts:36,unloaderAdjust:37,air:41,blower:42,gun:43,burnerParts:44,filter:13,filterMaint:14,tshootPump:46,tshootPump2:47,tshootPump3:48,tshootBurner:48,tshootBurner2:49,tshootBurner3:50,tshootHeater:50,tshootHeater2:51,float:22},
+ flags:[
+  ['Tank volumes','Page 5 prints 113.5 L for both the 9.5 gal fuel tank and the 6 gal engine tank. 9.5 gal is about 36 L and 6 gal is about 23 L. The gas tank weldment is listed as 6.75 gal on page 15.'],
+  ['Flow versus pump table','The machine is rated 5.0 gal/m at 3,500 psi. The N07-00224 table lists 4.5 gal/m at 3,500 psi and 1,125 rpm, and 5.6 gal/m at 1,700 psi and 1,450 rpm. Confirm with a flow test if numbers matter on a bid.'],
+  ['Which burner you have','Page 40 lists four burner numbers: V00-173340, V00-173240, V00-173341 and V00-173141. Specs use only 173340 and 173341. Read the burner tag before ordering solenoid parts.'],
+  ['Pump oil interval','This manual prints no pump oil change interval. The maintenance tab uses the 50 h, then 3 months or 300 h interval printed in the 8405HNL manual. Confirm with Alkota.'],
+  ['Missing sections','The contents page lists Temperature Control and two extra schematics that are not in this PDF. Troubleshooting points to Belt Tension and Oil Level sections that are also absent.'],
+  ['Crosshead number','Pump item 7 is printed N04-60038. Every other pump part starts N07. Confirm this one with the dealer.']],
+ assemblies:[
+  {id:'final',name:'Final assembly',pn:'5355J-00617',pg:7,sys:'frame',n:'cover',parts:[
+   [1,'3401-00709','Hose assembly, 3/8 x 100 ft',1,'hose'],[2,'4120-00902P','Assembly, chemical line',1,'chem'],[3,'5355J-00150','Weldment, pulley shield',1,'shield'],[10,'5355J-00617','Assembly, general',1],[5,'AB18-01705PB','Brace, pulley shield',1,'shield'],[6,'AB18-01705PB','Brace, pulley shield',1,'shield'],[7,'AS16-81331NB','Cover, float tank',1,'floatCover'],[8,'AS1892018NPR','Cover, burner',1,'cover'],[9,'AS1894703NPB','Panel, side',1,'sidePanel'],[10,'D02-00001E','Decal, serial number',1,'sidePanel'],[11,'F04-00451','Grommet, rubber',1,'sidePanel'],[12,'H04-19010','Screw, machine',3],[13,'H04-19011','Screw, self tap',2],[14,'H04-25002','Screw, cap',6],[15,'H06-19002','Nut, tinnerman',3],[16,'H06-25003','Nut, hex',8],[15,'H09-12500','Rivet, pop',2],[18,'JA0-15055-2','Tip, spray, #5.5, 15°, QC',1,'gunMachine'],[19,'J06-00158-B','Assembly, gun and wand, 42 in',1,'gunMachine'],[20,'W02-00033','Clamp, hose',1],[21,'ZA1-00009','Cap, gas, ratchet',1,'gasTank'],['','Z01-00084','Cap, filler, 2 1/2 OD, vented dome',1,'fuelTank']]},
+  {id:'general',name:'General assembly',pn:'5355J-00617',pg:11,sys:'frame',n:'frame',parts:[
+   [1,'4355E-00302','Assembly, control panel',1,'panel'],[2,'4355EB-00515','Assembly, unloader',1,'unloader'],[3,'4405G-00126','Assembly, gas tank',1,'gasTank'],[4,'4405G-00304','Assembly, junction box',1,'jbox'],[5,'5305EAA-00126','Assembly, fuel tank',1,'fuelTank'],[6,'5355J-00501','Assembly, pump',1,'pump'],[7,'5355J-00657','Assembly, pre-cleaner',1,'coil'],[8,'5355J-10186','Weldment, cover',1,'cover'],[9,'5355JB-01121','Assembly, tank, float',1,'floatTank'],[10,'AS11-04504PB','Angle, formed, J frame sheet metal',1],[11,'AS1694708NPB','Mount, control panel',1,'panel'],[12,'E06-00008-1','Coupling, hex',1,'hoses'],[13,'E08-00012-5','Elbow, reducing pipe',1,'hoses'],[14,'F04-00312','Connector, conduit, 3/8 flex 90°',1,'jbox'],[16,'H03-31302','Bolt, J, 5/16-18 x 3 1/2',1],[17,'H04-19011','Screw, self tap',17],[18,'H04-25002','Screw, cap',2],[19,'H04-31301','Screw, cap, 5/16 x 3/4',5],[20,'H04-31326','Screw, cap',2],[21,'H06-25003','Nut, hex',4],[22,'H06-25007','Nut, tinnerman, 1/4 in',2],[23,'H06-31300','Nut, lock, 5/16 in',3],[24,'H06-37500','Nut, lock, 3/8-16',4],[25,'H11-12501','Key, 1/4 x 1/4',1,'engPulley'],[26,'K02-03218A2','Assembly, hose, 3/8 x 18 in',1,'hoses'],[27,'K02-03238A2','Assembly, hose, 3/8 x 38 in',1,'hoses'],[28,'K23','Hose, low permeation, black',1,'hoses'],[29,'K23','Hose, low permeation, black',1,'hoses'],[30,'K23','Hose, low permeation, black',1,'hoses'],[31,'K33-00400 / K33-02400','Hose, water, 3/8',2,'hoses'],[32,'K75-02600','Hose, 3/4 in',1,'hoses'],[33,'R03-00747','Pulley, double V, 2BK47H',1,'engPulley'],[34,'R03-75100','Pulley, double V',1,'pumpPulley'],[35,'R04-00001','Bushing, pulley',1,'pumpPulley'],[36,'R04-00006','Bushing, pulley',1,'engPulley'],[37,'W02-00031','Clamp, hose',2,'hoses'],[38,'W02-00032','Clamp, hose',2,'hoses'],[39,'W02-00033','Clamp, hose',6,'hoses'],[40,'W04-34155-A','Coupler, quick',1,'hoses'],['spec','R02-00747','Belt, pump, BX43',2,'belt']]},
+  {id:'precleaner',name:'Pre-cleaner (frame, engine, coil)',pn:'5355J-00657',pg:38,sys:'drive',n:'engine',parts:[
+   [1,'4355E-00105','Weldment, chassis, 14 in dia',1,'coil'],[2,'4405G-00130AA','Weldment, frame',1,'frame'],[3,'5305EA-00401','Assembly, burner',1,'burner'],[4,'5355J-00134A','Weldment, motor mount',1,'mount'],[5,'F05-00439-36','Oil pressure switch',1,'engine'],[6,'F05-00528','Engine, gas, 20.3 hp Honda GX630',1,'engine'],[7,'F05-00606-02','Muffler, silver, starter side',1,'muffler'],[8,'H04-31326','Screw, cap',4],[9,'H05-31300','Washer, flat, 5/16',4],[10,'H05-50001','Washer, helical lock, 1/2 in',8],[11,'H06-31300','Nut, lock, 5/16 in',8],[12,'H06-37500','Nut, lock, 3/8-16',3],[13,'H06-50001','Nut, 1/2-20 UNF',8],[14,'H10-50000','Mount, shock',4,'mount'],[15,'K21-02214-20MM','Assembly, hose, oil drain',1,'engine'],['spec','F05-00478-03','Air filter',1,'engine']]},
+  {id:'coil',name:'Coil and heads',pn:'4355E-00105',pg:39,sys:'heat',n:'coil',parts:[
+   [1,'4355E-00117','Head, weldment',1,'exhaust'],[2,'350-00116','Head, burner',1,'coil'],[3,'H04-19011','Screw, self tap',10],[4,'Z01-05003','Insulation, 1 x 4 x 36 1/2 in',1,'coil'],[5,'4305E-00206','Weldment, coil',1,'coilTube'],[6,'E15-00035-1','Nipple, pipe, 3 1/2 in',1,'coilTube'],[7,'E15-00055-9','Nipple, pipe, 5 1/2 in',1,'coilTube']]},
+  {id:'fueltank',name:'Burner fuel tank',pn:'5305EAA-00126',pg:12,sys:'fuel',n:'fuelTank',parts:[
+   [1,'4405G-10125','Weldment, fuel tank, 9.5 gal',1],[2,'E08-00005-2','Elbow, 1/4 FNPT',1],[3,'E09-00002-2','Plug, pipe',1],[4,'E13-00030-2','Nipple, pipe',1],[5,'V04-00308','Filter, fuel',1,'filter'],[6,'W02-10019-8','Barb, hose',1],[7,'W02-10031','Barb, hose',1]]},
+  {id:'filter',name:'Fuel filter V04-00308',pn:'V04-00308',pg:14,sys:'fuel',n:'filter',parts:FILTER_PARTS_J},
+  {id:'gastank',name:'Gasoline tank',pn:'4405G-00126',pg:15,sys:'drive',n:'gasTank',parts:[
+   [1,'4405G-00125','Weldment, gas tank, 6.75 gal',1],[2,'E09-00002-2','Plug, pipe',1],[3,'W02-10060','Barb, hose',1],['','C03-00131','Valve, ball, 1/4 M x 1/4 B',1],['','E08-00005-2','Elbow, 1/4 FNPT, 90°',1],['','W02-10018-8','Barb, hose, 1/4 B x 1/8 MNPT',1]]},
+  {id:'panel',name:'Control panel',pn:'4355E-00302',pg:16,sys:'elec',n:'panel',parts:[
+   [1,'4355E-00301','Weldment, control panel',1],[2,'10301-00520','Assembly, metering valve',1],[3,'D01-00060','Decal, metering valve',1],[4,'FA4-00811','Thermostat, adjustable (temperature-control build, 4355E-00302B)',1],[5,'Y02-00083','Digital tachometer / hour meter',1],['','C03-00307','Valve, metering',1],['','W02-10031','Barb, hose',2],['','F04-00693','Switch, rocker, 12 V, 20 A',1],['','F04-00693-1','Seal, rocker switch',1]]},
+  {id:'jbox',name:'Junction box',pn:'4405G-00304',pg:20,sys:'elec',n:'jbox',parts:[
+   [1,'5355JC-00310','Weldment, junction box',1],[2,'AS16-01017PB','Cover, junction box',1],[3,'F04-00411','Bushing, strain relief',1],[4,'F04-00413','Bushing, strain relief',2],[5,'F04-00608','Terminal, ring',4],[6,'F04-00617','Terminal, splice',4],[7,'F04-00616','Terminal, insulator',4],[8,'F04-00616-1','Terminal, splice, 18-6 wire',1],[9,'F04-00616-2','Insulator, splice, 18-6',1],[10,'F04-00618','Insulated spade',9],[11,'F04-00693','Switch, rocker, 12 V',1],[12,'F04-00693-1','Seal, rocker switch',1],[13,'F04-00790','Switch, pressure',1],[14,'FA5-00063','Relay, automotive, 12 V',1]]},
+  {id:'float',name:'Float tank',pn:'5355JB-01121',pg:22,sys:'water',n:'floatTank',parts:[
+   [1,'5305A-04120','Weldment, tank, float',1],[2,'5405-10548P','Assembly, restrictor',1],[3,'AR14-00300','Rod, thread, 1/4-20 x 3',1],[4,'C03-00216-4','Valve, ball, 3-way',1],[5,'C03-00620-Q','Valve, float',1],[6,'C03-00622-B','Ball, float, plastic',1],[7,'C04-00120','Filter, soap screen',1],[8,'C05-00273','Adapter, garden hose',1],[9,'E09-00002-P','Plug, pipe, nylon',1],[10,'E15-R0006-4','Nipple, hex',1],[11,'W02-10029-8','Barb, hose',1],['','C03-99620-Q','Plunger, float valve (only replaceable part)',1],['','AS16-81331NB','Cover, tank',1,'floatCover']]},
+  {id:'pumpasm',name:'Pump plumbing',pn:'5355J-00501',pg:24,sys:'water',n:'plumb',parts:[
+   [1,'C03-00810','Valve, air',1],[2,'C09-00008','Valve, easy start',1],[3,'E04-00002-58','Bushing, pipe',1],[4,'E04-00016-58','Bushing, 3/8 - 1/4',1],[5,'E07-00006-5','Cross, pipe, high pressure',1],[6,'E08-00006-48','Elbow, pipe',1],[7,'E08-00011-58','Elbow, pipe',1],[8,'E10-00021-58','Tee, street, 3/8',1],[9,'E11-00012-4T','Tee, pipe',1],[10,'E14-00010-68','Nipple, 3/8 MNPT, close, Sch 80',1],[11,'E15-00010-48','Nipple, brass, 1/2 in',1],[12,'K21-02214-1/4','Assembly, hose, oil drain',1,'pump'],[13,'K31-01100','Hose, water',1],[14,'N07-00224','Pump, water',1,'pump'],[15,'N07-40046-P','Mount, pump, with hole',1,'pump'],[16,'W02-00033','Clamp, hose',2],[17,'W02-10016-8','Barb, hose',1],[18,'W02-10026-8','Barb, hose',1],[19,'W02-10030-8','Barb, hose',1]]},
+  {id:'pump',name:'Water pump N07-00224',pn:'N07-00224',pg:30,sys:'water',n:'pump:head',parts:[
+   [1,'N07-40018','Screw, cap',4,'pump:retainer'],[2,'N07-40020','Retainer, bearing, closed',1,'pump:retainer'],[3,'N07-40021','O-ring',2,'pump:retainer'],[4,'N07-60022','Bearing, roller',2,'pump:bearing'],[5,'N07-40024','Dipstick, oil',1,'pump:dipstick'],[6,'N07-40023','Crankcase',1,'pump:crankcase'],[7,'N04-60038','Crosshead',3,'pump:rods'],[8,'N07-40034','Cover, crankcase',1,'pump:rearCover'],[9,'N07-70025','O-ring',1,'pump:rearCover'],[10,'N07-16026','Cover, rear, O-ring',1,'pump:rearCover'],[11,'N07-60027','Screw, cap',4,'pump:rearCover'],[12,'N07-20029','Indicator, oil level',1,'pump:sight'],[13,'N07-20030','Plug, pipe',1,'pump:crankcase'],[14,'N07-20042','Washer, flat',3,'pump:plungers'],[15,'N07-40032','Pin, crosshead',3,'pump:rods'],[16,'N07-40053','Ring, retaining',3,'pump:rods'],[17,'N07-60031','Crankshaft (N07-00224)',1,'pump:crank'],[18,'N07-40033','Key',1,'pump:crank'],[19,'N07-40019','Retainer, bearing, open',1,'pump:retainer'],['20*','N07-40035','Shim',1,'pump:retainer'],['21*','N07-40045','Seal, oil',1,'pump:seal'],[22,'N07-40046','Mount, pump',2,'pump:mount'],[23,'N07-40047','Washer, lock',4,'pump:mount'],[24,'N07-40048','Screw, cap',4,'pump:mount'],[25,'N07-40016','O-ring',3,'pump:packings'],[26,'N07-40015','Adapter, female, rear, 20 mm',3,'pump:packings'],[27,'N07-40012A','Packing, V, low pressure',3,'pump:packings'],[28,'N07-34013','Adapter, female, front',3,'pump:packings'],[29,'N07-40062','Ring, restop',3,'pump:packings'],[30,'N07-40012','Packing, V, high pressure',3,'pump:packings'],[31,'N07-99007','Adapter, male, 20 mm',3,'pump:packings'],[32,'N07-20049','Plug, pipe',2,'pump:head'],[33,'N07-20050','Plug, pipe',1,'pump:head'],[34,'N07-20051','Washer, flat',1,'pump:head'],[35,'N07-20011','Washer, flat',1,'pump:head'],[36,'N07-22401','Head, pump, brass',1,'pump:head'],[37,'N07-40003','Washer, flat',8,'pump:bolts'],[38,'N07-40002','Screw, cap',8,'pump:bolts'],[39,'N07-99001','Kit, valve (6)',6,'pump:valves'],['39A','N07-20004','O-ring',6,'pump:valves'],[40,'N07-20009','O-ring',6,'pump:valvePlugs'],[41,'N07-22410','Plug, pipe',6,'pump:valvePlugs'],[42,'N07-20043','Screw, plunger',3,'pump:plungers'],[43,'N07-20028','O-ring',3,'pump:plungers'],[44,'N07-20041','Ring, anti-extrusion',3,'pump:plungers'],[45,'N07-40040','Plunger, 20 mm',3,'pump:plungers'],[46,'N07-20039','Washer, flat, copper',3,'pump:plungers'],[47,'N07-99002','Seal, oil (3 in kit)',3,'pump:oilSeals'],[48,'N07-40044','Bushing',3,'pump:oilSeals']]},
+  {id:'unloaderasm',name:'Unloader assembly',pn:'4355EB-00515',pg:33,sys:'water',n:'unloader',parts:[
+   [1,'4355EB-00514','Bracket, unloader valve',1],[2,'C03-00509-45','Valve, relief, SS',1,'relief'],[3,'C07-04506','Valve, unloader',1,'unloader'],[4,'E07-00006-5','Cross, pipe, high pressure',1],[5,'E08-00010-5','Elbow, pipe',1],[6,'E08-00011-58','Elbow, pipe',1],[7,'W02-10040-8','Barb, hose',1],[8,'Y01-00123','Accumulator',1,'accumulator']]},
+  {id:'unloader',name:'Unloader valve C07-04506',pn:'C07-04506',pg:36,sys:'water',n:'unloader:body',parts:[
+   [1,'C07-04504-11','Guide, piston',1,'unloader:piston'],[2,'C07-04504-01','O-ring',2,'unloader:piston'],[3,'C07-04504-09','Piston, SS',1,'unloader:piston'],[4,'C07-04504-02','Ring, back-up',1,'unloader:piston'],[5,'N07-20028','O-ring',1,'unloader:piston'],[6,'','Housing',1,'unloader:body'],[7,'C07-04500A-05','Kit, seat and O-ring',1,'unloader:seat'],['7A','C07-02300-08','O-ring, 1/16 CS x 11/16 OD',1,'unloader:seat'],[9,'C07-04500-03','Ball, SS, 13/32',1,'unloader:ball'],[10,'C07-02700-06','Spring, 1.6 x 11 x 20 mm',1,'unloader:ball'],[11,'C07-04506-04','Coupling, inlet, 3/8 NPT, SS',1,'unloader:inlet'],[12,'N16-28110084','Washer, flat',2,'unloader:body'],[13,'C07-04504-05','Plug, 3/8 NPT',2,'unloader:body'],[14,'C07-04504-07','Ring, back-up',1,'unloader:check'],[15,'P04-00215','O-ring, 1.78 x 6.07 mm',1,'unloader:check'],[16,'C07-03200-20','O-ring, 3 x 6 mm',2,'unloader:check'],[17,'C07-04500-15','Valve, check',1,'unloader:check'],[18,'C07-01009A-18','Spring, compression',1,'unloader:check'],[19,'C07-04504-16','O-ring, 1/16 CS x 5/8',1,'unloader:outlet'],[20,'C07-04506-10','Fitting, outlet, 3/8 M, SS',1,'unloader:outlet'],[21,'C07-04504-14','Nut, hex (pressure limit, do not remove)',2,'unloader:nuts'],[22,'C07-04504-13','Follower, spring',1,'unloader:spring'],[23,'C07-04504-15','Nut, hex, brass',1,'unloader:nuts'],[24,'C07-04500-13','Spring, compression, blue',1,'unloader:spring']]},
+  {id:'burnerasm',name:'Oil burner assembly',pn:'5305EA-00401',pg:40,sys:'fuel',n:'burner',parts:[
+   [1,'V00-173340','Burner, oil (or V00-173341 with solenoid)',1],[2,'V2.25 80DB','Nozzle, burner',1,'burner:nozzle'],[3,'W02-10019-8','Barb, hose',2]]},
+  {id:'burner',name:'Burner breakdown',pn:'V00-173340',pg:45,sys:'fuel',n:'burner:housing',parts:[
+   [1,'V-101126-002','Kit, motor / adapter',1,'burner:motor'],['1A','V-21993-006','Motor, electric, 12 VDC, 3,900 rpm',1,'burner:motor'],['1D','V-101119-001','Coupling, shaft',1,'burner:coupling'],[2,'H04-19000','Screw, self tap',1,'burner:housing'],[3,'V00-101350-001','Fan, burner, with set screw',1,'burner:fan'],[4,'H04-31302','Screw, set',1,'burner:fan'],[5,'V-100603','Screw',1,'burner:housing'],[6,'V-62899-001','Cover, control box',1,'burner:box'],[7,'H04-19010','Screw, machine',1,'burner:box'],[8,'V-63355-001','Box, control, side mount',1,'burner:box'],['9*','V-100732-001','Spring, compression (in V00-99006)',1,'burner:igniter'],['10*','V-101308-001','Igniter, 12 V (in V00-99006)',1,'burner:igniter'],['11*','V-100603-016','Screw, self tap',1,'burner:igniter'],['12*','V-100730-003','Mount, igniter',1,'burner:igniter'],['13*','V-100603-015','Screw, self tap (in V00-99006)',1,'burner:igniter'],[15,'V00-12694','Screw, machine',1,'burner:housing'],['16*','V-21723-014','Cover, housing, rear, hinge',1,'burner:rearCover'],[17,'V-101256-001','Gasket, cover, rear, hinge',1,'burner:rearCover'],[18,'H04-31301','Screw, self tap',1,'burner:housing'],[19,'V04-00401','Detector, cad cell',1,'burner:cad'],[20,'V-12689','Plug',1,'burner:housing'],[21,'V00-13392','Cover, slot',1,'burner:housing'],[22,'V00-14296','Nut, lock, oil line',1,'burner:oilLine'],[23,'V00-14452-1','Line, oil',1,'burner:oilLine'],[24,'H04-31313','Screw, cap',1,'burner:bands'],[25,'V-101119-001','Coupling, shaft',1,'burner:coupling'],[26,'V00-14283','Pump, fuel',1,'burner:pump'],[27,'V00-13494-1','Elbow, flare',1,'burner:oilLine'],[28,'V-20602-002','Band, air, outer',1,'burner:bands'],[29,'V-20601-002','Band, air, inner',1,'burner:bands'],[30,'V-21866-002','Assembly, housing',1,'burner:housing'],[31,'V-30537-011','Assembly, gun',1,'burner:gun'],[32,'V-22044-004','Air tube',1,'burner:tube'],[33,'V00-14160','Cone, air, #4A',1,'burner:cone'],[34,'V00-12484','Gasket',1,'burner:tube'],[35,'V00-12699','Screw, air cone',1,'burner:cone'],['36**','V00-14222','Fitting, flare (solenoid burner)',1,'burner:oilLine'],['37**','F04-00979','Valve, fuel solenoid (solenoid burner)',1,'burner:pump'],['37A','V13-00664','Coil, solenoid, 12 VDC',1,'burner:pump'],['*','V00-99006','Kit, 12 V igniter',1,'burner:igniter']]},
+  {id:'burnergun',name:'Burner gun V-30537-011',pn:'V-30537-011',pg:45,sys:'fuel',n:'burner:gun',parts:[
+   [1,'V-100597-002','Assembly, electrode, RH',1,'burner:electrodes'],['1B','V00-12574','Insulator, electrode',1,'burner:electrodes'],['1C','V-13499-002','Bar, buss, T',1,'burner:electrodes'],['1D','V00-13110','Nut, pal',1,'burner:electrodes'],[2,'V00-12408','Bushing, insulator',1,'burner:electrodes'],[3,'V00-12694','Screw, machine',1],[4,'H04-19002','Screw, set',1],[5,'V00-12695','Screw, machine',1],[6,'','Assembly, oil pipe, 7 in',1],[7,'V-100598-002','Assembly, electrode, LH',1,'burner:electrodes'],['7B','V00-12574','Insulator, electrode',1,'burner:electrodes'],['7C','V-13499-002','Bar, buss, T',1,'burner:electrodes'],['7D','V00-13110','Nut, pal',1,'burner:electrodes'],[8,'V00-13409','Plate, baffle, 2 1/2 in',1],[9,'V00-14310','Support, electrode',1],[10,'V00-14442','Spring, electrode support',1],[11,'H04-16400','Screw, thread cutting',1],[12,'V00-12362','Adapter, nozzle',1,'burner:nozzle']]},
+  {id:'gunwand',name:'Gun and wand',pn:'J06-00158-B',pg:8,sys:'water',n:'gun:handle',parts:[
+   [1,'J06-00104EZ','Assembly, wand, 42 in',1,'gun:wand'],[2,'J06-00158','Gun, trigger',1,'gun:handle'],[3,'W04-24225-A','Coupler, 1/4 F x 1/4 FNPT',1,'gun:discharge'],['','W04-31231-B','Coupler, 3/8 M x 3/8 FNPT (hose)',1,'hose'],['','K02-31100E33','Assembly, hose, 3/8 x 100 ft',1,'hose'],['','C04-00131','Strainer, with check',1,'chem'],['','Z01-08413-2','Hose, polybraid, 1/4 in x 84 in',1,'chem']]},
+  {id:'gun',name:'Trigger gun J06-00158',pn:'J06-00158',pg:9,sys:'water',n:'gun:handle',parts:GUN_PARTS}],
+ kits:[['N07-99001','Valve assemblies: check valve (6), O-ring (6)','pump:valves'],['N07-99002','Oil seals (3)','pump:oilSeals'],['N07-99003','Crankshaft seal (2)','pump:seal'],['N07-99004F','Plugs (6) and O-rings (6)','pump:valvePlugs'],['N07-99006','Plunger screw and O-rings, washers, anti-extrusion rings','pump:plungers'],['N07-99007','Male adapters (6)','pump:packings'],['N07-99010','Rear adapters and O-rings (3)','pump:packings'],['N07-99028','Plunger packing with retainer. Order three for the complete pump','pump:packings'],['N07-99069','Retainer and O-rings','pump:packings'],['N07-99071','Front adapter','pump:packings'],['N07-OILCA','Pump oil, case of 6 one-pint bottles','pump:crankcase'],['N07-OILCA-1','Pump oil, one-pint bottle','pump:crankcase'],['C07-9904504','Unloader repair kit','unloader:piston'],['J06-99158C','Trigger gun repair kit','gun:seat'],['V04-00308-K','Replacement fuel filter bowl kit','filter'],['V00-99006','12 V igniter kit','burner:igniter']]
+},
+'8405HNL':{
+ id:'8405HNL',series:'EN/HN Series',pn:'8405HNL-X00020',rev:'2022-10-20',file:'8405HNL service manual',
+ plate:[['Flow','7.7','gal/min'],['Pressure','3,700','psi'],['Heat','508,200','Btu/h'],['Engine','24','hp GX800'],['Fuel use','3.63','gal/h'],['Weight','1,260','lb']],
+ size:'49 3/8 × 22 5/16 × 42 3/4 in',
+ specs:[
+  ['Performance',[['Discharge volume','7.7 gal/m · 29.1 L/m'],['Pump head pressure','3,700 psi · 255 bar'],['Smoke (Bacharach)','#1 or #2'],['Carbon monoxide allowed','0.01 %'],['Heat input','508,200 Btu/h · 127,050 kcal/h']]],
+  ['General',[['Inlet water pressure','10 psi minimum. Over 65 psi may need a regulator'],['Spray tips','Yellow #8, 15°, JA0-15080-2. #40, 65°, JA0-65400-2B'],['Hose','1/2 in x 50 ft, K02-04150E7'],['Coil','18 in OD x 3/4 in ID x 147 ft, Schedule 80'],['Coil back pressure','5 psi new. Descale at 50 psi'],['Belt','R02-00750'],['Tanks','Fuel 7.0 gal. Gasoline 7.0 gal']]],
+  ['Engine',[['Engine','Honda GX800, 24 hp, F05-00639'],['Charge rate','26 A'],['Speed','3,600 rpm'],['Fuel','Unleaded, 86 octane or higher'],['Air filter','F05-00478-03, inner F05-00478-04'],['Oil filter','F05-00467-01'],['Engine oil','2.1 US qt · 2.0 L'],['Battery','12 V, minimum 45 Ah, 400 CCA'],['Battery cables','AWG 4, 5 ft max. F05-00220-R red, F05-00220 black'],['Fuse','30 A']]],
+  ['Burner',[['Burner','V00-173229, pressure atomizing'],['Voltage','12 VDC'],['Gun setting','1/8 in ahead of air tube'],['Air bands','2 1/4 in open'],['Fuel','Kerosene, #1 or #2 diesel'],['Fuel pressure','125 psi · 9 bar'],['Nozzle','3.25 gph, 80° B, V3.25 80DB']]],
+  ['Pump',[['Pump','N07-00092 (TSF2021), triplex, oil bath'],['Rated','8.5 gal/m at 1,750 rpm, 7.0 gal/m at 1,450 rpm'],['Max discharge pressure','3,600 psi'],['Max inlet pressure','125 psi'],['Max fluid temperature','165 °F'],['Crankcase oil','31.0 oz'],['Plunger bore / stroke','20 mm / 21 mm']]]],
+ torque:[['Head bolts (2)',33.2],['Valve caps (10)',95.9],['Cover screws (12)',14.8],['Crankcase cover screws (26)',7.3],['Plug (29)',14.8],['Screws (31)',14.8],['Plunger bolt (38), Loctite 542',14.8],['Screws (41)',14.8],['Plug (42)',29.5],['Rail screws (51)',29.5],['Plug (55)',51.6],['Plug (58)',29.5]],
+ torqueNote:'Values are from the Position column on the spec page. Decrease torque 20 % if threads are lubricated.',
+ keys:{nozzle:'V3.25 80DB',filter:'V04-00308-01',bowlKit:'V04-00308-K',cad:'V04-00401',igniter:'V-101308-001',fuelPump:'V00-13841',motor:'V-21993-006',fan:'V00-23018-001',coupling:'V00-101320-001',airOuter:'V00-02668',airInner:'V00-02669',gunAsm:'V-30535-052',electrodeR:'V00-100631',electrodeL:'V00-100632',insulator:'V-100005-002',oilLine:'V00-14451',valves:'N07-99169',packing:'N07-99170',plunger:'N07-90040',oilSeal:'N07-99002',crankSeal:'N07-99003',rod:'N07-900034',bearing:'',unloader:'C07-06323',unloaderKit:'',relief:'C03-00548',belt:'R02-00750',inletScreen:'C04-00121',pressureSw:'F04-00790',burnerSw:'F04-00693',relay:'FA5-00063',plungerKit:'',tip:'JA0-15080-2',gunKit:'J06-99158C',strainerCover:'V00-14283-2',strainer:'V00-14283-5',sight:'N07-47029',dipstick:'N07-40024',solenoid:'V-100610-005',thermostat:'F04-99220-X'},
+ pdf:{pumpMaint:22,plunger:23,packing:24,head:25,pumpSpec:20,pumpParts:21,kits:20,unloader:26,unloaderSpec:27,unloaderTrouble:27,unloaderParts:28,unloaderAdjust:28,air:31,blower:32,gun:33,burnerParts:36,filter:34,filterMaint:35,tshootPump:39,tshootPump2:40,tshootPump3:41,tshootBurner:41,tshootBurner2:42,tshootBurner3:43,tshootHeater:43,tshootHeater2:44,float:0},
+ flags:[
+  ['Pressure versus pump table','Machine spec is 3,700 psi. The N07-00092 table lists 3,600 psi maximum discharge. Do not raise the unloader setting to chase the higher number until Alkota confirms it.'],
+  ['Strainer numbers','The fuel pump strainer figure prints V00-14283-5 and V00-14283-2, both for a V00-14283 pump. This burner lists fuel pump V00-13841. Read the pump tag before ordering.'],
+  ['Fuel filter flow','Page 34 prints two flow values for the same filter: 15 GPM and 15 GPH. The weight also appears as 1.0 lb / 340 km. These are print errors in the insert.'],
+  ['Battery line','The engine spec table prints "Engine Battery 3600 RPM". The voltage and capacity lines under it are the usable ones.'],
+  ['Pump part numbers','Item 33 Wrist Pin and item 34 Piston Guide share N07-900038. Several items have no number printed at all, including the crankshaft, manifold and bearings.'],
+  ['Missing sections','Troubleshooting points to Belt Tension and Oil Level sections, and to Temperature Control and Machine Troubleshooting inserts. None are in this PDF.'],
+  ['Unloader adjustment','This manual prints the heading for unloader adjustment with no steps. The steps shown here come from the 5355J manual, written for a different unloader.']],
+ assemblies:[
+  {id:'general',name:'Cleaner assembly',pn:'8355HNL-X0605',pg:13,sys:'frame',n:'frame',parts:[
+   [1,'5355ENL-00126','Assembly, fuel tank',1,'fuelTank'],[2,'5355HNLEI-00302','Control panel assembly',1,'panel'],[3,'8405HNL-00501','Pump assembly',1,'pump'],[4,'8355HNL-00515A','Assembly, unloader',1,'unloader'],[5,'5355ENL-10126','Assembly, gas tank',1,'gasTank'],[6,'8405HNL-X0657','Pre-cleaner assembly',1,'coil'],[7,'8355HNL-00150','Pulley shield weldment',1,'shield'],[8,'AS16-94519PB','Backing panel',1,'sidePanel'],[9,'AS1892201NPR','Cover, burner, 18 in',1,'cover'],[10,'E08-00011-58','Elbow, street, 3/8 NPT x 90°',1,'hoses'],[11,'E10-00008-5','Tee, pipe, high pressure',1,'hoses'],[12,'H04-25002','Screw, cap',12],[14,'H04-31306','Screw, cap, 5/16 x 3/4',6],[16,'H04-37509','Screw, cap',4],[17,'H05-31303','Washer',4],[18,'H05-37505','Washer, Nord-Lock',4],[19,'H06-25003','Nut, hex',8],[20,'H06-25006','Nut, tinnerman, 5/16 in',8],[21,'H06-31300','Nut, lock, 5/16 in',13],[23,'H06-37503','Nut, 3/8-16 hex, plain',4],[24,'K02-03218A2','Assembly, hose, 3/8 x 18 in',1,'hoses'],[25,'K02-03228A2','Assembly, hose, 3/8',1,'hoses'],[26,'K75-02400','Hose, water, 3/4 x 24 in',1,'hoses'],[27,'R03-00752','Pulley, double',1,'engPulley'],[28,'W02-10019-8','Barb, hose',1,'hoses'],[29,'W04-53155-A','Quick coupler',1,'hoses'],['spec','R02-00750','Belt, pump',1,'belt'],['spec','F05-00220-R','Battery cable, positive, red',1,'jbox'],['spec','F05-00220','Battery cable, negative, black',1,'jbox']]},
+  {id:'precleaner',name:'Pre-cleaner (frame, engine, burner)',pn:'8405HNL-X0657',pg:29,sys:'drive',n:'engine',parts:[
+   [1,'500NX4-05105','Assembly, chassis, split',1,'coil'],[2,'5355HNL-00130F','Frame weldment',1,'frame'],[3,'8355HNL-00401','Assembly, burner',1,'burner'],[4,'F05-00439-36','Oil pressure switch',1,'engine'],[5,'F05-00639','Engine, gas, 24 hp Honda 800 cc, 26 A, 1 1/8 shaft, electric start',1,'engine'],[6,'H04-31351','Cap screw, 5/16-18 x 2',8],[7,'H05-31304','Washer, lock',4],[8,'H05-31306','Washer, Nord-Lock',4],[9,'H06-31300','Nut, lock, 5/16 in',4],[10,'H06-31310-3','Nut, hex, 5/16, stainless',4],[11,'H06-37500','Nut, lock, 3/8-16',3],[12,'K21-02214-20MM','Assembly, hose, oil drain',1,'engine'],['spec','F05-00478-03','Air filter',1,'engine'],['spec','F05-00478-04','Air inner filter',1,'engine'],['spec','F05-00467-01','Oil filter',1,'engine']]},
+  {id:'coil',name:'Chassis, split',pn:'500NX4-05105',pg:38,sys:'heat',n:'coil',parts:[
+   [1,'4120-00116','Weldment, head, burner',1,'coil'],[2,'500NX4-00111','Weldment, coil, 18 in',1,'coilTube'],[3,'550-00117','Assembly, head, exhaust',1,'exhaust'],[4,'AS1693007PBR','Wrapper, coil, upper',1,'coil'],[5,'AS1693037PBR','Wrapper, chassis, lower',1,'coil'],[7,'E16-00055-9','Nipple, 3/4 x 5 1/2',1,'coilTube'],[8,'H04-19011','Screw, self tap',10],[9,'Z01-05001','Insulation, ceramic, 1 x 2 x 42 in',1,'coil'],[10,'Z01-05005','Insulation, ceramic',1,'coil'],['','550-00118','Weldment, head, burner',1,'coil'],['','3102-00119','Insulation, ceramic fiber',1,'coil'],['','A47-00002','Weldment, head, coil',1,'exhaust'],['','Z01-05004','Insulation, 1 x 18',1,'exhaust']]},
+  {id:'filter',name:'Fuel filter V04-00308',pn:'V04-00308',pg:35,sys:'fuel',n:'filter',parts:FILTER_PARTS},
+  {id:'panel',name:'Control panel',pn:'5355ENL-00302C',pg:14,sys:'elec',n:'panel',parts:[
+   [1,'216AX-00310-P','Box, control, plastic',1,'jbox'],[2,'AS1694537NPB','Control panel',1],[3,'F04-00310','Connector, conduit',1],[4,'F04-00311','Connector, conduit, 3/4 in',1],[5,'F04-00693','Switch, rocker, 12 V',1],[6,'F04-00790','Switch, pressure',1,'jbox'],[7,'F04-99220-X','Kit, temperature, 220, FA4-00811',1],[8,'FA5-00063','Relay, automotive, 12 V',1,'jbox'],[9,'H04-19020','Screw, machine, 10-24 x 1/2',2],[10,'Y02-00117','Tach / hour meter, Honda',1],[11,'Z01-00163','Plug, domed',1]]},
+  {id:'pumpasm',name:'Pump assembly',pn:'8405HNL-00501',pg:18,sys:'water',n:'plumb',parts:[
+   [1,'4355EB-00513','Mount, pump',1,'pump'],[2,'C03-00810','Valve, air',1],[3,'C04-00121','Screen, garden hose',1],[4,'C05-00270-1','Nut, garden hose',1],[5,'C05-00270-2','Adapter, swivel',1],[6,'C09-00008','Valve, easy start',1],[7,'E04-00002-58','Bushing, pipe',1],[8,'E04-00016-58','Bushing, 3/8 - 1/4',1],[9,'E07-00006-5','Cross, pipe, high pressure',1],[10,'E08-00006-48','Elbow, pipe',1],[11,'E08-00011-58','Elbow, pipe',1],[12,'E10-00021-58','Tee, street, 3/8',1],[13,'E11-00012-4T','Tee, pipe',1],[14,'E14-00010-68','Nipple, hex, 3/8 MNPT',1],[15,'E15-R0006-4','Nipple, hex',1],[16,'K21-02214-1/4','Assembly, hose, oil drain',1,'pump'],[17,'N07-00092','Pump, water, TSF2021',1,'pump'],[18,'R03-75110','Pulley, double V',1,'pumpPulley'],[19,'R04-00001','Bushing, pulley',1,'pumpPulley'],[20,'W02-10030-8','Barb, hose',1],[21,'W02-10031','Barb, hose',1]]},
+  {id:'pump',name:'Water pump N07-00092',pn:'N07-00092',pg:21,sys:'water',n:'pump:head',parts:[
+   [1,'','Manifold, 20 mm',1,'pump:head'],[2,'N07-57002','Headbolt, M10 x 90',8,'pump:bolts'],[3,'N07-80003','Washer, M10',8,'pump:bolts'],[4,'F02-85008','O-ring',1,'pump:valves','Kit 3'],[5,'','Valve, seat',6,'pump:valves','Kit 3'],[6,'','Valve, poppet',6,'pump:valves','Kit 3'],[7,'','Valve, spring',6,'pump:valves','Kit 3'],[8,'','Valve, guide',6,'pump:valves','Kit 3'],[9,'N07-90080','Anti-extrusion ring',6,'pump:valvePlugs'],[10,'N07-90010','Valve, cap',6,'pump:valvePlugs'],[11,'','Valve, assembly, complete',6,'pump:valves','Kit 3'],[12,'','Screw, M8 x 25',4,'pump:rearCover'],[13,'','Cover',1,'pump:rearCover'],[14,'N07-47029','Sightglass',1,'pump:sight'],[15,'N07-20021','O-ring',2,'pump:sight'],[16,'','Side cover',1,'pump:retainer'],[17,'N07-40021','O-ring',2,'pump:retainer'],[18,'','Bearing',2,'pump:bearing'],[19,'','Crankcase',1,'pump:crankcase'],[20,'N07-40024','Dipstick, vented',1,'pump:dipstick'],[21,'','Crankshaft, 21 mm stroke',1,'pump:crank'],[22,'N07-98033','Key',1,'pump:crank'],[23,'N07-900034','Connecting rod',3,'pump:rods'],[24,'N07-70025','O-ring',1,'pump:rearCover'],[25,'','Cover, crankcase',1,'pump:rearCover'],[26,'','Screw, M6 x 20',4,'pump:rearCover'],[27,'N07-80009','O-ring',1,'pump:sight'],[28,'N07-98029','Sightglass, bayonet style',1,'pump:sight'],[29,'N07-20030','Plug, 1/4 x 9',1,'pump:crankcase'],[30,'N07-20028','O-ring',1,'pump:crankcase'],[31,'N07-40037','Screw, M8 x 35',6,'pump:retainer'],[32,'N0720003','Lockwasher, M8',6,'pump:retainer'],[33,'N07-900038','Wrist pin',3,'pump:rods'],[34,'N07-900038','Piston guide',3,'pump:rods'],[35,'N07-90039','Flinger washer',3,'pump:plungers'],[36,'N07-90040','Plunger, 20 mm',3,'pump:plungers'],[37,'','O-ring',3,'pump:plungers'],[38,'N07-90043','Plunger bolt',3,'pump:plungers'],[39,'N07-900019','Side cover, PTO',1,'pump:retainer'],[40,'N07-40045','Seal, shaft',1,'pump:seal','Kit 2'],[41,'N07-40018','Screw, M8 x 16',4,'pump:retainer'],[42,'N07-20049','Plug, 3/8 x 13',2,'pump:head'],[43,'C07-01409','O-ring',1,'pump:retainer'],[44,'','Seal retainer, 20 mm',3,'pump:packings','Kit 5'],[45,'N07-40016','O-ring',3,'pump:packings','Kit 5'],[46,'N07-20063','Lp seal, 20 mm',3,'pump:packings','Kit 4, 5'],[47,'','Internal ring, 20 mm',3,'pump:packings','Kit 5'],[48,'','Hp seal, 20 mm',3,'pump:packings','Kit 4, 5'],[49,'N07-40046','Pump rail',2,'pump:mount'],[50,'N07-40047','Washer, M10',4,'pump:mount'],[51,'N07-40048','Screw, M10 x 18',4,'pump:mount'],[52,'N07-40044','Guide, bushing',3,'pump:oilSeals'],[53,'N07-99002','Seal, plunger rod',3,'pump:oilSeals','Kit 1'],[54,'N07-20011','Gasket, aluminum, 3/8 in',1,'pump:head'],[55,'N07-80050','Plug, 3/4 x 16',1,'pump:head'],[56,'N07-80051','Gasket, aluminum, 3/4 in',1,'pump:head'],[57,'N07-20028','O-ring',3,'pump:head'],[58,'N07-90081','Plug, 1/4 x 13',3,'pump:head']]},
+  {id:'unloaderasm',name:'Unloader assembly',pn:'8355HNL-00515A',pg:26,sys:'water',n:'unloader',parts:[
+   [1,'W5305-00524','Weldment, bracket',1],[2,'C03-00548','Valve, relief, SS',1,'relief'],[3,'C07-06323','Valve, unloader, multigun',1,'unloader'],[4,'E07-00006-5','Cross, pipe, high pressure',1],[5,'E08-00012-5','Elbow, reducing pipe',1],[6,'E08-00017-58','Elbow, street',1],[7,'E09-00002-2','Plug, pipe',1],[8,'E15-R0005-58','Nipple, reducing',1],[9,'W02-10036-8','Barb, hose',1],[10,'Y01-00123','Accumulator',1,'accumulator']]},
+  {id:'unloader',name:'Unloader valve C07-06323 (YVB4021B)',pn:'C07-06323',pg:28,sys:'water',n:'unloader:body',parts:[
+   [1,'C07-010009A-02','O-ring, 1.78 x 15.6',1,'unloader:seat'],[2,'C07-010009A-13','Seat, ball, 11.6 x 19 x 6, SST',1,'unloader:seat'],[3,'C07-01009A-12','Housing, ball, M8, SST',1,'unloader:ball'],[4,'C07-01009A-11','Spacer ring, 10.3 x 23.4 x 12.5, brass',1,'unloader:piston'],[5,'C07-01009A-10','Stem seal, 10 x 14.9',1,'unloader:piston'],[6,'N06-33061','Set screw, M4 x 4',1,'unloader:nuts'],[7,'C07-01009A-08','Ring nut, M27 x 1, brass',1,'unloader:nuts'],[8,'Y60180531','Piston holder, brass',1,'unloader:piston'],[9,'Y10307201','O-ring, 1.78 x 20.35',1,'unloader:piston'],[10,'Y10306801','O-ring, 1.78 x 17.17',1,'unloader:piston'],[11,'Y60185135','Brass body, 1/2 in NPT',1,'unloader:body'],[12,'Y10329200','O-ring, 4 x 8',1,'unloader:check'],[13,'Y60048899','Shutter pin, brass, with O-ring 4 x 8',1,'unloader:check'],[14,'Y60048951','Spring, 0.8 x 13.3 x 27, SST',1,'unloader:check'],[15,'Y60185231','Shutter coupling, 1/2 F, NPT, brass',1,'unloader:inlet'],[16,'Y10307260','O-ring, 1.78 x 21.95',1,'unloader:inlet'],[17,'Y60172684','Valve regulating knob',1,'unloader:nuts'],[18,'Y60172731','Valve regulating insert, brass',1,'unloader:nuts'],[19,'C07-01009A-04','Spring, 4.5 x 15.8 x 47',1,'unloader:spring'],[20,'C07-01009A-05','Guide, spring, brass',1,'unloader:spring'],[21,'C07-03200-04','Ball, 11/32 in, SST',1,'unloader:ball'],[22,'C07-01009A-07','Piston, M8, SST',1,'unloader:piston'],[23,'C07-01009A-06','Piston seal, 9 x 14 x 2.2, with O-ring',1,'unloader:piston']]},
+  {id:'burnerasm',name:'Oil burner assembly',pn:'8355HNL-00401',pg:30,sys:'fuel',n:'burner',parts:[
+   [1,'E08-00006-2','Elbow, pipe',1,'filter'],[2,'E13-00020-2','Nipple, pipe',1,'filter'],[3,'V00-173229','Burner, oil, 12 VDC',1],[4,'V04-00308','Filter, fuel',1,'filter'],[5,'V3.25 80DB','Nozzle, burner',1,'burner:nozzle'],[6,'W02-10019-8','Barb, hose',1],[7,'W02-10031','Barb, hose',1]]},
+  {id:'burner',name:'Burner breakdown',pn:'V00-173229',pg:36,sys:'fuel',n:'burner:housing',parts:[
+   [1,'V-101308-001','Igniter',1,'burner:igniter'],[32,'V00-02668','Band, outer, air',1,'burner:bands'],[33,'V00-02669','Band, inner, air',1,'burner:bands'],[29,'V-100610-005','Fuel solenoid',1,'burner:pump'],[13,'V00-13841','Pump, fuel',1,'burner:pump'],[16,'V00-14451','Line, oil, 6 in',1,'burner:oilLine'],[9,'V00-23018-001','Fan, 3.25 x .75 x 5/16',1,'burner:fan'],[10,'V00-101320-001','Coupling, fan / pump',1,'burner:coupling'],[11,'V-21993-006','Motor, electric, 12 VDC',1,'burner:motor'],[15,'V-30535-052','Assembly, gun',1,'burner:gun'],[19,'V00-12484','Gasket, burner flange',1,'burner:tube'],[25,'V04-00401','Cad cell',1,'burner:cad'],[53,'V-100889-002','Timer, igniter, 12 V',1,'burner:box']]},
+  {id:'burnergun',name:'Burner gun V00-30535-052',pn:'V00-30535-052',pg:37,sys:'fuel',n:'burner:gun',parts:[
+   [1,'V00-12360','Adapter, nozzle',1,'burner:nozzle'],[2,'V00-12361','Disc, no drip',1,'burner:nozzle'],[3,'V00-100427','Assembly, Flamelock',1],[4,'','Pipe, oil',1],[5,'V00-14295','Fitting, oil line',1],[6,'V00-14442','Spring, electrode',1,'burner:electrodes'],[7,'V00-13511','Screw, hex, #8-32 x 5/16',1],[8,'V00-12694','Screw, machine',1],[9,'','Stabilizer, electrode',1,'burner:electrodes'],[10,'H04-19002','Screw, set',1],[11,'V00-12408','Bushing, insulator',1,'burner:electrodes'],[12,'V00-13407','Plate, baffle, 2 in',1],[13,'V-100005-002','Insulator, electrode',1,'burner:electrodes'],[14,'V00-100631','Electrode, stem, RH',1,'burner:electrodes'],[15,'V00-100632','Electrode, stem, LH',1,'burner:electrodes'],[16,'V00-12695','Screw, machine',1],[17,'V00-12331','Bar, buss, straight, 4 in',1,'burner:electrodes'],[18,'V00-13110','Nut, pal',1,'burner:electrodes']]},
+  {id:'gunwand',name:'Gun, wand, hose, injector',pn:'J06-00158-B',pg:8,sys:'water',n:'gun:handle',parts:[
+   [1,'J06-00104EZ','Assembly, wand, 42 in',1,'gun:wand'],[2,'J06-00158','Gun, trigger',1,'gun:handle'],[3,'W04-24225-A','Coupler, 1/4 F x 1/4 FNPT',1,'gun:discharge'],['','W04-53255-B','Coupler, 1/2 M x 1/2 FNPT',1,'hose'],['','K02-04150E7','Assembly, hose, 1/2 x 50 ft',1,'hose'],['','C04-00131','Screen, chemical',1,'chem'],['','Z01-08413-2','Hose, polybraid, 1/4 in x 84 in',1,'chem'],['','JA0-15080-2','Spray tip, yellow, #8, 15°',1,'gun:wand'],['','JA0-65400-2B','Spray tip, #40, 65°',1,'gun:wand']]},
+  {id:'injector',name:'Chemical injector, downstream',pn:'J06-00235',pg:10,sys:'water',n:'chem',parts:[
+   [1,'J06-00245','Injector, chemical, 5-8 gpm, 4,500 psi',1],[2,'C04-00130','Strainer, with check valve, 1/4 barb',1],[3,'Z01-08413-2','Hose, polybraid, 1/4 x 84 in',1]]},
+  {id:'gun',name:'Trigger gun J06-00158',pn:'J06-00158',pg:9,sys:'water',n:'gun:handle',parts:GUN_PARTS}],
+ kits:[['N07-99002','Kit 1: plunger rod seal (item 53), 3 assemblies','pump:oilSeals'],['N07-99003','Kit 2: shaft seal (item 40)','pump:seal'],['N07-99169','Kit 3: valve items 4, 5, 6, 7, 8 (11), 6 assemblies','pump:valves'],['N07-99170','Kit 4: seals 46, 48 for 20 mm plungers','pump:packings'],['N07-99171','Kit 5: seals 44, 45, 46, 47, 48 for 20 mm plungers','pump:packings'],['N07-OILCA','Pump oil, case of 6 one-pint bottles','pump:crankcase'],['N07-OILCA-1','Pump oil, one-pint bottle','pump:crankcase'],['N07-OILCA-2','Pump oil, case of 24 one-pint bottles','pump:crankcase'],['J06-99158C','Trigger gun repair kit','gun:seat'],['V04-00308-K','Replacement fuel filter bowl kit','filter']]
+}};
+const TOOLS=[['Z09-00028','Packing extraction kit'],['Z09-00021','Complete pump tool kit'],['Y01-00041','Gauge, 0-200 psi'],['Z09-00004','Bacharach smoke tester'],['Y01-00090','Allen wrench, 1/8 in'],['Z01-00092','Fuel nozzle changing wrench']];
+
+/* Troubleshooting tables transcribed from the manuals. Links between symptoms replace the manuals' "See ..." references.
+   c cause, r remedy, go symptom id, loc 3D node, proc procedure id, p part keys (resolved per machine) */
+const TROUBLE = [
+ {group:'Pressure and water',sys:'water',items:[
+  {id:'lowpressure',t:'Low pressure',pg:'tshootPump2',causes:[
+   {c:'Dirty or worn check valves',r:'Clean or replace check valves.',loc:'pump:valves',proc:'valve',p:['valves']},
+   {c:'Worn packing',r:'Remove and replace packing.',loc:'pump:packings',proc:'packing',p:['packing']},
+   {c:'Belt slipping',r:'Check belt tension. The Belt Tension section the manual points to is not in this PDF.',loc:'belt',p:['belt']},
+   {c:'Improperly sized spray tip or nozzle',r:'Fit the spray tip listed in the machine specifications.',loc:'gun:wand',p:['tip']},
+   {c:'Inlet filter screen is clogged',r:'Clean inlet filter screen.',loc:'plumb',p:['inletScreen']},
+   {c:'Pitted valves',r:'See Valve Service.',loc:'pump:valves',proc:'valve',p:['valves']},
+   {c:'Unloader: valve does not reach pressure',r:'Work through the unloader causes.',go:'unlnopress',loc:'unloader:piston'}]},
+  {id:'erratic',t:'Erratic pressure, pump runs rough',pg:'tshootPump2',causes:[
+   {c:'Dirty or worn check valves',r:'Clean or replace check valves.',loc:'pump:valves',proc:'valve',p:['valves']},
+   {c:'Foreign particles in valve assemblies',r:'Clean or replace check valves.',loc:'pump:valves',proc:'valve'},
+   {c:'High inlet water temperature',r:'Keep inlet water at or below 165 °F, the pump maximum.',loc:'pump:head'}]},
+  {id:'headleak',t:'Water leaking from under the pump head',pg:'tshootPump2',causes:[
+   {c:'Worn packing',r:'Install new packing.',loc:'pump:packings',proc:'packing',p:['packing']},
+   {c:'Cracked or scored plunger',r:'Remove and replace plunger.',loc:'pump:plungers',proc:'plunger',p:['plunger']},
+   {c:'Failure of plunger retainer O-ring',r:'Remove and replace plunger retainer O-ring.',loc:'pump:plungers',proc:'plunger',p:['plungerKit']}]},
+  {id:'packingfail',t:'Frequent or early packing failure',pg:'tshootPump2',causes:[
+   {c:'Scored, damaged or worn plunger',r:'Remove and replace plungers.',loc:'pump:plungers',proc:'plunger',p:['plunger']},
+   {c:'Overpressure to inlet manifold',r:'Reduce inlet pressure. Pump maximum is 125 psi.',loc:'pump:head'},
+   {c:'Abrasive material in the fluid',r:'Install proper filtration on the pump inlet.',loc:'plumb',p:['inletScreen']},
+   {c:'Excessive pressure or temperature of pumped fluid',r:'Check pressures and inlet temperature are within range.',loc:'pump:head'},
+   {c:'Overpressure of pump',r:'Reduce pressure.',loc:'unloader'},
+   {c:'Running pump dry',r:'Do not run the pump without water.',loc:'pump:head'}]},
+  {id:'checkvalves',t:'Dirty or worn check valves',pg:'tshootPump2',causes:[
+   {c:'Normal wear',r:'Remove and replace.',loc:'pump:valves',proc:'valve',p:['valves']},
+   {c:'Debris',r:'Check for missing water inlet screens.',loc:'plumb',p:['inletScreen']}]},
+  {id:'cavitation',t:'Cavitation or pitted plungers',pg:'tshootPump3',causes:[
+   {c:'High inlet fluid temperature, low inlet pressure',r:'Lower inlet fluid temperature and raise inlet fluid pressure.',loc:'pump:plungers'}]},
+  {id:'scored',t:'Scored plungers',pg:'tshootPump3',causes:[
+   {c:'Abrasive material in fluid being pumped',r:'Install proper filtration on pump inlet plumbing.',loc:'pump:plungers',p:['plunger','inletScreen']}]},
+  {id:'vibration',t:'Excessive vibration',pg:'tshootPump3',causes:[
+   {c:'Dirty or worn check valves',r:'Follow the check valve causes.',go:'checkvalves',loc:'pump:valves'}]}]},
+ {group:'Pump noise and oil',sys:'drive',items:[
+  {id:'knock',t:'Loud knocking in pump',pg:'tshootPump',causes:[
+   {c:'Loose connecting rod screws',r:'Tighten to the pump spec torque.',loc:'pump:rods'},
+   {c:'Worn connecting rod',r:'Replace connecting rod.',loc:'pump:rods',p:['rod']},
+   {c:'Worn bearings',r:'Replace bearings.',loc:'pump:bearing',p:['bearing']},
+   {c:'Loose plunger bushing screw',r:'Tighten plunger screw to the pump spec torque.',loc:'pump:plungers',proc:'plunger'},
+   {c:'Pulley loose on crankshaft',r:'Check key and tighten set screw.',loc:'pumpPulley'},
+   {c:'Worn connecting rod, crankshaft or crosshead',r:'Remove and replace.',loc:'pump:crank'}]},
+  {id:'shaftoil',t:'Oil leaking around the crankshaft',pg:'tshootPump',causes:[
+   {c:'Worn crankshaft seal, bad bearing, grooved shaft, or failed retainer O-ring',r:'Remove and replace.',loc:'pump:seal',p:['crankSeal']}]},
+  {id:'rearoil',t:'Oil leaking at the rear of the pump',pg:'tshootPump',causes:[
+   {c:'Damaged or badly installed oil gauge window gasket or rear cover',r:'Replace gasket or O-ring.',loc:'pump:rearCover'},
+   {c:'Oil gauge loose',r:'Tighten oil gauge.',loc:'pump:sight',p:['sight']},
+   {c:'Rear cover screws loose',r:'Tighten rear screws to the spec torque.',loc:'pump:rearCover'},
+   {c:'Pump overfilled, oil pushed out of the dipstick breather hole',r:'Drain oil and refill to the recommended level.',loc:'pump:dipstick',proc:'pumpoil',p:['dipstick']}]},
+  {id:'crankplay',t:'Excessive play on crankshaft',pg:'tshootPump',causes:[
+   {c:'Defective bearings',r:'Follow the worn bearing causes.',go:'bearing',loc:'pump:bearing'},
+   {c:'Excess shims',r:'Set up crankshaft.',loc:'pump:crank'}]},
+  {id:'waterinoil',t:'Water in crankcase, milky oil',pg:'tshootPump',causes:[
+   {c:'Humid air condensing inside',r:'Maintain or step up the oil change schedule. Water must not exceed 20 % of the oil.',loc:'pump:crankcase',proc:'pumpoil'},
+   {c:'Worn or damaged plunger screw O-ring',r:'Remove and replace.',loc:'pump:plungers',proc:'plunger',p:['plungerKit']}]},
+  {id:'bearing',t:'Worn bearing or short bearing life',pg:'tshootPump',causes:[
+   {c:'Excessive belt tension',r:'Check belt tension. The referenced section is not in this PDF.',loc:'belt'},
+   {c:'Oil contamination, or oil not changed on schedule',r:'Check oil type and change intervals.',loc:'pump:crankcase',proc:'pumpoil'},
+   {c:'Misalignment between pump and motor',r:'Re-align pump and motor.',loc:'pumpPulley'}]},
+  {id:'sealife',t:'Short seal life',pg:'tshootPump',causes:[
+   {c:'Damaged plunger bushing',r:'Replace plunger bushing.',loc:'pump:oilSeals'},
+   {c:'Worn connecting rod',r:'Replace connecting rod.',loc:'pump:rods',p:['rod']},
+   {c:'Excess pressure beyond the pump rating',r:'Match the pressure in the pump specifications.',loc:'unloader'},
+   {c:'High water temperature',r:'Lower water temperature to the pump specification.',loc:'pump:head'}]},
+  {id:'metal',t:'Metal particles during oil change',pg:'tshootPump2',causes:[
+   {c:'Failure of an internal component',r:'Remove and disassemble to find the probable cause.',loc:'pump:crankcase'},
+   {c:'New pump',r:'New pumps carry machining filings. Drain and refill.',loc:'pump:crankcase',proc:'pumpoil'}]}]},
+ {group:'Burner will not fire',sys:'fuel',items:[
+  {id:'noignite',t:'Burner will not ignite',pg:'tshootBurner',causes:[
+   {c:'Electrodes out of alignment',r:'Set the electrode assembly dimensions.',loc:'burner:electrodes',proc:'electrode',p:['electrodeR','electrodeL']},
+   {c:'Electrode insulator failure',r:'Replace if there are breaks, cracks or spark trails.',loc:'burner:electrodes',proc:'gunsvc',p:['insulator']},
+   {c:'Water flow switch not closing',r:'Adjust, repair or replace the switch. These machines list pressure switch F04-00790.',loc:'jbox',p:['pressureSw']},
+   {c:'Vacuum switch not closing',r:'Adjust, repair or replace the switch.',loc:'jbox'},
+   {c:'Temperature control switch not closing',r:'Adjust or replace the temperature control.',loc:'panel',p:['thermostat']},
+   {c:'Fuel solenoid valve not opening',r:'Clean, repair or replace solenoid.',loc:'burner:pump',p:['solenoid']},
+   {c:'Weak transformer',r:'Clean and check terminals, then run the transformer test.',loc:'burner:igniter',proc:'transformer',p:['igniter']},
+   {c:'Faulty cad cell, if equipped',r:'Clean and test cad cell. Replace if required.',loc:'burner:cad',p:['cad']},
+   {c:'Faulty primary control, if equipped',r:'Replace primary control.',loc:'burner:box'},
+   {c:'Burner motor thermal protector locked out',r:'Follow the thermal protector causes.',go:'thermal',loc:'burner:motor'},
+   {c:'Wiring',r:'All contacts clean and tight. No cracked or frayed wire.',loc:'jbox',p:['relay']},
+   {c:'Burner switch',r:'Test switch operation. Replace as necessary.',loc:'panel',p:['burnerSw']},
+   {c:'Pump pressure',r:'Follow the low fuel pressure causes.',go:'lowfuel',loc:'burner:pump'},
+   {c:'Venting or sooting',r:'A downdraft delays ignition. Soot on coil and burner interrupts air flow and can short the electrodes. Clean as required.',loc:'exhaust'},
+   {c:'No fuel',r:'Follow the no fuel causes.',go:'nofuel',loc:'fuelTank'}]},
+  {id:'noelectric',t:'Burner does not electrically come on',pg:'tshootBurner3',warn:'Do not keep pressing reset when you have oil pressure. You are only filling the combustion chamber with oil, and if it lights it will cause an explosion.',causes:[
+   {c:'Burner motor reset button tripped',r:'Reset if necessary, once. Read the warning above.',loc:'burner:motor'},
+   {c:'High limit temperature control reset tripped, if equipped',r:'Reset if necessary.',loc:'panel'}]},
+  {id:'nofuel',t:'No fuel',pg:'tshootBurner2',causes:[
+   {c:'Clogged fuel filter',r:'Replace the element.',loc:'filter',proc:'element',p:['filter']},
+   {c:'Fuel leak',r:'Repair as necessary.',loc:'fuelTank'},
+   {c:'Kinked or collapsed fuel line',r:'Remove and replace fuel line.',loc:'burner:oilLine',p:['oilLine']},
+   {c:'Low fuel pressure',r:'Follow the low fuel pressure causes.',go:'lowfuel',loc:'burner:pump'},
+   {c:'Faulty burner oil pump',r:'Adjust pressure or replace.',loc:'burner:pump',proc:'fuelpressure',p:['fuelPump']},
+   {c:'Air leak in intake lines',r:'Tighten all fittings.',loc:'burner:oilLine'},
+   {c:'Clogged burner nozzle',r:'Remove and replace. Do not clean.',loc:'burner:nozzle',proc:'gunsvc',p:['nozzle']}]},
+  {id:'lowfuel',t:'Low fuel pressure (spec 125 psi)',pg:'tshootBurner2',causes:[
+   {c:'Clogged fuel filter',r:'Replace the element.',loc:'filter',proc:'element',p:['filter']},
+   {c:'Clogged fuel pump filter screen',r:'Remove pump cover and clean strainer with a brush and clean fuel oil, diesel or kerosene.',loc:'burner:pump',proc:'strainer',p:['strainer']},
+   {c:'Fuel oil too viscous',r:'Use a lighter oil or operate in a warmer area.',loc:'fuelTank'},
+   {c:'Air leaks in intake lines',r:'Tighten all fittings.',loc:'burner:oilLine'},
+   {c:'Kinked or collapsed fuel line',r:'Remove and replace.',loc:'burner:oilLine',p:['oilLine']},
+   {c:'Burner shaft coupling slipping',r:'Remove and replace.',loc:'burner:coupling',p:['coupling']},
+   {c:'Fuel nozzle worn',r:'Replace with the specified nozzle.',loc:'burner:nozzle',proc:'gunsvc',p:['nozzle']},
+   {c:'Faulty oil pump',r:'Remove and replace.',loc:'burner:pump',p:['fuelPump']}]},
+  {id:'pulsing',t:'Pulsating fuel pressure',pg:'tshootBurner2',causes:[
+   {c:'Partially clogged fuel pump strainer or filter',r:'Replace strainer.',loc:'burner:pump',proc:'strainer',p:['strainer']},
+   {c:'Air leaking around fuel pump cover',r:'Check cover screws for tightness and the gasket for damage.',loc:'burner:pump',proc:'strainer',p:['strainerCover']}]},
+  {id:'thermal',t:'Burner motor thermal protector kicked out',pg:'tshootBurner2',causes:[
+   {c:'Low voltage',r:'Voltage must match the burner spec, 12 VDC.',loc:'burner:motor'},
+   {c:'Fuel too viscous',r:'Follow the low fuel pressure causes.',go:'lowfuel',loc:'fuelTank'},
+   {c:'Fuel pump defective',r:'Check that fuel pump turns freely.',loc:'burner:pump',p:['fuelPump']},
+   {c:'Motor defective',r:'Call a service technician or take the motor to a repair or warranty station.',loc:'burner:motor',p:['motor']}]},
+  {id:'delayed',t:'Delayed ignition, rumbling or noisy starts',pg:'tshootBurner3',causes:[
+   {c:'Dirty or damaged electrodes',r:'Clean or replace.',loc:'burner:electrodes',proc:'gunsvc',p:['electrodeR','electrodeL']},
+   {c:'Air adjustment open too far',r:'Readjust the air bands.',loc:'burner:bands',proc:'air',p:['airOuter','airInner']},
+   {c:'Poor fuel spray pattern',r:'Replace with the specified nozzle.',loc:'burner:nozzle',proc:'gunsvc',p:['nozzle']},
+   {c:'Incorrect electrode setting',r:'Readjust the electrode assembly.',loc:'burner:electrodes',proc:'electrode'},
+   {c:'Weak transformer',r:'Run the transformer test.',loc:'burner:igniter',proc:'transformer',p:['igniter']}]}]},
+ {group:'Heat, smoke and exhaust',sys:'heat',items:[
+  {id:'notemp',t:'Machine will not reach operating temperature',pg:'tshootHeater',causes:[
+   {c:'Low fuel pressure',r:'Spec is 125 psi. Follow the low fuel pressure causes.',go:'lowfuel',loc:'burner:pump'},
+   {c:'Water in fuel piping',r:'Drain fuel tank and replace the filter.',loc:'filter',proc:'drainwater',p:['filter']},
+   {c:'Fuel filter clogged',r:'Replace fuel filter element.',loc:'filter',proc:'element',p:['filter']},
+   {c:'Poor combustion',r:'Follow the poor combustion causes.',go:'poorburn',loc:'burner:bands'},
+   {c:'Improper fuel supply',r:'Use kerosene, #1 or #2 diesel.',loc:'fuelTank'},
+   {c:'Temperature control inoperative, if equipped',r:'Check the temperature control. That insert is not in this PDF.',loc:'panel',p:['thermostat']}]},
+  {id:'overheat',t:'Machine overheats',pg:'tshootHeater',causes:[
+   {c:'Insufficient water',r:'Follow the low pressure causes.',go:'lowpressure',loc:'plumb'},
+   {c:'Temperature control inoperative',r:'Check the temperature control. That insert is not in this PDF.',loc:'panel',p:['thermostat']},
+   {c:'Improper fuel supply',r:'Use kerosene, #1 or #2 diesel.',loc:'fuelTank'}]},
+  {id:'drysteam',t:'Dry steam, very little moisture',pg:'tshootHeater',causes:[
+   {c:'Insufficient water',r:'Follow the low pressure causes.',go:'lowpressure',loc:'plumb'},
+   {c:'Improper fuel supply',r:'Use kerosene, #1 or #2 diesel.',loc:'fuelTank'},
+   {c:'Improper fuel pressure',r:'Spec is 125 psi.',loc:'burner:pump',proc:'fuelpressure'}]},
+  {id:'smoke',t:'Unit smokes, sweet smelling exhaust',pg:'tshootHeater2',causes:[
+   {c:'Improper fuel',r:'Refuel with kerosene, #1 or #2 diesel.',loc:'fuelTank'},
+   {c:'Insufficient combustion air',r:'Open the air bands to reach #1 or #2 smoke.',loc:'burner:bands',proc:'air',p:['airOuter','airInner']},
+   {c:'Leaking fuel system',r:'Correct leakage problem.',loc:'burner:oilLine'},
+   {c:'Clogged or improper burner nozzle',r:'Remove and replace. Do not clean.',loc:'burner:nozzle',proc:'gunsvc',p:['nozzle']},
+   {c:'Loose burner nozzle',r:'See burner gun service.',loc:'burner:nozzle',proc:'gunsvc'},
+   {c:'Water in fuel',r:'Inspect fuel filter for water.',loc:'filter',proc:'drainwater'},
+   {c:'Gun out of alignment',r:'Bend oil pipe to center burner nozzle.',loc:'burner:gun',proc:'gunsvc'}]},
+  {id:'fumes',t:'Fumes, exhaust burns eyes',pg:'tshootHeater2',causes:[
+   {c:'Too much combustion air',r:'Close the air bands to reach #1 or #2 smoke.',loc:'burner:bands',proc:'air'},
+   {c:'Improper fuel pressure',r:'Spec is 125 psi.',loc:'burner:pump',proc:'fuelpressure'}]},
+  {id:'dripping',t:'Excess oil dripping from coil condensate',pg:'tshootHeater2',causes:[
+   {c:'Loose nozzle',r:'See burner gun service.',loc:'burner:nozzle',proc:'gunsvc'},
+   {c:'Fuel pressure too high',r:'Adjust to 125 psi.',loc:'burner:pump',proc:'fuelpressure'},
+   {c:'Burner nozzle defective',r:'Replace with the specified nozzle.',loc:'burner:nozzle',proc:'gunsvc',p:['nozzle']},
+   {c:'Incorrect burner nozzle',r:'Replace with the specified nozzle.',loc:'burner:nozzle',proc:'gunsvc',p:['nozzle']}]},
+  {id:'poorburn',t:'Poor combustion',pg:'tshootHeater2',causes:[
+   {c:'Low fuel pressure',r:'Follow the low fuel pressure causes.',go:'lowfuel',loc:'burner:pump'},
+   {c:'Improper fuel supply',r:'Use kerosene, #1 or #2 diesel.',loc:'fuelTank'},
+   {c:'Insufficient combustion air',r:'Adjust the air bands.',loc:'burner:bands',proc:'air'}]}]},
+ {group:'Unloader',sys:'water',only:'5355J',note:'Printed in the 5355J manual for valve C07-04506.',items:[
+  {id:'unlcycle',t:'Unloader recycles frequently',pg:'unloaderTrouble',causes:[
+   {c:'Damaged check valve O-ring',r:'Remove and replace.',loc:'unloader:check',p:['unloaderKit']},
+   {c:'Leaking connections',r:'Check or renew.',loc:'hoses'},
+   {c:'Restricted bypass or bypass hose too small',r:'Clean or adapt passage diameter.',loc:'unloader:outlet'}]},
+  {id:'unlnopress',t:'Valve does not reach pressure',pg:'unloaderTrouble',causes:[
+   {c:'Piston O-rings worn out',r:'Remove and replace.',loc:'unloader:piston',p:['unloaderKit']},
+   {c:'Debris between seat and shutter',r:'Clean the seat.',loc:'unloader:seat'},
+   {c:'Seat worn out',r:'Remove and replace.',loc:'unloader:seat',p:['unloaderKit']},
+   {c:'Nozzle worn out',r:'Remove and replace.',loc:'gun:wand',p:['tip']},
+   {c:'Incorrect choice of nozzle',r:'Fit a smaller nozzle.',loc:'gun:wand',p:['tip']}]},
+  {id:'unlpeak',t:'High pressure peaks at gun closure',pg:'unloaderTrouble',causes:[
+   {c:'Less than 5 % of total flow discharged in bypass',r:'Reset correctly.',loc:'unloader:body',proc:'unloaderadj'},
+   {c:'Excessive flow in bypass',r:'Change type of valve or adjust passages.',loc:'unloader:outlet'},
+   {c:'Adjustment spring totally compressed',r:'Loosen adjustment screw and, if needed, fit a smaller nozzle.',loc:'unloader:spring'}]},
+  {id:'unlnodump',t:'Valve does not discharge at low pressure at gun closure',pg:'unloaderTrouble',causes:[
+   {c:'Jammed check valve',r:'Clean or replace.',loc:'unloader:check'},
+   {c:'Debris on check valve',r:'Clean.',loc:'unloader:check'}]}]},
+ {group:'Fuel filter',sys:'fuel',items:[
+  {id:'bowlleak',t:'Fuel bowl leaking',pg:'filterMaint',causes:[
+   {c:'Deteriorated gasket',r:'Remove and replace gasket.',loc:'filter',p:['bowlKit']},
+   {c:'Housing cracked',r:'Remove and replace housing.',loc:'filter'},
+   {c:'Bowl rim cracked, nicked or scratched',r:'Remove and replace bowl.',loc:'filter',p:['bowlKit']},
+   {c:'Gasket missing',r:'Replace gasket.',loc:'filter'},
+   {c:'Loose fuel bowl',r:'Tighten fuel bowl onto filter.',loc:'filter'}]},
+  {id:'airbubbles',t:'Air bubbles in the bowl during operation',pg:'filterMaint',causes:[
+   {c:'Cracked component',r:'Inspect filter bowl, filter housing and gasket.',loc:'filter'},
+   {c:'Loose filter bowl',r:'Tighten fuel bowl onto fuel filter.',loc:'filter'},
+   {c:'Loose valve assembly',r:'Tighten valve assembly.',loc:'filter'}]}]}
+];
+
+const PROCS = {
+ pumpoil:{t:'Change pump oil',pg:'head',only8405text:true,loc:'pump:crankcase',lead:'Change the oil with the pump stopped and the oil still warm.',steps:['Stop the pump while the oil is still warm.','Drain the crankcase through the oil drain hose.','Refill with pump oil to the sight level. Capacity: 40.6 oz on 5355J, 31.0 oz on 8405HNL.','Check the drained oil. Milky oil means water. Water must stay under 20 %. Metal particles need investigating unless the pump is new.'],warn:''},
+ valve:{t:'Valve service',pg:'pumpMaint',loc:'pump:valves',steps:['Remove the plugs holding the valve assemblies.','Remove and discard the O-rings from the plugs. Clean plugs with solvent or soap and water. Let them dry.','Remove the valve assemblies from the head with needle-nose pliers, fingers or a hook tool. Discard their O-rings. Examine each assembly.','Clean debris from the valve cavities and flush with water.','Wash the assemblies in clean water and rinse. While still wet, test each by sucking on the valve seat. A good valve holds vacuum.','Replace any valve that fails.','Lubricate a new O-ring with crankcase oil and install it in the cavity. Install a good valve assembly.','Lubricate a new O-ring and place it on a cleaned plug.','Install the plug and tighten by hand.','Torque the plug to the pump spec value.','Repeat for the remaining valves.']},
+ headoff:{t:'Remove pump head',pg:'pumpMaint',loc:'pump:head',steps:['Remove the cap screws holding the head to the crankcase. This needs a metric tool. Keep the washer on each screw.','Rotate the crankshaft and tap the head away with a soft mallet. Keep the rear of the head parallel to the crankcase so it does not bind on the plungers.','Protect the plungers from damage once the head is off.']},
+ plunger:{t:'Plunger service',pg:'plunger',loc:'pump:plungers',lead:'Fit a new O-ring, anti-extrusion ring and copper washers any time the plunger screw comes out.',steps:['Remove the pump head.','Pull any packings and retainers straight off the plungers.','Check each plunger for scoring, cracks or pitting. Continue only for a defective plunger.','Remove the retaining screw counterclockwise. Replace the copper washer.','Discard the O-ring and anti-extrusion ring from the retainer screw.','Remove the plunger from the crosshead.','Remove and discard the copper flinger washer. Clean with solvent and let dry.','Install the copper flinger washer on the crosshead and slide the plunger on.','Lubricate an O-ring and fit it in the screw groove, nearest the screw head. Fit the anti-extrusion ring next to it, nearest the threads.','Put a drop of thread sealant on the retainer screw threads.','Thread in the screw with the copper flat washer in place.','Torque to the pump spec value, then reinstall the head.']},
+ packing:{t:'Packing service',pg:'packing',loc:'pump:packings',steps:['Remove the pump head.','Pull packings and female adapters straight off the plungers. Use the packing extractor on what stays in the head. Discard O-rings and packings.','Clean the packing cavities and rinse with clean water.','Clean the plungers. Clean the adapters with soap and water and let dry.','Examine adapters and discard worn ones. Trial fit the female adapters in the head and check for binding.','Lubricate cavities, packings and adapters with crankcase oil.','Lay the head on the bench, cavities up. Install one male adapter in each cavity, flat side down.','Install one V-packing in each cavity, lips down.','Install the re-stop ring, lips down.','Install a front female adapter, flat side up, fully seated.','Install the low pressure packing, flat side down.','Install the rear female adapter, lips down.','Lubricate O-rings and install one in the groove of each adapter.','Install the adapter and O-ring, flat side up. It should push to about 1/16 in of flush by hand. If it does not, remove and reinstall the stack.','Install the head.']},
+ headon:{t:'Install pump head',pg:'head',loc:'pump:bolts',steps:['Prepare the head per packing service.','Rotate the plungers so the outer two project the same distance.','Lubricate the exposed plungers with crankcase oil.','Start the head onto the plungers and tap evenly with a soft mallet until it meets the crankcase.','Start the cap screws with a lock washer on each.','Tighten all screws by hand.','Torque the screws to spec in the order printed in the manual.']},
+ freeze:{t:'Freeze protection and storage',pg:'head',loc:'pump:head',steps:['Drain all water out of the pump.','Run a 50 % solution of RV or non-toxic, biodegradable antifreeze through the pump.','Flush with fresh water before the next use.'],warn:'In freezing conditions, skipping this can damage the pump internally. Freeze damage is excluded from warranty. For long storage in non-freezing areas, the solution keeps seals and O-rings lubricated.'},
+ air:{t:'Air band adjustment',pg:'air',loc:'burner:bands',lead:'Preset at the factory for about 1,400 ft elevation. Readjust where elevation is substantially different. The 8405HNL spec is 2 1/4 in open.',steps:['Loosen the cap screw retaining the air bands.','With the machine running, move the bands until the exhaust gives #1 or #2 on the Bacharach smoke scale. Without a tester: smoky exhaust, oily odor or sweet smell means too little air. Eye-burning fumes mean too much.','Tighten the cap screw.']},
+ strainer:{t:'Fuel pump strainer',pg:'air',loc:'burner:pump',steps:['Shut off fuel supply.','Loosen the 4 screws holding the cover to the pump housing.','Take off cover and gasket, and pull the strainer off the housing.','Clean out dirt from the bottom of the strainer cover. If you see rust, remove water from the supply tank and fuel filter.','Turn the fuel supply back on.'],warn:'Failing to turn the fuel supply back on damages the fuel pump.'},
+ fuelpressure:{t:'Fuel pressure adjustment',pg:'air',loc:'burner:pump',lead:'Spec is 125 psi on both machines.',steps:['Install a 0-200 psi gauge.','Remove the plug on top of the fuel pump.','Insert a 1/8 in Allen wrench. Clockwise increases pressure, counterclockwise decreases.','Remove the gauge and reinstall the plug.']},
+ blower:{t:'Blower fan replacement',pg:'blower',loc:'burner:fan',steps:['Shut off power to the burner and disconnect wires.','Loosen the two screws securing the blower motor and fan to the housing.','Remove the blower.','Install the blower on the shaft. Place a .030 feeler gauge on the motor and slide the blower until it touches. Rotate the wheel until the set screw is centered on the shaft flat, then tighten.','Reinstall motor and blower.','Reconnect wires and turn on power.']},
+ transformer:{t:'Transformer test',pg:'blower',loc:'burner:igniter',warn:'High voltage. Use a screwdriver with a well insulated handle.',steps:['Remove the burner junction box cover.','Turn on the burner and confirm the transformer receives rated voltage.','Turn off the burner.','Loosen the screw and swing the transformer away from the burner gun.','Turn on the burner.','Short the high voltage terminals with the screwdriver.','Open the gap by drawing the screwdriver away from one electrode while touching the other.','The spark should jump 5/8 to 3/4 in. If it does not jump, replace the transformer.','Turn the burner off.','Partially close the transformer and check the buss bars align and make contact.','Close the transformer, reposition the clip and tighten the screw.']},
+ buss:{t:'Buss bar alignment',pg:'blower',loc:'burner:electrodes',steps:['With the burner off, loosen the screw and swing the transformer away.','Inspect buss bars and transformer electrodes for pitting or corrosion.','Partially close the transformer and check contact and alignment.','Gently bend the buss bars until they spring against, parallel to and in full contact with the transformer electrodes.','Carefully close and fasten the transformer.']},
+ gunsvc:{t:'Burner gun removal and service',pg:'gun',loc:'burner:gun',steps:['Disconnect the fuel line from the gun oil line fitting. Loosen the other end and swing the line away.','Remove the retaining nut.','Loosen the screw and swing the transformer away.','Carefully remove the gun.','Replace cracked electrode insulators. Clean burnt buss bars. Clean carbon off the electrodes.','Clean carbon off the nozzle without scratching the face or orifice. Check for a loose nozzle.','Gently replace the gun in the air tube. Do not force it, or the electrodes misalign.','Reinstall the retaining nut and oil line. Make both ends tight.','Partially close the transformer and check buss bar contact.','Close the transformer, reposition the retainer and tighten the screw.']},
+ electrode:{t:'Electrode adjustment',pg:'gun',loc:'burner:electrodes',spec:[['Above nozzle face','5/32 in'],['From nozzle center','5/16 in'],['Tip gap','1/8 in']],steps:['Loosen the screws holding the electrode assemblies.','Raise the tips 5/32 in above the end of the oil nozzle.','Place each tip 5/16 in from the center of the spray hole, keeping the first measurement.','Spread the tips to a 1/8 in gap, keeping both measurements.','Gently tighten the screws.'],warn:'Do not overtighten. It makes the electrode insulator fail.'},
+ prime:{t:'Prime the fuel filter',pg:'filter',loc:'filter',steps:['Shut off the fuel tank valves.','Spin off the clear bowl, fill with clean fuel and coat the round gasket with fuel.','Reinstall the bowl. Tighten 1/4 to 1/3 turn after the gasket contacts the upper housing.','Turn on the fuel tank valves. Start the machine and check for leaks.']},
+ drainwater:{t:'Drain water from the fuel filter',pg:'filter',loc:'filter',steps:['Check the collection bowl daily.','Drain off water by unscrewing the clear bowl counterclockwise, or by opening the head vent and then the drain.','If you drain more than 1/8 cup, follow the priming steps. Otherwise close the vent and drain.','Start the machine and let air purge from the fuel system before operating.']},
+ element:{t:'Replace fuel filter element',pg:'filter',loc:'filter',lead:'Replace every 500 hours, or on engine power loss, whichever comes first. Foul-smelling diesel means microbes: change fuel source and carry a spare element.',steps:['Shut off the fuel tank valves.','Unscrew the clear bowl counterclockwise.','Remove and discard the element.','Follow the priming steps.']},
+ unloaderadj:{t:'Unloader adjustment',pg:'unloaderAdjust',loc:'unloader:nuts',warn:'Preset at the factory. Adjust only after repair or replacement. The lower nut (item 21) is a mechanical safety that limits pressure. It must not be removed. Always keep a relief valve in the system.',steps:['Install a pressure gauge in the pump head outlet. Its range should be twice the operating pressure.','Install the spray nozzle in the end of the wand.','Make sure the relief valve is set properly.','Loosen the top lock nut and turn the lower nut counterclockwise to minimum spring tension.','Machine on, trigger open: start the pump and watch the gauge. Slowly loosen the lower nut until pressure starts to drop.','Tighten the lower nut. Pressure should rise. Tighten until it stops climbing.','Close and open the gun to check unloading pressure and bypass. Unloading pressure should not exceed operating pressure by more than 400 psi.','Lock the setting with the top lock nut.']},
+ gunrepair:{t:'Trigger gun repair',pg:null,pgFixed:9,loc:'gun:seat',steps:['Remove the screws from the handles and remove the housings.','With an 18 mm socket, remove the retainer. Catch the spring and ball as they fall out.','Replace parts with those in kit J06-99158C. Bevel side of the washer and dished side both face the ball.','Reassemble in reverse order.'],warn:'Do not run acid concentrates through the gun. Never hold the trigger open by anything but the operator’s hand. Engage the safety latch when not in use.'}
+};
+
+/* every: hours; days: calendar. Source: m manual / g gap */
+const SCHEDULE = [
+ {group:'Every day',items:[{id:'bowl',t:'Check fuel filter bowl and drain water',days:1,proc:'drainwater',src:'filter',loc:'filter'}]},
+ {group:'Every week',items:[
+  {id:'gasket',t:'Inspect fuel filter gaskets for tearing',days:7,src:'filterMaint',loc:'filter'},
+  {id:'rim',t:'Inspect filter bowl rim for nicks, cracks, scratches',days:7,src:'filterMaint',loc:'filter'},
+  {id:'eleminspect',t:'Inspect filter element for damage',days:7,src:'filterMaint',loc:'filter'},
+  {id:'bowlclean',t:'Check fuel bowl for contaminants. Check more often if found',days:7,src:'filterMaint',loc:'filter'}]},
+ {group:'By hour meter',items:[
+  {id:'oilfirst',t:'First pump oil change',at:50,proc:'pumpoil',src:'head',loc:'pump:crankcase',note:{'5355J':'Interval borrowed from the 8405HNL manual. The 5355J manual prints none.'}},
+  {id:'oil',t:'Pump oil change',every:300,orDays:90,proc:'pumpoil',src:'head',loc:'pump:crankcase',note:{'5355J':'Interval borrowed from the 8405HNL manual. The 5355J manual prints none.'}},
+  {id:'gasketr',t:'Replace fuel filter gaskets',every:100,src:'filterMaint',loc:'filter'},
+  {id:'unlgrease',t:'Check unloader seals and lube with water-resistant grease',every:400,only:'5355J',src:'unloaderParts',loc:'unloader:piston'},
+  {id:'element',t:'Replace fuel filter element',every:500,proc:'element',src:'filter',loc:'filter'}]},
+ {group:'Every year',items:[{id:'relief',t:'Inspect relief valve for obstruction',days:365,src:'unloader',loc:'relief'}]},
+ {group:'When the condition calls for it',items:[
+  {id:'descale',t:'Descale the coil at 50 psi back pressure. A new coil reads 5 psi',cond:true,src:null,pgFixed:{'5355J':5,'8405HNL':5},loc:'coilTube'},
+  {id:'smoke',t:'Check smoke: #1 or #2 Bacharach. Set air bands if off',cond:true,proc:'air',src:'air',loc:'burner:bands'},
+  {id:'fuelpsi',t:'Check burner fuel pressure: 125 psi',cond:true,proc:'fuelpressure',src:'air',loc:'burner:pump'},
+  {id:'freeze',t:'Freeze protect before freezing weather or long storage',cond:true,proc:'freeze',src:'head',loc:'pump:head'},
+  {id:'engine',t:'Engine oil, air filter and oil filter',cond:true,src:null,pgFixed:{'5355J':6,'8405HNL':7},loc:'engine',note:{'5355J':'Part numbers only. Use the Honda GX630 owner’s manual for intervals.','8405HNL':'Part numbers only. Use the Honda GX800 owner’s manual for intervals.'}},
+  {id:'belt',t:'Belt tension',cond:true,src:null,loc:'belt',note:{'5355J':'The manual cites a Belt Tension section that is not in the PDF. Ask Alkota for the spec.','8405HNL':'The manual cites a Belt Tension section that is not in the PDF. Ask Alkota for the spec.'}}]}
+];
+const PROC_GROUPS=[['Pump',['pumpoil','valve','headoff','plunger','packing','headon','freeze']],['Burner',['air','strainer','fuelpressure','blower','transformer','buss','gunsvc','electrode']],['Fuel filter',['prime','drainwater','element']],['Unloader and gun',['unloaderadj','gunrepair']]];
+const SAFETY=['Shut the engine off and let the coil and exhaust cool.','Squeeze the trigger with the engine off to bleed pressure before opening any fitting.','Disconnect the battery before electrical or burner work, except where a test needs power.','Shut off the fuel tank valves before opening the fuel system.'];
+
+/* Procedural models. Units are inches. Layout follows the manuals' assembly drawings and printed dimensions;
+   this is schematic geometry, not manufacturer CAD. */
+if(THREE.ColorManagement)THREE.ColorManagement.legacyMode=false;
+const Mats=(()=>{
+ const std=(c,m=.2,r=.6,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,metalness:m,roughness:r},o));
+ return {
+  frame:std(0x2c3238,.35,.5), panel:std(0x3a4149,.3,.55), cover:std(0x8d2f24,.25,.42), wrap:std(0xa8aeb2,.75,.38),
+  steel:std(0x9aa3a9,.85,.32), dark:std(0x42484e,.6,.5), black:std(0x17191b,.2,.62), rubber:std(0x101112,.0,.85),
+  brass:std(0xc49a3d,.9,.3), copper:std(0xc0703d,.9,.32), alum:std(0xaeb6ba,.7,.45), engine:std(0x25282b,.3,.5),
+  red:std(0xb4231c,.2,.42), tank:std(0x4c5560,.2,.45), fuelTank:std(0x6f4d24,.25,.45), gasTank:std(0x7c2019,.25,.45), amber:std(0xd99a2b,.1,.25,{transparent:true,opacity:.62}),
+  ceramic:std(0xe8e4d8,0,.7), water:std(0x1d7fa6,.1,.5), fuelHose:std(0x9a6412,.1,.6), hose:std(0x20262b,.05,.7),
+  blue:std(0x1f5f9a,.3,.5), yellow:std(0xd8a80f,.2,.5), glass:std(0xaad0dc,.1,.1,{transparent:true,opacity:.42}), white:std(0xdcdfe0,.1,.6),
+  flame:new THREE.MeshBasicMaterial({color:0xffa23c,transparent:true,opacity:.75,blending:THREE.AdditiveBlending,depthWrite:false}),
+  spark:new THREE.MeshBasicMaterial({color:0xbfe6ff,transparent:true,opacity:.95,blending:THREE.AdditiveBlending,depthWrite:false})
+ };
+})();
+const V=(x,y,z)=>new THREE.Vector3(x,y,z);
+function cyl(r,h,mat,axis='y',seg=32,r2){const g=new THREE.CylinderGeometry(r2===undefined?r:r2,r,h,seg);if(axis==='x')g.rotateZ(-Math.PI/2);if(axis==='z')g.rotateX(Math.PI/2);return new THREE.Mesh(g,mat);}
+function rbox(w,h,d,mat,r=.25){const s=new THREE.Shape(),x=-w/2+r,y=-h/2+r,W=w-2*r,H=h-2*r;s.moveTo(x,y-r);s.lineTo(x+W,y-r);s.quadraticCurveTo(x+W+r,y-r,x+W+r,y);s.lineTo(x+W+r,y+H);s.quadraticCurveTo(x+W+r,y+H+r,x+W,y+H+r);s.lineTo(x,y+H+r);s.quadraticCurveTo(x-r,y+H+r,x-r,y+H);s.lineTo(x-r,y);s.quadraticCurveTo(x-r,y-r,x,y-r);
+ const b=Math.min(r*.5,.15),g=new THREE.ExtrudeGeometry(s,{depth:Math.max(d-2*b,.01),bevelEnabled:true,bevelSize:b,bevelThickness:b,bevelSegments:2,curveSegments:5});g.translate(0,0,-(d-2*b)/2);return new THREE.Mesh(g,mat);}
+function tube(pts,r,mat,tension=.5,closed=false,seg){const c=new THREE.CatmullRomCurve3(pts.map(p=>p.isVector3?p:V(...p)),closed,'catmullrom',tension);return new THREE.Mesh(new THREE.TubeGeometry(c,seg||Math.max(20,pts.length*12),r,10,closed),mat);}
+function lathe(prof,mat,axis='y',seg=40){const g=new THREE.LatheGeometry(prof.map(p=>new THREE.Vector2(p[0],p[1])),seg);if(axis==='x')g.rotateZ(-Math.PI/2);if(axis==='z')g.rotateX(Math.PI/2);return new THREE.Mesh(g,mat);}
+function hex(r,h,mat,axis='y'){return cyl(r,h,mat,axis,6);}
+function at(m,x=0,y=0,z=0){m.position.set(x,y,z);return m;}
+
+class SceneBuilder{
+ constructor(){this.root=new THREE.Group();this.nodes={};this.links=[];this.flows=[];this.tick=[];this.fx=[];}
+ node(id,label,home,off,children=[]){const g=new THREE.Group();g.name=id;g.position.set(...home);const n={id,label,group:g,home:V(...home),off:V(...(off||[0,0,0])),subs:[],anchor:V(0,0,0)};children.forEach(c=>c&&g.add(c));this.root.add(g);this.nodes[id]=n;return n;}
+ sub(n,obj,off){const h=obj.position.clone();n.group.add(obj);n.subs.push({obj,home:h,off:V(...off)});return obj;}
+ /* points: [nodeId|null,x,y,z] local to node */
+ link(id,node,sys,r,mat,pts,opts={}){this.links.push(Object.assign({id,node,sys,r,mat,pts},opts));}
+ flow(sys,pts,opts={}){this.flows.push(Object.assign({sys,pts,color:null},opts));}
+}
+
+/* ---------- whole machine ---------- */
+function buildMachine(cfg){
+ const b=new SceneBuilder(),{L,W,H}=cfg, hx=L/2-1.5, hz=W/2-.5, top=cfg.frameTop;
+ // frame
+ const f=[];const hoop=(a)=>{const r=4,loop=cfg.hoop==='end'?[[a,3,-hz+r],[a,3,hz-r],[a,3+r*.3,hz],[a,top-r*.3,hz],[a,top,hz-r],[a,top,-hz+r],[a,top-r*.3,-hz],[a,3+r*.3,-hz]]:null;return loop&&tube(loop,.75,Mats.frame,.5,true,80);};
+ if(cfg.hoop==='end'){f.push(hoop(-hx),hoop(hx));[[3,hz-.6],[3,-hz+.6],[top,hz-.6],[top,-hz+.6]].forEach(([y,z])=>f.push(at(cyl(.75,2*hx,Mats.frame,'x'),0,y,z)));}
+ else{[-hz,hz].forEach(z=>{const r=6,l=[[-hx+r,3,z],[hx-r,3,z],[hx,3+r,z],[hx,top-r,z],[hx-r,top,z],[-hx+r,top,z],[-hx,top-r,z],[-hx,3+r,z]];f.push(tube(l,.75,Mats.frame,.5,true,90));});
+  [[-hx,3],[hx,3],[-hx+3,top],[hx-3,top]].forEach(([x,y])=>f.push(at(cyl(.75,2*hz,Mats.frame,'z'),x,y,0)));}
+ f.push(at(rbox(2*hx-1,.35,2*hz-1,Mats.panel,.1),0,3.6,0));
+ f[f.length-1].rotation.set(0,0,0);
+ b.node('frame','Frame',[0,0,0],[0,0,0],f);
+ const ex=cfg.engineX, ez=cfg.engineZ;
+ // mount
+ b.node('mount','Motor mount',[ex,4.2,ez],[0,-3.5,0],[rbox(19,.5,cfg.engineD+3,Mats.dark,.1)].concat([-7,7].flatMap(x=>[-5,5].map(z=>at(cyl(.8,1,Mats.rubber),x,.7,z)))));
+ // engine
+ const ew=cfg.engineW,eh=cfg.engineH,ed=cfg.engineD,ec=[];
+ ec.push(at(rbox(ew,eh*.6,ed,Mats.engine,.8),0,eh*.32,0));
+ ec.push(at(rbox(ew*.85,eh*.3,ed*.8,Mats.black,1),0,eh*.78,-1));
+ const shroud=cyl(ew*.36,1.5,Mats.dark,'z',48);ec.push(at(shroud,0,eh*.42,ed/2+.5));
+ for(let i=0;i<24;i++){const a=i/24*Math.PI*2,r1=ew*.09,r2=ew*.33,g=rbox(.28,r2-r1,.2,Mats.steel,.05);g.position.set(Math.cos(a)*(r1+r2)/2,eh*.42+Math.sin(a)*(r1+r2)/2,ed/2+1.3);g.rotation.z=a-Math.PI/2;ec.push(g);}
+ ec.push(at(rbox(ew*.5,eh*.14,ed*.3,Mats.black,.4),-ew*.18,eh*.98,-ed*.15));
+ const cap=cyl(1,.7,Mats.red);ec.push(at(cap,ew*.25,eh*.95,ed*.1));
+ [-1,1].forEach(s=>ec.push(at(rbox(1.4,eh*.42,ed*.68,Mats.alum,.3),s*(ew/2+.5),eh*.5,0)));
+ const shaftE=at(cyl(.56,ed*.5,Mats.steel,'z'),0,eh*.42,-ed/2-1.5);ec.push(shaftE);
+ const eng=b.node('engine',cfg.engineLabel,[ex,5,ez],[0,0,0],ec);
+ const fan=new THREE.Group();ec.slice(1).filter(m=>m.geometry&&m.position.z===ed/2+1.3).forEach(m=>{fan.add(m);});fan.position.set(0,eh*.42,0);fan.children.forEach(m=>{m.position.y-=eh*.42;});eng.group.add(fan);
+ b.tick.push((dt,s)=>{fan.rotation.z-=s.rate*dt*3.6;});
+ // muffler
+ b.node('muffler','Muffler',[ex-ew/2-1.2,12,ez+1],[-7,0,0],[cyl(1.8,7,Mats.steel,'z'),at(cyl(.6,3,Mats.dark,'x'),-2.4,0,3)]);
+ // pulleys + belt
+ const py=5+eh*.42, zb=cfg.beltZ, r1=cfg.r1, r2=cfg.r2, px=cfg.pumpX, pcy=cfg.pumpY;
+ const pulley=(r,mat)=>{const g=new THREE.Group();[-.45,.45].forEach(z=>g.add(at(lathe([[.1,-.42],[r,-.42],[r*.92,-.0],[r,.42],[.1,.42]],mat,'z'),0,0,z)));g.add(cyl(.9,2,Mats.dark,'z',24));if(r>3)for(let i=0;i<5;i++){const a=i*Math.PI*2/5,sp=rbox(.8,r*.8,.4,mat,.1);sp.position.set(Math.cos(a)*r*.5,Math.sin(a)*r*.5,0);sp.rotation.z=a-Math.PI/2;g.add(sp);}return g;};
+ const pe=pulley(r1,Mats.dark),pp=pulley(r2,Mats.dark);
+ b.node('engPulley','Engine pulley',[ex,py,zb],[0,0,-9],[pe]);
+ b.node('pumpPulley','Pump pulley',[px,pcy,zb],[0,0,-9],[pp]);
+ b.tick.push((dt,s)=>{const w=s.rate*dt*3.6;pe.rotation.z-=w;pp.rotation.z-=w*r1/r2;});
+ const beltPts=beltPath(V(0,0,0),r1+.05,V(px-ex,pcy-py,0),r2+.05);
+ const beltG=new THREE.Group();const lugs=[];
+ [-.45,.45].forEach(z=>{const c=new THREE.CatmullRomCurve3(beltPts.map(p=>V(p.x,p.y,z)),true,'catmullrom',.05);const m=new THREE.Mesh(new THREE.TubeGeometry(c,160,.22,6,true),Mats.rubber);beltG.add(m);
+  const n=38,im=new THREE.InstancedMesh(new THREE.BoxGeometry(.3,.5,.55),Mats.steel,n);im.userData.noExport=true;im.userData.curve=c;beltG.add(im);lugs.push(im);});
+ b.node('belt','Pump belt'+(cfg.beltCount>1?'s':''),[ex,py,zb],[0,0,-15],[beltG]);
+ let lt=0;const dm=new THREE.Object3D();const setLugs=()=>{lugs.forEach(im=>{const n=im.count;for(let i=0;i<n;i++){const u=(i/n+lt)%1,p=im.userData.curve.getPointAt(u);dm.position.copy(p);const tg=im.userData.curve.getTangentAt(u);dm.rotation.z=Math.atan2(tg.y,tg.x);dm.updateMatrix();im.setMatrixAt(i,dm.matrix);}im.instanceMatrix.needsUpdate=true;});};setLugs();
+ b.tick.push((dt,s)=>{if(!s.rate)return;lt=(lt+s.rate*dt*.11)%1;setLugs();});
+ // shield
+ const midx=(ex+px)/2, sw=px-ex+r2+r1+3.5;
+ b.node('shield','Pulley shield',[midx,pcy+.8,zb-1.7],[0,3,-19],[rbox(sw,r2*2+4,.25,Mats.cover,.6)].concat(Array.from({length:9},(_,i)=>at(rbox(.5,5,.3,Mats.black,.1),-sw/3+i*sw/12,r2*.8,-.05))));
+ // pump, compact
+ const pg=[];pg.push(rbox(6.2,5.8,cfg.pumpLen,Mats.alum,.8));
+ for(let i=-2;i<=2;i++)pg.push(at(rbox(5.8,.25,cfg.pumpLen-.4,Mats.steel,.05),0,3+.0,i*1.1));
+ pg.push(at(rbox(4.2,6.2,cfg.pumpLen+.6,Mats.brass,.4),5.2,.2,0));
+ [-2.6,0,2.6].forEach(z=>[-1.6,1.6].forEach(y=>pg.push(at(hex(.82,.8,Mats.brass,'x'),7.5,y+.2,z*(cfg.pumpLen/8)))));
+ pg.push(at(cyl(.47,cfg.pumpLen/2+3,Mats.steel,'z'),0,0,-cfg.pumpLen/2-1));
+ pg.push(at(cyl(.45,1.8,Mats.yellow),-1,3.8,0));
+ pg.push(at(rbox(9,.4,cfg.pumpLen+1,Mats.dark,.1),1,-3.2,0));
+ const zp=cfg.pumpZ;
+ b.node('pump',cfg.pumpLabel,[px,pcy,zp],[6,-1,6],pg);
+ const plum=[at(rbox(1.6,1.6,2,Mats.brass,.2),0,0,0),at(hex(.7,1.7,Mats.brass,'x'),1.4,0,0),at(hex(.6,1.5,Mats.brass),0,1.4,0),at(cyl(.3,1.7,Mats.red,'z'),0,0,1.5)];
+ b.node('plumb','Pump plumbing',[px+9.2,pcy-1.4,zp+.5],[9,0,8],plum);
+ // unloader etc
+ const [ux,uy,uz]=cfg.unloader;
+ b.node('unloader','Unloader',[ux,uy,uz],[7,5,12],[cyl(1,5,Mats.brass),at(cyl(.75,3.2,Mats.steel),0,4,0),at(cyl(.7,1.2,Mats.brass,'x'),1.2,-.5,0),at(rbox(.3,6,3,Mats.dark,.1),-1.4,-1.5,0)]);
+ b.node('accumulator','Accumulator',[ux-.2,uy+4,uz+4.2],[6,14,14],[lathe([[0,-1.8],[1.8,-1.2],[2,0],[1.8,1.2],[0,1.8]],Mats.dark),at(cyl(.5,1.5,Mats.brass),0,-2.4,0)]);
+ b.node('relief','Relief valve',[ux-.2,uy-3.5,uz+4],[10,-3,15],[cyl(.7,2.4,Mats.steel),at(hex(.8,.8,Mats.brass),0,-1.3,0),at(cyl(.3,1.5,Mats.brass,'x'),.9,0,0)]);
+ // coil
+ const cx=cfg.coilX,cy=cfg.coilY,cr=cfg.coilOD/2,cl=cfg.coilLen;
+ b.node('coil','Coil wrapper',[cx,cy,0],[0,cfg.coilLift,0],[(()=>{const m=cyl(cr,cl,Mats.wrap,'x',64);return m;})(),at(cyl(cr+.2,.6,Mats.dark,'x',64),-cl/2,0,0),at(cyl(cr+.2,.6,Mats.dark,'x',64),cl/2,0,0)].concat([-.25,.25].map(t=>at(cyl(cr+.05,.3,Mats.dark,'x',64),cl*t,0,0))));
+ const helix=[];const turns=cfg.coilTurns,hr=cr-1.3;for(let i=0;i<=turns*14;i++){const a=i/14*Math.PI*2,t=i/(turns*14);helix.push(V(-cl/2+1+t*(cl-2),Math.cos(a)*hr,Math.sin(a)*hr));}
+ const hc=new THREE.CatmullRomCurve3(helix);const hg=new THREE.TubeGeometry(hc,turns*30,cfg.coilTube,8);
+ const cols=[];const pos=hg.attributes.position,col=new THREE.Color(),cA=new THREE.Color(0x3d8fb0),cB=new THREE.Color(0xd2502a);for(let i=0;i<pos.count;i++){col.lerpColors(cB,cA,THREE.MathUtils.clamp((pos.getX(i)+cl/2)/cl,0,1));cols.push(col.r,col.g,col.b);}
+ hg.setAttribute('color',new THREE.Float32BufferAttribute(cols,3));
+ b.node('coilTube','Heating coil',[cx,cy,0],[0,cfg.coilLift*.22,0],[new THREE.Mesh(hg,new THREE.MeshStandardMaterial({vertexColors:true,metalness:.55,roughness:.45}))]);
+ const hel=(u)=>{const i=Math.round(u*(helix.length-1));return helix[i];};
+ // exhaust head + cover
+ b.node('exhaust','Exhaust head',[cx+cl/2+.6,cy,0],[11,cfg.coilLift*.2,0],[cyl(cr+.1,.8,Mats.dark,'x',64),at(cyl(cr*.45,2.5,Mats.steel,'x',40),1.2,0,0),at(cyl(2.4,.7,Mats.steel,'x',6),-.6,0,0)]);
+ const hood=new THREE.Mesh(new THREE.CylinderGeometry(cr+1.1,cr+1.1,cl+4,48,1,false,-Math.PI/2,Math.PI),Mats.cover);hood.geometry.rotateZ(Math.PI/2);
+ hood.material=Mats.cover.clone();hood.material.side=THREE.DoubleSide;hood.rotation.x=0;
+ b.node('cover','Burner cover',[cx,cy+.6,0],[0,cfg.coverLift,0],[hood]);
+ // burner
+ const bx=cx-cl/2-cfg.burnerGap;
+ const burner=[at(cyl(cr*.75,.6,Mats.dark,'x',48),bx<0?2:-2,0,0),at(cyl(2.6,2.2,Mats.steel,'x',32),1,0,0),rbox(4,5,4.6,Mats.dark,.8),at(cyl(1.7,4,Mats.black,'z',28),0,.3,3.8),at(rbox(2.6,2.8,2.4,Mats.steel,.3),0,.3,-3.4),at(rbox(3.3,1.7,3.5,Mats.black,.2),-.1,3.3,0)];
+ b.node('burner','Oil burner',[bx,cy,0],[-13,4,3],burner);
+ // tanks
+ const tf=cfg.fuelBox, tg=cfg.gasBox;
+ b.node('fuelTank','Burner fuel tank',tf.p,tf.off,[rbox(...tf.s,Mats.fuelTank,.8),at(cyl(1.25,.9,Mats.black),tf.s[0]*.2,tf.s[1]/2+.3,0)]);
+ b.node('gasTank','Gasoline tank',tg.p,tg.off,[rbox(...tg.s,Mats.gasTank,.8),at(cyl(1,.9,Mats.black),tg.s[0]*.2,tg.s[1]/2+.3,0)]);
+ const fl=cfg.filter;
+ const filt=[at(cyl(1.6,1.1,Mats.alum),0,1.2,0),cyl(1.45,2.6,Mats.amber),at(cyl(.85,2.3,Mats.white),0,0,0),at(cyl(.55,.6,Mats.black),0,-1.6,0)];
+ b.node('filter','Fuel filter',fl,[-3,9,8],filt);
+ // panel, jbox
+ const pc=cfg.panel;
+ const panelKids=[rbox(pc.w,pc.h,.3,Mats.panel,.15),at(rbox(1,1.5,.4,Mats.black,.1),pc.w*.22,0,.25),at(rbox(2.6,1.4,.4,Mats.black,.1),-pc.w*.15,0,.25),at(rbox(2.1,.9,.1,Mats.glass,.05),-pc.w*.15,0,.5),at(cyl(.75,.8,Mats.black,'z',24),pc.w*.36,0,.5)];
+ b.node('panel','Control panel',pc.p,[0,3,12],panelKids);
+ b.node('jbox','Junction box',cfg.jbox,[-3,6,11],[rbox(4.6,3.2,2.8,Mats.dark,.2),at(rbox(1,.5,.5,Mats.black,.1),0,1.8,0),at(cyl(.5,.8,Mats.steel,'z'),1.2,0,1.6)]);
+ // side panel
+ const sp=cfg.side;
+ b.node('sidePanel',sp.label,sp.p,sp.off,[(()=>{const m=rbox(sp.s[0],sp.s[1],.2,Mats.panel,.3);return m;})()].concat(Array.from({length:7},(_,i)=>at(rbox(sp.s[0]*.6,.25,.26,Mats.black,.05),0,sp.s[1]/2-1.2-i*.7,0))));
+ // float tank
+ if(cfg.float){const ft=cfg.float;const shell=rbox(...ft.s,Mats.tank,.3);shell.material=Mats.tank.clone();shell.material.transparent=true;shell.material.opacity=.55;
+  const ball=lathe(Array.from({length:13},(_,i)=>{const a=-Math.PI/2+i/12*Math.PI;return[Math.cos(a)*1.9,Math.sin(a)*1.9];}),Mats.red);
+  const ballG=new THREE.Group();ballG.add(at(ball,0,0,-1));const arm=at(cyl(.1,4,Mats.steel,'x'),-1,-.0,-1);ballG.add(arm);ballG.position.set(0,1,0);
+  const n=b.node('floatTank','Float tank',ft.p,[8,14,-7],[shell,ballG,at(hex(.6,1.4,Mats.brass,'z'),ft.s[0]*.3,ft.s[1]/2-1.2,ft.s[2]/2+.6)]);
+  b.tick.push((dt,s)=>{ballG.position.y=1+.25*Math.sin(s.t*1.1)*(s.rate?1:0);});
+  b.node('floatCover','Float tank cover',[ft.p[0],ft.p[1]+ft.s[1]/2+.3,ft.p[2]],[8,20,-7],[rbox(ft.s[0]+.8,.5,ft.s[2]+.8,Mats.panel,.15)]);}
+ // hose + gun, resting at floor
+ const fz=W/2+8.5,hosex=cfg.hosex;
+ const hr2=[];for(let i=0;i<5;i++)for(let j=0;j<2;j++)hr2.push(at((()=>{const m=new THREE.Mesh(new THREE.TorusGeometry(6.5-j*.7,.28,10,64),Mats.hose);m.rotation.x=Math.PI/2;return m;})(),0,.3+i*.56,0));
+ b.node('hose','Hose, '+cfg.hoseLabel,[hosex,0,fz+1],[6,0,10],hr2);
+ b.node('gunMachine','Gun and wand, 42 in',[hosex-22,1.6,fz+1],[-3,0,12],[at(cyl(.28,42,Mats.steel,'x'),21,1.2,0),at(rbox(1.6,4.8,1.2,Mats.black,.3),-1.2,-.4,0),at(cyl(.5,3,Mats.brass,'x'),0,1.2,0),at(hex(.42,.8,Mats.yellow,'x'),42.3,1.2,0)]);
+ const chemN=[...Array(3)].map((_,i)=>at((()=>{const m=new THREE.Mesh(new THREE.TorusGeometry(3,.1,6,40),Mats.glass);m.rotation.x=Math.PI/2;return m;})(),0,.2+i*.22,0));chemN.push(at(cyl(.5,1.4,Mats.black),3,.8,0));
+ b.node('chem',cfg.chemLabel,[hosex+14,0,fz+1],[6,0,10],chemN);
+ // hoses as links (rebuilt on explode so they stay connected)
+ const P=(n,x,y,z)=>[n,x,y,z];
+ const inP=P('pump',4,-1.6,zp>0?0:0);
+ const coilIn=[...hel(0)],coilOut=[...hel(1)];
+ const outHead=P('pump',8,1.8,0);
+ b.link('water-in','hoses','water',.5,Mats.water,cfg.waterIn(P));
+ b.link('hp1','hoses','water',.3,Mats.hose,[P('plumb',2.2,0,0),P('plumb',4,.5,3),P('unloader',0,-2.5,0)]);
+ b.link('hpcoil','hoses','heat',.33,Mats.hose,[P('unloader',1.8,-.5,0),[null,ux+2.6,uy+3,uz-1],P('coilTube',coilIn[0],coilIn[1],coilIn[2])]);
+ b.link('pl2','hoses','water',.3,Mats.brass,[outHead,P('plumb',0,1.2,0)]);
+ b.link('outhose','hoses','heat',.33,Mats.hose,[P('coilTube',coilOut[0],coilOut[1],coilOut[2]),[null,cx-cl/2-2,cy-cr-2.5,W/2-5],P('panel',-pc.w*.42,-pc.h*.8,.3),P('hose',0,3,6.5)]);
+ b.link('bypass','hoses','water',.28,Mats.water,cfg.bypass(P));
+ b.link('fuel1','hoses','fuel',.2,Mats.fuelHose,[P('fuelTank',-tf.s[0]*.3,tf.s[1]/2,tf.s[2]*.25),P('filter',-1.5,1.2,0)]);
+ b.link('fuel2','hoses','fuel',.2,Mats.fuelHose,[P('filter',1.5,1.2,0),[null,bx-2,cy-7,2],P('burner',0,.3,-4.6)]);
+ b.link('gas','hoses','drive',.2,Mats.fuelHose,[P('gasTank',tg.s[0]*.3,tg.s[1]/2,-tg.s[2]*.2),[null,ex-ew/2-2,8,ez-2],P('engine',-ew/2+1,eh*.7,-ed/2+1)]);
+ b.link('wire','hoses','elec',.1,Mats.yellow,[P('jbox',1,-1.5,0),P('panel',-pc.w*.3,-pc.h/2,.1)]);
+ b.link('wire2','hoses','elec',.1,Mats.red,[P('jbox',-2,0,0),[null,bx+2,cy-7,5],P('burner',-.1,4,0)]);
+ b.node('hoses','Hoses and fittings',[0,0,0],[0,0,0],[]);
+ b.camera={p:cfg.cam,t:[0,17,0],explode:.6};
+ // fx
+ const flame=at(new THREE.Mesh(new THREE.ConeGeometry(cr*.55,cl*.45,24,1,true).rotateZ(-Math.PI/2),Mats.flame.clone()),-cl/2+cl*.22,0,0);flame.userData.noExport=true;flame.userData.noPick=true;
+ b.nodes.coilTube.group.add(flame);
+ const glow=new THREE.PointLight(0xff8a3c,0,50,1.6);glow.userData.noExport=true;b.nodes.coilTube.group.add(glow);
+ b.tick.push((dt,s)=>{const on=s.burner&&s.rate>0;flame.visible=on;glow.intensity=on?1.4+.3*Math.sin(s.t*23):0;flame.scale.x=1+.08*Math.sin(s.t*31);});
+ // shake
+ const eg=b.nodes.engine.group;b.tick.push((dt,s)=>{if(s.rate)eg.position.x+=Math.sin(s.t*60)*.008;});
+ return b;
+}
+function beltPath(c1,r1,c2,r2){ // external tangents, sampled closed loop
+ const d=c2.clone().sub(c1),D=d.length(),base=Math.atan2(d.y,d.x),a=Math.acos((r1-r2)/D),pts=[];
+ const arc=(c,r,a0,a1,n)=>{for(let i=0;i<=n;i++){const t=a0+(a1-a0)*i/n;pts.push(V(c.x+Math.cos(t)*r,c.y+Math.sin(t)*r,0));}};
+ arc(c2,r2,base+a-Math.PI*2+0,base-a,18);arc(c1,r1,base-a,base+a-Math.PI*2+ -0,0);
+ pts.length=0;
+ arc(c1,r1,base+a,base+Math.PI*2-a,12);arc(c2,r2,base-a,base+a,20);
+ return pts;
+}
+const MACHINE_CFG={
+ '5355J':{L:48,W:34,H:38.5,hoop:'end',frameTop:25.5,engineX:-1,engineZ:0,engineW:16,engineH:16.5,engineD:14,engineLabel:'Engine, Honda GX630',beltZ:-11.6,r1:2.35,r2:5.9,pumpX:13,pumpY:8.8,pumpZ:-3.4,pumpLen:8,pumpLabel:'Pump, N07-00224',beltCount:2,
+  unloader:[20.6,13,8.2],coilX:0,coilY:31.4,coilOD:14,coilLen:31,coilLift:13,coverLift:25,burnerGap:2.8,coilTurns:15,coilTube:.42,
+  fuelBox:{p:[-16.5,11.6,8.2],s:[11,14.4,13],off:[-13,0,10]},gasBox:{p:[-16.5,10.6,-7.8],s:[11,12.6,12],off:[-13,0,-10]},filter:[-8.2,16,14],
+  panel:{p:[7,23,16.6],w:17,h:4.4},jbox:[-8,23,14.2],side:{label:'Side panel',p:[-15,12.5,16.6],s:[15,17,.2],off:[-7,0,15]},float:{p:[19,20,-10],s:[8.5,11,11]},
+  hosex:-4,hoseLabel:'3/8 in x 100 ft',chemLabel:'Chemical line',cam:[58,44,86],
+  waterIn:P=>[P('floatTank',-1,-5.5,5.5),[null,17,6,-1],P('plumb',-.3,-.8,0)],
+  bypass:P=>[P('unloader',.8,-2,1),[null,24,12,0],P('floatTank',3,-1,5.6)]},
+ '8405HNL':{L:47.5,W:22.3,H:42.75,hoop:'side',frameTop:27,engineX:-1,engineZ:.5,engineW:18,engineH:18,engineD:14.5,engineLabel:'Engine, Honda GX800',beltZ:-8.6,r1:2.6,r2:6.4,pumpX:13.5,pumpY:9.6,pumpZ:-1.4,pumpLen:8.2,pumpLabel:'Pump, N07-00092',beltCount:2,
+  unloader:[20.2,13,6.6],coilX:0,coilY:33.2,coilOD:18,coilLen:34,coilLift:13,coverLift:24,burnerGap:2.6,coilTurns:18,coilTube:.58,
+  fuelBox:{p:[-17,11.6,5.2],s:[9.5,14.4,10],off:[-13,0,10]},gasBox:{p:[-17,11.6,-5.2],s:[9.5,14.4,10],off:[-13,0,-10]},filter:[-11,21.6,8],
+  panel:{p:[0,24.8,11.4],w:30,h:3.8},jbox:[-13,23.5,9],side:{label:'Backing panel',p:[0,15,-11.2],s:[34,22,.2],off:[0,0,-22]},
+  hosex:-4,hoseLabel:'1/2 in x 50 ft',chemLabel:'Chemical injector',cam:[58,46,84],
+  waterIn:P=>[[null,23.6,9,2],[null,22,8,2],P('plumb',-.3,-.8,0)],
+  bypass:P=>[P('unloader',.8,-2,1),[null,23,7.5,2],P('plumb',-.3,-.9,.7)]}
+};
+
+/* ---------- pump ---------- */
+function buildPump(cfg){
+ const b=new SceneBuilder(),T=cfg.trip?1:1,len=8.2,zs=[-2.5,0,2.5];
+ const crX=0,crR=cfg.stroke; // visual crank radius
+ const cc=[];const cs=rbox(6.8,6.2,len,Mats.alum,.9);cs.material=Mats.alum.clone();cs.material.transparent=true;cs.material.opacity=.42;cs.material.depthWrite=false;cc.push(cs);
+ for(let i=-3;i<=3;i++)cc.push(at(rbox(.5,.3,len-.6,Mats.alum,.05),i*.85,3.2,0));
+ b.node('crankcase','Crankcase',[0,0,0],[0,0,0],cc);
+ const crank=new THREE.Group();crank.add(cyl(.47,len+6.4,Mats.steel,'z'));crank.children[0].position.z=-1.4;
+ const throws=zs.map((z,i)=>{const a=i*2*Math.PI/3;const g=new THREE.Group();g.add(at(cyl(.62,1.1,Mats.steel,'z',22),Math.cos(a)*crR,Math.sin(a)*crR,z));crank.add(g);[-.65,.65].forEach(d=>{crank.add(at(cyl(1.0,.3,Mats.steel,'z',28),0,0,z+d));});return a;});
+ const key=at(rbox(.25,.25,1.6,Mats.dark,.03),0,.47,-len/2-4);crank.add(key);
+ b.node('crank','Crankshaft',[crX,0,0],[0,0,-15],[crank]);
+ const rodG=new THREE.Group(),rods=[];const rodL=3.1;
+ const plGroup=new THREE.Group(),plungers=[];
+ zs.forEach(z=>{const big=at(new THREE.Mesh(new THREE.TorusGeometry(.78,.2,10,28),Mats.dark),0,0,z);const beam=at(rbox(rodL,.5,.42,Mats.dark,.08),rodL/2,0,0);const r=new THREE.Group();r.add(beam);big.position.set(0,0,0);r.add(big);r.position.z=z;rodG.add(r);
+  const ch=at(cyl(.72,1.6,Mats.steel,'x',24),0,0,z);rodG.add(ch);rods.push({r,ch,z});
+  const pl=new THREE.Group();pl.position.z=z;pl.add(at(cyl(.39,cfg.plungerLen,Mats.ceramic,'x',24),cfg.plungerLen/2,0,0));pl.add(at(cyl(.56,.1,Mats.copper,'x',24),-.02,0,0));pl.add(at(hex(.3,.5,Mats.steel,'x'),cfg.plungerLen+.25,0,0));plGroup.add(pl);plungers.push(pl);});
+ b.node('rods',cfg.rodLabel,[crX,0,0],[0,10,0],[rodG]);
+ b.node('plungers','Plungers',[crX,0,0],[5,0,0],[plGroup]);
+ // oil seals & bushing
+ b.node('oilSeals','Oil seals and bushings',[3.5,0,0],[6.5,-5.5,0],zs.flatMap(z=>[at(new THREE.Mesh(new THREE.TorusGeometry(.5,.14,10,28).rotateY(Math.PI/2),Mats.rubber),0,0,z),at(cyl(.62,.5,Mats.brass,'x',24),-.4,0,z)]));
+ // packings stack
+ const pk=[];zs.forEach(z=>{[[0,Mats.brass,.68,.42],[.45,Mats.black,.62,.28],[.8,Mats.brass,.68,.35],[1.2,Mats.rubber,.62,.3],[1.55,Mats.steel,.6,.14],[1.75,Mats.brass,.66,.32]].forEach(([x,m,r,h])=>pk.push(at(new THREE.Mesh(new THREE.CylinderGeometry(r,r,h,24).rotateZ(Math.PI/2),m),x,0,z)));});
+ b.node('packings','Packing stacks',[5,0,0],[11,0,0],pk);
+ // head
+ const h=[];const headM=Mats.brass.clone();headM.transparent=true;headM.opacity=.62;h.push(rbox(cfg.headD,6.1,len+.4,headM,.5));
+ b.node('head',cfg.headLabel,[8.8,0,0],[19,0,0],h);
+ // valves, 6
+ const vn=b.node('valves',cfg.valveLabel,[9.0,0,0],[19,0,0]);const vParts=[];
+ const vp=b.node('valvePlugs',cfg.plugLabel,[9.0,0,0],[19,0,0]);
+ zs.forEach((z,i)=>[1,-1].forEach(s=>{const v=new THREE.Group();v.add(at(cyl(.62,.28,Mats.steel,'y',20),0,0,0));v.add(at(new THREE.Mesh(new THREE.TorusGeometry(.3,.07,6,14).rotateX(Math.PI/2),Mats.alum),0,.32,0),at(new THREE.Mesh(new THREE.TorusGeometry(.3,.07,6,14).rotateX(Math.PI/2),Mats.alum),0,.52,0));
+  const pop=at(cyl(.42,.1,Mats.dark,'y',18),0,.22,0);v.add(pop);v.position.set(0,s*1.9,z);if(s<0)v.rotation.x=Math.PI;b.sub(vn,v,[0,s*7,0]);vParts.push({pop,phase:i*2*Math.PI/3,inlet:s<0});
+  const pl=at(hex(.86,.75,Mats.brass),0,s*3.45,z);const ring=at(new THREE.Mesh(new THREE.TorusGeometry(.66,.08,8,24).rotateX(Math.PI/2),Mats.rubber),0,s*3.1,z);const g=new THREE.Group();g.add(pl,ring);b.sub(vp,g,[0,s*12,0]);}));
+ // bolts
+ const bolts=[];[-3.4,3.4].forEach(y=>[-3.6,-1.2,1.2,3.6].forEach(z=>{bolts.push(at(cyl(.2,cfg.boltLen,Mats.steel,'x',12),10.8-cfg.boltLen/2+2,y*.72,z));bolts.push(at(hex(.42,.4,Mats.dark,'x'),10.8+2.2,y*.72,z));}));
+ b.node('bolts',cfg.boltLabel,[0,0,0],[30,0,0],bolts);
+ // rear & covers
+ b.node('rearCover','Rear cover',[-3.6,0,0],[-9,0,0],[rbox(.5,5.4,len-.8,Mats.alum,.5),at(new THREE.Mesh(new THREE.TorusGeometry(2.1,.08,8,40).rotateY(Math.PI/2),Mats.rubber),.4,0,0)]);
+ b.node('sight','Oil sight glass',[-4,-1.5,0],[-16,0,0],[cyl(.75,.4,Mats.glass,'x'),at(new THREE.Mesh(new THREE.TorusGeometry(.75,.11,8,24).rotateY(Math.PI/2),Mats.red),0,0,0)]);
+ b.node('dipstick','Dipstick',[-1,3.8,0],[0,7,0],[at(cyl(.5,1,Mats.yellow),0,.6,0),at(cyl(.12,3.2,Mats.steel),0,-1.3,0)]);
+ const ret=(sign,lbl)=>[at(cyl(2.2,.5,Mats.alum,'z',36),0,0,0)].concat([0,1,2,3].map(i=>at(hex(.3,.3,Mats.dark,'z'),Math.cos(i*Math.PI/2+.8)*1.75,Math.sin(i*Math.PI/2+.8)*1.75,sign*.35)));
+ const rt=b.node('retainer',cfg.retLabel,[0,0,0],[0,0,0]);const rA=new THREE.Group();ret(1).forEach(m=>rA.add(m));rA.position.z=len/2+.25;b.sub(rt,rA,[0,0,9.5]);const rB=new THREE.Group();ret(-1).forEach(m=>rB.add(m));rB.position.z=-len/2-.25;b.sub(rt,rB,[0,0,-7]);
+ const bng=b.node('bearing',cfg.bearingLabel,[0,0,0],[0,0,0]);[-1,1].forEach(s=>{const m=new THREE.Group();m.add(new THREE.Mesh(new THREE.TorusGeometry(1.15,.32,12,32),Mats.steel));m.add(new THREE.Mesh(new THREE.TorusGeometry(.72,.14,8,28),Mats.dark));m.position.z=s*(len/2-.4);b.sub(bng,m,[0,0,s*6.5]);});
+ b.node('seal','Shaft seal',[0,0,-len/2-.7],[0,0,-11],[new THREE.Mesh(new THREE.TorusGeometry(.72,.17,10,28),Mats.rubber)]);
+ b.node('mount',cfg.mountLabel,[0,-3.5,0],[0,-7,0],[rbox(9,.4,len+1.5,Mats.dark,.1)].concat([[-3.3,1],[3.3,1],[-3.3,-1],[3.3,-1]].map(([x,s])=>at(hex(.42,.4,Mats.steel),x,.3,s*3))));
+ // flows
+ const mk=(x,y,z)=>['head',x,y,z];
+ zs.forEach(z=>{b.flow('water',[['head',0,-2.8,z+.1],['head',0,-1.4,z],['head',-1,0,z],['head',0,1.4,z],['head',0,2.8,z]],{n:6});});
+ b.flow('water',[['head',0,-2.5,-5],['head',0,-2.5,5]],{n:10});b.flow('water',[['head',0,2.5,-5],['head',0,2.5,5]],{n:10,hot:false});
+ // animation
+ const pinPos=V();let th=0;
+ const pose=()=>{zs.forEach((z,i)=>{const a=th+throws[i],px=Math.cos(a)*crR,py=Math.sin(a)*crR,sx=px+Math.sqrt(rodL*rodL-py*py);
+   const R=rods[i];R.r.position.set(px,py,z);R.r.rotation.z=Math.atan2(-py,sx-px);R.ch.position.x=sx+.75;plungers[i].position.x=sx+1.6;});
+  vParts.forEach(v=>{const p=Math.sin(th+v.phase);const open=v.inlet?Math.max(0,p):Math.max(0,-p);v.pop.position.y=.22+.28*open;});};
+ pose();
+ b.tick.push((dt,s)=>{if(!s.rate)return;th-=s.rate*dt*1.6;crank.rotation.z=th;pose();});
+ b.camera={p:[20,14,27],t:[6,0,0],explode:.55};
+ return b;
+}
+const PUMP_CFG={
+ '5355J':{stroke:.47,plungerLen:6,headD:4.2,boltLen:9,headLabel:'Head, brass',valveLabel:'Valve assemblies',plugLabel:'Valve plugs',boltLabel:'Head cap screws',rodLabel:'Crossheads and rods',retLabel:'Bearing retainers',bearingLabel:'Roller bearings',mountLabel:'Pump mount'},
+ '8405HNL':{stroke:.62,plungerLen:6,headD:4.6,boltLen:9.5,headLabel:'Manifold',valveLabel:'Valve assemblies',plugLabel:'Valve caps',boltLabel:'Head bolts, M10 x 90',rodLabel:'Connecting rods, guides',retLabel:'Side covers',bearingLabel:'Bearings',mountLabel:'Pump rails'}
+};
+
+/* ---------- burner ---------- */
+function buildBurner(cfg){
+ const b=new SceneBuilder();
+ const hm=Mats.dark.clone();hm.transparent=true;hm.opacity=.34;hm.depthWrite=false;
+ b.node('housing','Burner housing',[0,0,0],[0,0,0],[cyl(2.9,3.4,hm,'z',48),at(rbox(5,3.4,3.4,hm,.5),-2.2,1,0)]);
+ const motor=new THREE.Group();motor.add(cyl(1.75,4.2,Mats.black,'z',36),at(cyl(1.9,.3,Mats.steel,'z',36),0,0,-2.1));const spin=at(cyl(.16,1.6,Mats.steel,'z',12),0,0,-2.8);motor.add(spin);
+ b.node('motor','Motor, 12 VDC',[0,0,4.1],[0,0,8],[motor]);
+ const fan=new THREE.Group();fan.add(cyl(2.3,.1,Mats.alum,'z',36));for(let i=0;i<30;i++){const a=i/30*Math.PI*2,m=rbox(.08,.55,2.2,Mats.alum,.02);m.position.set(Math.cos(a)*2.2,Math.sin(a)*2.2,0);m.rotation.z=a+.5;fan.add(m);}
+ b.node('fan','Blower fan',[0,0,0],[0,0,3.6],[fan]);
+ const coup=at(cyl(.42,1.6,Mats.black,'z',18),0,0,0);
+ b.node('coupling','Shaft coupling',[0,0,-1.6],[0,0,-3.6],[coup]);
+ const pmp=[rbox(3,3,2.6,Mats.steel,.5),at(cyl(1.2,.6,Mats.alum,'z',28),0,0,-1.5),at(hex(.4,.6,Mats.brass,'y'),0,1.8,0),at(hex(.42,.6,Mats.brass,'x'),1.8,.5,0),at(hex(.42,.6,Mats.brass,'x'),-1.8,-.4,0),at(cyl(.7,1.3,Mats.yellow,'y',20),1.1,-2.1,0)];
+ b.node('pump','Fuel pump',[0,.2,-3.9],[0,0,-11],pmp);
+ const bs=b.node('bands','Air bands',[0,0,-1.95],[0,0,0]);const bo=new THREE.Mesh(new THREE.CylinderGeometry(2.8,2.8,.8,48,1,true).rotateX(Math.PI/2),(()=>{const m=Mats.steel.clone();m.side=THREE.DoubleSide;return m;})());const bi=new THREE.Mesh(new THREE.CylinderGeometry(2.65,2.65,.8,48,1,true,0,4.2).rotateX(Math.PI/2),(()=>{const m=Mats.alum.clone();m.side=THREE.DoubleSide;return m;})());b.sub(bs,bo,[0,0,-5.5]);b.sub(bs,bi,[0,0,-7.8]);
+ const tb=Mats.steel.clone();tb.transparent=true;tb.opacity=.3;tb.depthWrite=false;
+ b.node('tube','Air tube and flange',[5.8,0,0],[6,0,0],[cyl(1.9,8,tb,'x',40),at(cyl(3.8,.3,Mats.dark,'x',40),-.2,0,0)]);
+ b.node('cone','Air cone',[10.4,0,0],[13,0,0],[new THREE.Mesh(new THREE.CylinderGeometry(1.9,1.1,1.2,32,1,true).rotateZ(-Math.PI/2),(()=>{const m=Mats.steel.clone();m.side=THREE.DoubleSide;return m;})())]);
+ // gun
+ const gun=[at(cyl(.15,10,Mats.copper,'x',12),0,0,0),at(new THREE.Mesh(new THREE.CylinderGeometry(1.2,1.2,.1,32).rotateZ(Math.PI/2),Mats.steel),3.8,0,0),at(rbox(.6,.8,.5,Mats.brass,.1),-4.9,0,0)];
+ b.node('gun','Burner gun assembly',[4.2,0,0],[-14,4.5,0],gun);
+ b.node('nozzle','Nozzle',[9.5,0,0],[9,-2.5,0],[cyl(.32,.75,Mats.brass,'x',6),at(cyl(.18,.25,Mats.steel,'x',16),.45,0,0)]);
+ const el=[];[-1,1].forEach(s=>{el.push(at(cyl(.22,5,Mats.ceramic,'x',16),5.6,.55,s*.46));el.push(tube([[8,.55,s*.46],[8.8,.6,s*.4],[9.75,.45,s*.08]],.05,Mats.steel,.3));el.push(at(rbox(5,.09,.25,Mats.copper,.02),2.8,.85,s*.46));});
+ const sp=at(cyl(.035,.18,Mats.spark,'z',6),9.75,.45,0);sp.userData.noExport=true;sp.userData.noPick=true;el.push(sp);
+ b.node('electrodes','Electrodes and buss bars',[0,0,0],[-2,7,0],el);
+ const ign=[rbox(4.4,1.3,3,Mats.black,.25),at(hex(.3,.4,Mats.steel,'y'),1.6,-.8,.5),at(hex(.3,.4,Mats.steel,'y'),1.6,-.8,-.5),at(cyl(.1,.9,Mats.yellow,'x',8),-2.6,0,0)];
+ b.node('igniter','Igniter',[2.2,3.3,0],[0,10.5,0],ign);
+ b.node('box',cfg.boxLabel,[-2.6,3.5,0],[-8,7,0],[rbox(3.4,1.8,3.2,Mats.dark,.2)]);
+ b.node('cad','Cad cell',[-1.2,1.4,1.7],[-2,3,8],[cyl(.42,.9,Mats.black,'z',18),at(cyl(.3,.1,Mats.red,'z',18),0,0,.5)]);
+ b.node('rearCover','Rear cover',[-4.85,1,0],[-20,0,0],[rbox(.25,3.2,3.2,Mats.panel,.15)]);
+ b.node('oilLine','Oil line',[0,0,0],[0,0,0],[]);
+ b.link('oil','oilLine','fuel',.09,Mats.copper,[['pump',0,1.9,0],[null,-1,3,-3.5],[null,-5.7,1.2,0],['gun',-4.9,0,0]]);
+ b.flow('fuel',[['pump',0,1.9,0],[null,-1,3,-3.5],[null,-5.7,1.2,0],['gun',-4.9,0,0],['gun',5,0,0]],{n:16});
+ // fx spray and flame
+ const spray=at(new THREE.Mesh(new THREE.ConeGeometry(.9,1.3,20,1,true).rotateZ(Math.PI/2),Mats.flame.clone()),10.9,0,0);spray.userData.noExport=true;spray.userData.noPick=true;spray.material.color.set(0x8fd2ff);spray.material.opacity=.4;
+ const flame=at(new THREE.Mesh(new THREE.ConeGeometry(2,8,24,1,true).rotateZ(-Math.PI/2),Mats.flame.clone()),15.4,0,0);flame.userData.noExport=true;flame.userData.noPick=true;
+ b.nodes.nozzle.group.add(at(spray,1.4,0,0));b.root.add(flame);
+ b.tick.push((dt,s)=>{const on=s.rate>0;motor.rotation.z+=0;spin.rotation.z-=s.rate*dt*8;fan.rotation.z-=s.rate*dt*8;coup.rotation.z-=s.rate*dt*8;spray.visible=on;const off=s.explode;flame.visible=on&&off<.08;flame.scale.x=1+.08*Math.sin(s.t*35);sp.visible=on&&Math.sin(s.t*70)>-.2;sp.position.x=9.75;});
+ b.camera={p:[15,14,26],t:[3,1.5,-.5],explode:.6};
+ return b;
+}
+
+/* ---------- unloader ---------- */
+function buildUnloader(cfg){
+ const b=new SceneBuilder();
+ const bm=Mats.brass.clone();bm.transparent=true;bm.opacity=.42;bm.depthWrite=false;
+ b.node('body',cfg.bodyLabel,[0,0,0],[0,0,0],[cyl(1.2,4.4,bm,'y',36),at(cyl(.75,2.3,bm,'x',28),1.6,-1,0),at(cyl(.75,2.3,bm,'x',28),-1.6,-1,0),at(cyl(.7,1.4,bm,'y',28),0,-2.7,0)]);
+ const pist=new THREE.Group();pist.add(at(cyl(.55,1.4,Mats.steel,'y',24),0,.5,0),at(cyl(.18,1.9,Mats.steel,'y',12),0,-.9,0),at(new THREE.Mesh(new THREE.TorusGeometry(.55,.07,8,24).rotateX(Math.PI/2),Mats.rubber),0,.9,0),at(new THREE.Mesh(new THREE.TorusGeometry(.55,.07,8,24).rotateX(Math.PI/2),Mats.rubber),0,.2,0));
+ const pn=b.node('piston','Piston and seals',[0,.7,0],[0,12.4,0],[pist]);
+ const ball=at(lathe(Array.from({length:11},(_,i)=>{const a=-Math.PI/2+i/10*Math.PI;return[Math.cos(a)*.34,Math.sin(a)*.34];}),Mats.steel),0,0,0);
+ const bl=b.node('ball','Ball',[0,-1.6,0],[-8,-1,4],[ball]);
+ b.node('seat','Seat and O-ring',[0,-2.2,0],[-8,-6,0],[cyl(.5,.35,Mats.steel,'y',24),at(new THREE.Mesh(new THREE.TorusGeometry(.5,.06,8,24).rotateX(Math.PI/2),Mats.rubber),0,.2,0)]);
+ const coils=[];for(let i=0;i<=56;i++){const a=i/8*Math.PI*2;coils.push(V(Math.cos(a)*.75,i/56*3,Math.sin(a)*.75));}
+ const spr=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(coils),170,.1,6),Mats.blue);
+ const sg=new THREE.Group();sg.add(spr);sg.position.y=0;
+ b.node('spring','Adjustment spring',[0,2.5,0],[0,6.4,0],[sg]);
+ b.node('nuts',cfg.nutLabel,[0,6,0],[0,15,0],[hex(.6,.45,Mats.brass),at(hex(.55,.35,Mats.steel),0,.55,0),at(cyl(.16,3,Mats.steel,'y',12),0,-.7,0)]);
+ b.node('inlet','Inlet coupling',[3.3,-1,0],[8,0,0],[hex(.95,.9,Mats.steel,'x'),at(cyl(.55,1.1,Mats.steel,'x',20),-.9,0,0)]);
+ b.node('outlet','Outlet fitting',[-3.3,-1,0],[-8,0,0],[hex(.95,.9,Mats.steel,'x'),at(cyl(.45,1.5,Mats.steel,'x',20),-1,0,0)]);
+ const chk=at(cyl(.32,.9,Mats.brass,'x',16),0,0,0);
+ b.node('check','Check valve and spring',[-1.2,-1,0],[-4,6,5],[chk,at(new THREE.Mesh(new THREE.TorusGeometry(.33,.05,6,20).rotateY(Math.PI/2),Mats.rubber),.3,0,0)]);
+ b.flow('water',[[null,5,-1,0],[null,1,-1,0],[null,-1,-1,0],[null,-5,-1,0]],{n:12,only:s=>!s.gunClosed});
+ b.flow('bypass',[[null,5,-1,0],[null,1,-1,0],[null,0,-2,0],[null,0,-5,0]],{n:12,only:s=>s.gunClosed,color:0x74c7e6});
+ let lift=0;
+ b.tick.push((dt,s)=>{const tgt=s.gunClosed?1:0;lift+=(tgt-lift)*Math.min(1,dt*5);pist.position.y=lift*.5;sg.scale.y=1-lift*.16;ball.position.y=-lift*-.0+lift*.22;chk.position.x=s.gunClosed?0:-.2;});
+ b.camera={p:[10,6,16],t:[0,1.5,0],explode:.5};b.gunToggle=true;
+ return b;
+}
+const UNL_CFG={'5355J':{bodyLabel:'Housing',nutLabel:'Hex nuts, item 21 and 23'},'8405HNL':{bodyLabel:'Brass body',nutLabel:'Ring nut and regulating knob'}};
+
+/* ---------- trigger gun ---------- */
+function buildGun(){
+ const b=new SceneBuilder();
+ const hm=Mats.black.clone();hm.transparent=true;hm.opacity=.4;hm.depthWrite=false;
+ const shape=()=>{const s=new THREE.Shape();s.moveTo(-3,2);s.lineTo(3.5,2);s.lineTo(3.5,.4);s.lineTo(.2,.4);s.quadraticCurveTo(-.4,-3,-.9,-4.3);s.lineTo(-3,-4.3);s.quadraticCurveTo(-2.8,-1,-3,2);const g=new THREE.ExtrudeGeometry(s,{depth:.7,bevelEnabled:true,bevelSize:.1,bevelThickness:.1,bevelSegments:2});return g;};
+ const hn=b.node('handle','Handle housing',[0,0,0],[0,0,0]);
+ const hA=new THREE.Mesh(shape(),hm);hA.position.z=.0;hA.geometry.translate(0,0,0);hA.position.z=0;const gA=new THREE.Group();gA.add(hA);gA.position.z=.02;b.sub(hn,gA,[0,0,6.5]);
+ const hB=new THREE.Mesh(shape(),hm);const gB=new THREE.Group();gB.add(hB);gB.position.z=-.82;b.sub(hn,gB,[0,0,-6.5]);
+ b.node('valve','Valve housing',[.3,1.1,0],[0,4.5,0],[(()=>{const m=cyl(.55,4,Mats.brass.clone(),'x',24);m.material.transparent=true;m.material.opacity=.55;m.material.depthWrite=false;return m;})()]);
+ b.node('discharge','Discharge fitting',[3.4,1.1,0],[7.5,0,0],[hex(.6,1,Mats.steel,'x'),at(cyl(.4,.8,Mats.steel,'x',16),.8,0,0)]);
+ b.node('inlet','Inlet fitting and filter',[-1.8,-4.8,0],[-2,-8,0],[hex(.6,1,Mats.steel),at(cyl(.28,.9,Mats.alum,'y',12),0,1,0),at(new THREE.Mesh(new THREE.TorusGeometry(.4,.06,6,20).rotateX(Math.PI/2),Mats.rubber),0,.6,0)]);
+ b.node('seat','Valve seat and washers',[-1,1.1,0],[-4,5,-3],[cyl(.48,.3,Mats.steel,'x',20),at(new THREE.Mesh(new THREE.TorusGeometry(.48,.05,6,20).rotateY(Math.PI/2),Mats.copper),.3,0,0)]);
+ const ball=lathe(Array.from({length:11},(_,i)=>{const a=-Math.PI/2+i/10*Math.PI;return[Math.cos(a)*.24,Math.sin(a)*.24];}),Mats.steel);
+ b.node('ball','Ball, 5/16 in',[-1.4,1.1,0],[-6,5,1],[ball]);
+ const cs=[];for(let i=0;i<=40;i++){const a=i/6*Math.PI*2;cs.push(V(i/40*1.1,Math.cos(a)*.27,Math.sin(a)*.27));}
+ const sm=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(cs),120,.04,5),Mats.steel);
+ b.node('spring','Spring',[-2.6,1.1,0],[-8,4,0],[sm]);
+ b.node('retainer','Valve retainer',[-2.8,1.1,0],[-14,1,0],[hex(.56,.5,Mats.steel,'x')]);
+ const pin=at(cyl(.08,1.6,Mats.steel,'x',8),0,0,0);
+ b.node('pin','Valve pin',[.0,1.1,0],[1,7.5,0],[pin]);
+ const cam=at(rbox(.5,.5,.3,Mats.dark,.08),0,0,0);
+ b.node('cam','Cam',[.7,.5,0],[3.5,-4,4],[cam]);
+ const trigG=new THREE.Group();const ts=new THREE.Shape();ts.moveTo(0,0);ts.lineTo(.5,0);ts.quadraticCurveTo(1.05,-1.8,.65,-3.2);ts.lineTo(.25,-3.2);ts.quadraticCurveTo(.55,-1.6,0,0);const tr=new THREE.Mesh(new THREE.ExtrudeGeometry(ts,{depth:.5,bevelEnabled:false}),Mats.red);tr.position.z=-.25;trigG.add(tr);trigG.add(at(cyl(.1,.9,Mats.steel,'z',10),.1,0,0));
+ b.node('trigger','Trigger and pin',[1.1,.6,0],[7,-6,0],[trigG]);
+ const lat=at(rbox(.25,1,.4,Mats.yellow,.05),0,0,0);
+ b.node('latch','Safety latch',[1.65,-1.4,0],[8.5,-10,2],[lat]);
+ const wand=[at(cyl(.22,10,Mats.steel,'x',16),5,0,0),at(hex(.45,.9,Mats.yellow,'x'),10.4,0,0),at(cyl(.32,4,Mats.rubber,'x',14),2.4,0,0)];
+ b.node('wand','Wand and spray tip, shown shortened',[4.8,1.1,0],[9,0,0],wand);
+ b.flow('water',[['inlet',0,-.5,0],[null,-1.7,-2,0],[null,-1.6,1.1,0],[null,3.4,1.1,0],['wand',10,0,0]],{n:18,only:s=>!s.gunClosed});
+ let k=0;
+ const spray=at(new THREE.Mesh(new THREE.ConeGeometry(1,3,18,1,true).rotateZ(Math.PI/2),Mats.flame.clone()),12.5,0,0);spray.material.color.set(0x8fd2ff);spray.material.opacity=.3;spray.userData.noExport=true;spray.userData.noPick=true;b.nodes.wand.group.add(spray);
+ b.tick.push((dt,s)=>{const tgt=s.gunClosed?0:1;k+=(tgt-k)*Math.min(1,dt*7);trigG.rotation.z=k*.34;pin.position.x=-k*.2;ball.position.x=-k*.3;sm.scale.x=1-k*.2;cam.rotation.z=k*.5;lat.rotation.z=k*.15;spray.visible=k>.5;});
+ b.camera={p:[9,6,22],t:[5,-.5,0],explode:.45};b.gunToggle=true;
+ return b;
+}
+const BUILDERS={
+ machine:m=>buildMachine(MACHINE_CFG[m]),
+ pump:m=>buildPump(PUMP_CFG[m]),
+ burner:m=>buildBurner({boxLabel:m==='5355J'?'Control box':'Igniter timer and box'}),
+ unloader:m=>buildUnloader(UNL_CFG[m]),
+ gun:()=>buildGun()
+};
+const SCENES=[['machine','Whole machine'],['pump','Water pump'],['burner','Oil burner'],['unloader','Unloader valve'],['gun','Trigger gun']];
+
+class Viewer{
+ constructor(host,overlay){
+  this.host=host;this.overlay=overlay;this.state={explode:.55,rate:1,burner:true,flow:new Set(['water']),gunClosed:false,t:0,labels:true};
+  this.renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:true});this.renderer.setPixelRatio(Math.min(devicePixelRatio,2));this.renderer.outputEncoding=THREE.sRGBEncoding;this.renderer.toneMapping=THREE.ACESFilmicToneMapping;this.renderer.toneMappingExposure=.92;
+  host.appendChild(this.renderer.domElement);
+  this.scene=new THREE.Scene();this.camera=new THREE.PerspectiveCamera(30,1,1,2000);
+  const pm=new THREE.PMREMGenerator(this.renderer);this.scene.environment=pm.fromScene(new THREE.RoomEnvironment(),.04).texture;
+  const key=new THREE.DirectionalLight(0xfff4e6,1.5);key.position.set(40,80,60);this.scene.add(key);const rim=new THREE.DirectionalLight(0x9fd0ff,.7);rim.position.set(-60,30,-50);this.scene.add(rim);this.scene.add(new THREE.AmbientLight(0xffffff,.16));
+  this.controls=new THREE.OrbitControls(this.camera,this.renderer.domElement);this.controls.enableDamping=true;this.controls.dampingFactor=.09;
+  this.ray=new THREE.Raycaster();this.ptr=new THREE.Vector2();this.hover=null;this.sel=null;this.onPick=()=>{};this.onHover=()=>{};this.clock=new THREE.Clock();
+  this.balloons={};this.svg=overlay.querySelector('svg');
+  const el=this.renderer.domElement;let dn=null;
+  el.addEventListener('pointerdown',e=>dn=[e.clientX,e.clientY]);
+  el.addEventListener('pointerup',e=>{if(dn&&Math.hypot(e.clientX-dn[0],e.clientY-dn[1])<5)this.pick(e);dn=null;});
+  el.addEventListener('pointermove',e=>this.moveHover(e));
+  new ResizeObserver(()=>this.resize()).observe(host);this.resize();
+  this.loop=this.loop.bind(this);requestAnimationFrame(this.loop);
+ }
+ resize(){const w=this.host.clientWidth||600,h=this.host.clientHeight||400;this.renderer.setSize(w,h);this.camera.aspect=w/h;this.camera.fov=w<h?44:30;this.camera.updateProjectionMatrix();this.w=w;this.h=h;}
+ load(machine,sceneId,keepExplode){
+  if(this.cur){this.clearFlows();this.scene.remove(this.cur.root);this.cur.root.traverse(o=>{o.geometry&&o.geometry.dispose();});}
+  const b=BUILDERS[sceneId](machine);this.cur=b;this.sceneId=sceneId;this.machine=machine;
+  this.scene.add(b.root);
+  // per-node material copies for highlight; tag meshes
+  Object.values(b.nodes).forEach(n=>n.group.traverse(o=>{o.userData.node=n.id;if(o.isMesh&&!o.isInstancedMesh){o.material=o.material.clone();o.material.envMapIntensity=.42;o.userData.baseOpacity=o.material.opacity;o.userData.baseTrans=o.material.transparent;}}));
+  // links
+  b.links.forEach(l=>{const g=b.nodes[l.node].group;l.mesh=new THREE.Mesh(new THREE.BufferGeometry(),l.mat.clone());l.mesh.material.envMapIntensity=.42;l.mesh.userData.node=l.node;l.mesh.userData.baseOpacity=l.mesh.material.opacity;l.mesh.userData.baseTrans=l.mesh.material.transparent;l.mesh.name=l.id;g.add(l.mesh);});
+  // flows
+  b.flowObjs=b.flows.map(f=>{const n=f.n||30;const color=f.color||({water:0x35b6e8,fuel:0xf0a51e,bypass:0x74c7e6}[f.sys]||0xffffff);const im=new THREE.InstancedMesh(new THREE.SphereGeometry(.22,8,6),new THREE.MeshBasicMaterial({color,depthTest:false,transparent:true,opacity:.95}),n);im.frustumCulled=false;im.renderOrder=20;im.userData.noExport=true;im.userData.noPick=true;this.scene.add(im);return{f,im,n,u:Math.random()};});
+  this.addMachineFlows();
+  // dashed explode lines
+  b.lines=[];Object.values(b.nodes).forEach(n=>{if(n.off.lengthSq()>0){const g=new THREE.BufferGeometry().setFromPoints([n.home.clone(),n.home.clone()]);const l=new THREE.Line(g,new THREE.LineDashedMaterial({color:0x9fb6bf,dashSize:.5,gapSize:.35,transparent:true,opacity:.7}));l.userData.noPick=true;l.userData.noExport=true;l.frustumCulled=false;b.root.add(l);b.lines.push({l,n});}});
+  // anchors
+  Object.values(b.nodes).forEach(n=>{const bx=new THREE.Box3();n.group.updateWorldMatrix(true,true);bx.setFromObject(n.group);if(!bx.isEmpty()){const c=bx.getCenter(new THREE.Vector3());n.anchor=c.sub(n.group.position);if(n.id==='frame')n.anchor=V(bx.max.x-1,bx.min.y+3,bx.max.z-1);}});
+  const cam=b.camera;
+  if(!keepExplode)this.state.explode=cam.explode;
+  this.applyExplode();this.fit();this.buildBalloons();this.select(null);this.dim(null);
+  return b;
+ }
+ addMachineFlows(){const b=this.cur;if(this.sceneId!=='machine')return;
+  const mk=(id,sys,n)=>{const l=b.links.find(x=>x.id===id);if(!l)return;const color={water:0x35b6e8,heat:0xff6a33,fuel:0xf0a51e,drive:0xd65b4c}[sys]||0x35b6e8;const im=new THREE.InstancedMesh(new THREE.SphereGeometry(.42,8,6),new THREE.MeshBasicMaterial({color,depthTest:false,transparent:true,opacity:.95}),n);im.frustumCulled=false;im.renderOrder=20;im.userData.noPick=true;this.scene.add(im);b.flowObjs.push({f:{sys,pts:l.pts,link:l,only:null},im,n,u:Math.random()});};
+  [['water-in','water',10],['hp1','water',5],['pl2','water',3],['hpcoil','water',8],['outhose','heat',14],['fuel1','fuel',5],['fuel2','fuel',12],['gas','drive',8]].forEach(a=>mk(...a));
+  const cn=b.nodes.coilTube,cfg=MACHINE_CFG[this.machine],mesh=cn.group.children[0];
+  const turns=cfg.coilTurns,hr=cfg.coilOD/2-1.3,cl=cfg.coilLen,pts=[];for(let i=0;i<=turns*8;i++){const a=i/8*Math.PI*2,t=i/(turns*8);pts.push(['coilTube',-cl/2+1+t*(cl-2),Math.cos(a)*hr,Math.sin(a)*hr]);}
+  const im=new THREE.InstancedMesh(new THREE.SphereGeometry(.42,8,6),new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false,transparent:true,opacity:.95}),60);im.frustumCulled=false;im.renderOrder=20;im.userData.noPick=true;const c0=new THREE.Color(0x35b6e8),c1=new THREE.Color(0xff6a33),c=new THREE.Color();for(let i=0;i<60;i++){im.setColorAt(i,c0);}this.scene.add(im);b.flowObjs.push({f:{sys:'water',pts,coil:true,c0,c1,c,speed:.06},im,n:60,u:0});
+ }
+ fit(){const b=this.cur,cam=b.camera,box=new THREE.Box3(),tb=new THREE.Box3(),pts=[];Object.values(b.nodes).forEach(n=>{let any=false;n.group.traverse(o=>{if(o.isMesh&&!o.userData.noPick)any=true;});if(!any)return;n.group.updateWorldMatrix(true,true);n.group.traverse(o=>{if(o.isMesh&&!o.userData.noPick&&o.geometry&&o.geometry.attributes.position&&o.geometry.attributes.position.count){tb.setFromObject(o);if(!tb.isEmpty()){box.union(tb);for(let i=0;i<8;i++)pts.push(V(i&1?tb.max.x:tb.min.x,i&2?tb.max.y:tb.min.y,i&4?tb.max.z:tb.min.z));}}});});
+  const c=box.getBoundingSphere(new THREE.Sphere());const dir=V(...cam.p).sub(V(...cam.t)).normalize();const tgt=box.getCenter(new THREE.Vector3());let d=c.radius*4;this.camera.near=1;this.camera.far=d*8;this.camera.updateProjectionMatrix();
+  for(let it=0;it<4;it++){this.camera.position.copy(tgt).addScaledVector(dir,d);this.camera.lookAt(tgt);this.camera.updateMatrixWorld(true);let mx=0,my=0;for(const w of pts){const q=w.clone().project(this.camera);mx=Math.max(mx,Math.abs(q.x));my=Math.max(my,Math.abs(q.y));}d*=Math.max(mx/.86,my/.86);}
+  const pos=tgt.clone().addScaledVector(dir,d);this.camera.position.copy(pos);this.controls.target.copy(tgt);this.controls.minDistance=d*.12;this.controls.maxDistance=d*3;this.controls.update();this.fit0={p:pos.toArray(),t:tgt.toArray()};
+  if(this.grid)this.scene.remove(this.grid);const size=Math.ceil(c.radius*3/10)*10;this.grid=new THREE.GridHelper(size,Math.round(size/(this.sceneId==='machine'?6:2)),0x47606b,0x2d414a);this.grid.position.set(tgt.x,box.min.y-.2,tgt.z);this.grid.material.transparent=true;this.grid.material.opacity=.55;this.scene.add(this.grid);this.camera.near=d/60;this.camera.far=d*8;this.camera.updateProjectionMatrix();}
+ resolve(p){const[nid,x,y,z]=p;if(!nid)return V(x,y,z);const n=this.cur.nodes[nid];if(!n)return V(x,y,z);return n.group.position.clone().add(V(x,y,z));}
+ applyExplode(){
+  const b=this.cur,t=this.state.explode,e=t*t*(3-2*t);
+  Object.values(b.nodes).forEach(n=>{n.group.position.copy(n.home).addScaledVector(n.off,e);n.subs.forEach(s=>s.obj.position.copy(s.home).addScaledVector(s.off,e));});
+  b.lines.forEach(({l,n})=>{const p=l.geometry.attributes.position;const a=n.home.clone().add(n.anchor),c=n.group.position.clone().add(n.anchor);p.setXYZ(0,a.x,a.y,a.z);p.setXYZ(1,c.x,c.y,c.z);p.needsUpdate=true;l.computeLineDistances();l.visible=e>.04;});
+  b.links.forEach(l=>{const pts=l.pts.map(p=>this.resolve(p));const c=new THREE.CatmullRomCurve3(pts,false,'catmullrom',.35);l.mesh.geometry.dispose();l.mesh.geometry=new THREE.TubeGeometry(c,Math.max(18,pts.length*10),l.r,7);l.curve=c;});
+  b.flowObjs.forEach(o=>{o.curve=o.f.link?o.f.link.curve:new THREE.CatmullRomCurve3(o.f.pts.map(p=>this.resolve(p)),false,'catmullrom',.3);});
+ }
+ setExplode(v){this.state.explode=v;this.applyExplode();}
+ buildBalloons(){
+  this.overlay.querySelectorAll('.bln').forEach(e=>e.remove());this.balloons={};
+  const nums=this.cbNumbers?this.cbNumbers(this.machine,this.sceneId):{};
+  Object.values(this.cur.nodes).forEach(n=>{if(n.id==='frame'&&false)return;if(n.id==='hoses'||n.id==='oilLine')return;const e=document.createElement('button');e.className='bln'+(this.sceneId==='machine'?' pill':'');e.type='button';const num=nums[n.id];
+   e.innerHTML=this.sceneId==='machine'?`<span>${n.label}</span>`:`<b>${num===undefined||num===''?'•':num}</b><span>${n.label}</span>`;e.setAttribute('aria-label',n.label);e.addEventListener('click',()=>this.select(n.id,true));e.addEventListener('pointerenter',()=>this.setHover(n.id));e.addEventListener('pointerleave',()=>this.setHover(null));this.overlay.appendChild(e);this.balloons[n.id]={e,x:0,y:0,n};});
+ }
+ updateBalloons(){
+  if(!this.state.labels){Object.values(this.balloons).forEach(b=>{const on=this.sel===b.n.id;b.e.hidden=!on;if(on){const w=b.n.group.position.clone().add(b.n.anchor).project(this.camera);b.e.classList.add('on');b.e.style.transform=`translate(${Math.min(this.w-150,Math.max(4,(w.x+1)/2*this.w-30)).toFixed(0)}px,${Math.max(4,(1-w.y)/2*this.h-34).toFixed(0)}px)`;}});this.svg.innerHTML='';return;}
+  const pts=[];const W=this.w,H=this.h;const c=this.controls.target;
+  Object.values(this.balloons).forEach(b=>{const n=b.n,w=n.group.position.clone().add(n.anchor);w.project(this.camera);const ax=(w.x+1)/2*W,ay=(1-w.y)/2*H;
+   const d=V(ax-W/2,ay-H/2,0);const len=d.length()||1;const push=this.sceneId==='machine'?46:40;
+   let bx=ax+d.x/len*push,by=ay+d.y/len*push;pts.push({b,ax,ay,x:bx,y:by,w:b.e.offsetWidth||26,h:b.e.offsetHeight||22});});
+  for(let it=0;it<7;it++)for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const a=pts[i],q=pts[j];const dx=(q.x-a.x),dy=(q.y-a.y),ox=(a.w+q.w)/2+3-Math.abs(dx),oy=(a.h+q.h)/2+2-Math.abs(dy);if(ox>0&&oy>0){if(oy<ox){const s=(dy>=0?1:-1)*oy/2;a.y-=s;q.y+=s;}else{const s=(dx>=0?1:-1)*ox/2;a.x-=s;q.x+=s;}}}
+  let s='';pts.forEach(p=>{p.x=Math.min(W-p.w/2-3,Math.max(p.w/2+3,p.x));p.y=Math.min(H-p.h/2-3,Math.max(p.h/2+3,p.y));const b=p.b;b.e.hidden=false;b.e.style.transform=`translate(${(p.x-p.w/2).toFixed(1)}px,${(p.y-p.h/2).toFixed(1)}px)`;const on=this.sel===b.n.id||this.hover===b.n.id;b.e.classList.toggle('on',on);s+=`<line x1="${p.ax.toFixed(1)}" y1="${p.ay.toFixed(1)}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" class="${on?'on':''}"/>`;});
+  this.svg.innerHTML=s;
+ }
+ hit(e){const r=this.renderer.domElement.getBoundingClientRect();this.ptr.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);this.ray.setFromCamera(this.ptr,this.camera);const xs=this.ray.intersectObjects(this.cur.root.children,true);for(const x of xs){const o=x.object;if(o.userData.noPick||!o.isMesh)continue;if(o.material&&o.material.transparent&&o.material.opacity<.45)continue;if(o.userData.node)return o.userData.node;}return null;}
+ pick(e){const id=this.hit(e);this.select(id,true);}
+ moveHover(e){if(e.pointerType==='touch'||e.buttons)return;const id=this.hit(e);this.setHover(id);this.renderer.domElement.style.cursor=id?'pointer':'grab';}
+ setHover(id){if(this.hover===id)return;this.hover=id;this.paint();}
+ select(id,user){this.sel=id;this.paint();this.dim(id);if(user)this.onPick(id);}
+ dim(id){if(!this.cur)return;this.cur.root.traverse(o=>{if(!o.isMesh||o.isInstancedMesh||o.userData.noPick)return;const m=o.material;if(id&&o.userData.node!==id){m.transparent=true;m.opacity=Math.min(o.userData.baseOpacity,.16);m.depthWrite=false;}else{m.opacity=o.userData.baseOpacity;m.transparent=o.userData.baseTrans;m.depthWrite=!o.userData.baseTrans||o.userData.baseOpacity>.5;}m.needsUpdate=true;});}
+ paint(){if(!this.cur)return;this.cur.root.traverse(o=>{if(!o.isMesh||o.isInstancedMesh||o.userData.noPick||!o.material.emissive)return;const on=o.userData.node&&(o.userData.node===this.hover||o.userData.node===this.sel);o.material.emissive.setHex(on?(this.sel===o.userData.node?0x0d6f93:0x0a4a60):0);o.material.emissiveIntensity=on?.8:0;});}
+ focusNode(id){const n=this.cur&&this.cur.nodes[id];if(!n)return;this.select(id,false);}
+ loop(){
+  requestAnimationFrame(this.loop);if(!this.cur||document.hidden||this.paused)return;
+  const dt=Math.min(this.clock.getDelta(),.05);const s=this.state;s.t+=dt;
+  const e=s.explode*s.explode*(3-2*s.explode);
+  const ss={rate:s.rate,t:s.t,burner:s.burner,gunClosed:s.gunClosed,explode:e};
+  this.cur.tick.forEach(f=>f(dt,ss));
+  // flows
+  const d=this._d||(this._d=new THREE.Object3D());
+  this.cur.flowObjs.forEach(o=>{const f=o.f;const vis=s.rate>0&&(s.flow.has(f.sys)||(f.sys==='bypass'&&s.flow.has('water'))||(f.sys==='heat'&&s.flow.has('water'))||(f.sys==='drive'&&s.flow.has('fuel')))&&(!f.only||f.only(ss));o.im.visible=vis;if(!vis||!o.curve)return;o.u=(o.u+dt*s.rate*(f.speed||.28))%1;for(let i=0;i<o.n;i++){const u=(i/o.n+o.u)%1;o.curve.getPoint(u,d.position);d.updateMatrix();o.im.setMatrixAt(i,d.matrix);if(f.coil){f.c.lerpColors(f.c0,f.c1,u);o.im.setColorAt(i,f.c);}}o.im.instanceMatrix.needsUpdate=true;if(f.coil&&o.im.instanceColor)o.im.instanceColor.needsUpdate=true;});
+  this.controls.update();this.renderer.render(this.scene,this.camera);this.updateBalloons();
+ }
+ clearFlows(){if(this.cur&&this.cur.flowObjs)this.cur.flowObjs.forEach(o=>this.scene.remove(o.im));}
+}
+
+/* App shell: tabs, machine switch, explode controls, guides, parts, maintenance. */
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LS={get(k,d){try{const v=localStorage.getItem('pl.'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem('pl.'+k,JSON.stringify(v));}catch(e){}}};
+let S={machine:LS.get('machine','5355J'),tab:'view',scene:'machine',symptom:'lowpressure',trail:[],checks:LS.get('checks',{}),order:LS.get('order',{}),q:'',asm:'all',sys:'all',sel:null,drawer:null,drawerChecks:{},hours:{},log:[],shared:false,onlyMissing:false};
+const M=()=>MACHINES[S.machine];
+const pdfPg=key=>key==null?null:(typeof key==='number'?key:M().pdf[key]);
+function toast(t){let e=$('.toast');if(!e){e=document.createElement('div');e.className='toast';e.setAttribute('role','status');document.body.appendChild(e);}e.textContent=t;clearTimeout(e._t);e._t=setTimeout(()=>e.remove(),2200);}
+
+/* ---------- shared store: database inside Claude, browser storage elsewhere ---------- */
+const Store={db:null,
+ async init(){ if(!window.claude||!window.claude.use)return; try{const db=await window.claude.use('db');if(!db)return;this.db=db;S.shared=true;
+   db.collection('machines').onSnapshot(s=>{s.docs.forEach(d=>{S.hours[d.id]=d.data().hours;});renderMaint();},()=>{});
+   db.collection('service_log').onSnapshot(s=>{S.log=s.docs.map(d=>Object.assign({id:d.id},d.data()));renderMaint();},()=>{});
+   renderMaint();}catch(e){} },
+ loadLocal(){S.hours=LS.get('hours',{});S.log=LS.get('log',[]);},
+ async setHours(mid,h){S.hours[mid]=h;if(this.db){try{await this.db.doc('machines/'+mid).set({hours:h,updated:new Date().toISOString()});}catch(e){toast('Could not save the hour reading. Ask for edit access.');}}else LS.set('hours',S.hours);},
+ async addLog(row){if(this.db){try{await this.db.collection('service_log').add(row);}catch(e){toast('Could not save the entry. Ask for edit access.');}}else{row.id='l'+Date.now();S.log.push(row);LS.set('log',S.log);renderMaint();}},
+ async delLog(id){if(this.db){try{await this.db.doc('service_log/'+id).delete();}catch(e){toast('Could not remove the entry.');}}else{S.log=S.log.filter(r=>r.id!==id);LS.set('log',S.log);renderMaint();}}
+};
+
+/* ---------- lookups ---------- */
+function nodeRef(sc,id){return sc==='machine'?id:sc+':'+id;}
+function rowsFor(ref){const out=[];M().assemblies.forEach(a=>a.parts.forEach(r=>{const n=r[4]||a.n;if(n===ref)out.push({a,r});}));return out;}
+function itemNumbers(m,sc){const nums={};MACHINES[m].assemblies.forEach(a=>a.parts.forEach(r=>{const n=r[4]||a.n;if(n&&n.startsWith(sc+':')){const id=n.split(':')[1];if(nums[id]===undefined)nums[id]=r[0];}}));return nums;}
+function troublesFor(ref){const out=[];TROUBLE.forEach(g=>{if(g.only&&g.only!==S.machine)return;g.items.forEach(i=>{if(i.causes.some(c=>c.loc===ref))out.push(i);});});return out;}
+function procsFor(ref){return Object.entries(PROCS).filter(([k,p])=>p.loc===ref);}
+const ALLPN=(()=>{const o={};for(const m in MACHINES){MACHINES[m].assemblies.forEach(a=>a.parts.forEach(r=>{if(r[1]){(o[r[1]]=o[r[1]]||new Set()).add(m);}}));MACHINES[m].kits.forEach(k=>{(o[k[0]]=o[k[0]]||new Set()).add(m);});}return o;})();
+function otherMachine(pn){const s=ALLPN[pn];if(!s)return null;const others=[...s].filter(x=>x!==S.machine);return others[0]||null;}
+function descOf(pn){if(!pn)return'';for(const a of M().assemblies)for(const r of a.parts)if(r[1]===pn)return r[2];const k=M().kits.find(k=>k[0]===pn);return k?k[1]:'';}
+function addOrder(pn,desc){const k=S.machine+'|'+pn;const o=S.order[k]||{q:0,pn,desc:desc||descOf(pn),machine:S.machine};o.q++;S.order[k]=o;LS.set('order',S.order);renderOrder();toast(pn+' added to order list');}
+function pnChip(pn){if(!pn)return'';return `<span class="tag"><span class="pn">${esc(pn)}</span><button type="button" data-order="${esc(pn)}" aria-label="Add ${esc(pn)} to order list" title="Add to order list">+</button></span>`;}
+
+/* ---------- 3D ---------- */
+let viewer=null,viewerFailed=false;
+function ensureViewer(){if(viewer||viewerFailed)return;try{viewer=new Viewer($('#gl'),$('#ov'));viewer.cbNumbers=itemNumbers;viewer.onPick=id=>{S.sel=id;renderNodePanel();};
+  const rm=matchMedia('(prefers-reduced-motion:reduce)').matches;if(rm){viewer.state.rate=0;}if(innerWidth<600){viewer.state.labels=false;$('#labels').setAttribute('aria-pressed','false');}
+  syncCtl();loadScene(S.scene);}catch(e){viewerFailed=true;$('#gl').innerHTML='<p style="padding:20px">3D needs WebGL, which this browser has turned off. The parts, troubleshooting and maintenance tabs still work.</p>';console.error(e);}}
+function loadScene(sc,sel){S.scene=sc;S.sel=sel||null;$$('#sceneTabs .chip').forEach(b=>b.setAttribute('aria-pressed',b.dataset.scene===sc));if(viewer){viewer.load(S.machine,sc);if(sel)viewer.select(sel,false);$('#ex').value=viewer.state.explode;$('#gunRow').hidden=!viewer.cur.gunToggle;}renderNodePanel();syncRunLabel();}
+function locate(ref){setTab('view');const [sc,id]=ref.includes(':')?ref.split(':'):['machine',ref];ensureViewer();const sub=sc;
+ if(viewer&&viewer.machine===S.machine&&viewer.sceneId===sub){viewer.select(viewer.cur.nodes[id]?id:null,false);S.sel=id;renderNodePanel();}else loadScene(sub,id);
+ $('#stage').scrollIntoView({block:'nearest'});}
+function syncRunLabel(){const b=$('#run');if(b&&viewer)b.textContent=viewer.state.rate?'Stop motion':'Run motion';}
+function syncCtl(){if(!viewer)return;$('#ex').value=viewer.state.explode;syncRunLabel();}
+const SUBSCENE={pump:'pump',burner:'burner',unloader:'unloader',gunMachine:'gun'};
+const PATHS={
+ '5355J':[['water','Water',['Float tank, fed by garden hose','Pump inlet','Pump head, 3,500 psi','Unloader, with accumulator and relief valve','Heating coil, 14 in OD x 126 ft','Quick coupler, 100 ft hose','Trigger gun, wand, tip']],['fuel','Burner fuel',['Fuel tank, 9.5 gal','Fuel filter','Fuel pump, 125 psi','Burner gun and 2.25 gph nozzle']]],
+ '8405HNL':[['water','Water',['Garden hose swivel and screen','Pump inlet','Pump head, 3,700 psi','Unloader, with accumulator and relief valve','Heating coil, 18 in OD x 147 ft','Quick coupler, 50 ft hose','Trigger gun, wand, tip']],['fuel','Burner fuel',['Fuel tank, 7 gal','Fuel filter','Fuel pump, 125 psi','Burner gun and 3.25 gph nozzle']]]};
+const SCENE_NOTE={machine:'Click any part. Hoses stay connected as the machine opens up.',pump:'Crankshaft turns, rods drive the plungers, and suction and discharge valves lift in turn.',burner:'Motor spins the fan and fuel pump. Fuel reaches the nozzle, the electrodes spark, and the flame shows when assembled.',unloader:'Close the gun to see the piston rise and the flow move to bypass.',gun:'Open or close the gun to see the trigger, cam, pin and ball move.'};
+function renderNodePanel(){const box=$('#nodePanel');if(!box)return;const id=S.sel;
+ if(!id||!viewer||!viewer.cur||!viewer.cur.nodes[id]){
+  box.innerHTML=`<div><div class="lab">${esc(SCENES.find(s=>s[0]===S.scene)[1])}</div><h2>${S.scene==='machine'?S.machine:esc(SCENES.find(s=>s[0]===S.scene)[1])}</h2><p style="margin:6px 0 0">${esc(SCENE_NOTE[S.scene])}</p></div>`+
+  (S.scene==='machine'?PATHS[S.machine].map(([sys,n,list])=>`<div><h3><span class="dot" style="background:var(--sys-${sys})"></span>${n} path</h3><ol class="pathlist" style="list-style:none;padding:0;margin:6px 0 0;display:flex;flex-direction:column;gap:4px">${list.map(x=>`<li>${esc(x)}</li>`).join('')}</ol></div>`).join(''):'')+
+  `<div><h3>Open a subassembly</h3><ul style="margin-top:6px">${SCENES.filter(s=>s[0]!==S.scene).map(s=>`<li><button class="linkish" data-scene="${s[0]}">${s[1]}</button></li>`).join('')}</ul></div>`;return;}
+ const n=viewer.cur.nodes[id],ref=nodeRef(S.scene,id),rows=rowsFor(ref),tr=troublesFor(ref),pr=procsFor(ref),sub=S.scene==='machine'&&SUBSCENE[id];
+ box.innerHTML=`<div><div class="lab">${esc(SCENES.find(s=>s[0]===S.scene)[1])}</div><h2>${esc(n.label)}</h2></div>
+ <div style="display:flex;gap:6px;flex-wrap:wrap">${sub?`<button class="btn pri" data-scene="${sub}">Open exploded ${esc(SCENES.find(s=>s[0]===sub)[1].toLowerCase())}</button>`:''}<button class="btn" data-clear="1">Clear selection</button></div>
+ ${rows.length?`<div><table class="mini"><thead><tr><th>Item</th><th>Part no.</th><th>Description</th><th>Qty</th><th></th></tr></thead><tbody>${rows.slice(0,24).map(({a,r})=>`<tr><td>${esc(r[0])}</td><td class="pn">${r[1]?esc(r[1]):'<span class="mute">not printed</span>'}</td><td>${esc(r[2])}<br><span class="mute">${esc(a.name)}, PDF p.${a.pg}</span></td><td>${esc(r[3])}</td><td>${r[1]?`<button class="btn sm" data-order="${esc(r[1])}" aria-label="Add ${esc(r[1])} to order list">+</button>`:''}</td></tr>`).join('')}</tbody></table>${rows.length>24?`<p class="mute" style="font-size:.84rem;margin:6px 0 0">Showing 24 of ${rows.length}. <button class="linkish" data-asmjump="${esc(rows[0].a.id)}">See all in Parts</button></p>`:''}</div>`:'<p class="mute" style="margin:0">Shown for context. The manual has no separate part row for this.</p>'}
+ ${tr.length?`<div><h3>Symptoms that point here</h3><ul style="margin-top:6px">${tr.slice(0,9).map(t=>`<li><button class="linkish" data-sym="${t.id}">${esc(t.t)}</button></li>`).join('')}</ul></div>`:''}
+ ${pr.length?`<div><h3>Procedures</h3><ul style="margin-top:6px">${pr.map(([k,p])=>`<li><button class="linkish" data-proc="${k}">${esc(p.t)}</button></li>`).join('')}</ul></div>`:''}`;
+}
+
+/* ---------- troubleshooting ---------- */
+function allSym(){const o={};TROUBLE.forEach(g=>{if(g.only&&g.only!==S.machine)return;g.items.forEach(i=>o[i.id]=Object.assign({group:g},i));});return o;}
+function renderFinder(){const q=($('#tq')?$('#tq').value:'').toLowerCase().trim();const box=$('#symList');box.innerHTML=TROUBLE.filter(g=>!g.only||g.only===S.machine).map(g=>{const items=g.items.filter(i=>!q||i.t.toLowerCase().includes(q)||i.causes.some(c=>(c.c+' '+c.r).toLowerCase().includes(q)));if(!items.length)return'';return `<h3><span class="dot" style="background:var(--sys-${g.sys})"></span>${esc(g.group)}</h3>`+items.map(i=>`<button class="sym" data-sym="${i.id}" aria-current="${S.symptom===i.id}">${esc(i.t)}</button>`).join('');}).join('')||'<p class="mute">No symptom mentions that. Try a part name such as nozzle, belt or valve.</p>';}
+function renderDiag(){const all=allSym();if(!all[S.symptom])S.symptom='lowpressure';const i=all[S.symptom];const key=c=>S.machine+'|'+i.id+'|'+c;const pg=M().pdf[i.pg];
+ const st=i.causes.map(c=>S.checks[key(c.c)]||'');const done=st.filter(Boolean).length,found=st.filter(x=>x==='found').length;
+ $('#diag').innerHTML=`${S.trail.length?`<div class="trail"><span class="mute">Followed from</span>${S.trail.map((t,ix)=>`<button class="linkish" data-back="${ix}">${esc(all[t]?all[t].t:t)}</button><span class="mute">›</span>`).join('')}<span>${esc(i.t)}</span></div>`:''}
+ <div class="diag-h"><div><div class="lab">${esc(i.group.group)}, ${S.machine}${pg?`, PDF p.${pg}`:''}</div><h2>${esc(i.t)}</h2></div><div class="mute" style="font-size:.9rem;font-variant-numeric:tabular-nums">${done} of ${i.causes.length} checked${found?`, ${found} found`:''} ${done?`<button class="linkish" data-reset="1">Reset</button>`:''}</div></div>
+ ${i.warn?`<div class="warnbox"><b>Warning.</b> ${esc(i.warn)}</div>`:''}
+ ${i.group.note?`<div class="note">${esc(i.group.note)}</div>`:''}
+ ${i.causes.map((c,ix)=>{const s=S.checks[key(c.c)]||'';const parts=(c.p||[]).map(k=>M().keys[k]).filter(Boolean);return `<article class="cause ${s==='found'?'found':s==='clear'?'clear':''}"><div><h4>${esc(c.c)}</h4><p>${esc(c.r)}</p></div>
+  <div class="state" role="group" aria-label="Result for ${esc(c.c)}"><button data-mark="${ix}" data-v="clear" aria-pressed="${s==='clear'}">Ruled out</button><button data-mark="${ix}" data-v="found" aria-pressed="${s==='found'}">Found it</button></div>
+  <div class="acts">${c.go&&all[c.go]?`<button class="btn sm" data-follow="${c.go}">Follow: ${esc(all[c.go].t)}</button>`:''}${c.loc?`<button class="btn sm" data-locate="${c.loc}">Show in 3D</button>`:''}${c.proc?`<button class="btn sm" data-proc="${c.proc}">${esc(PROCS[c.proc].t)}</button>`:''}${parts.map(pnChip).join('')}</div></article>`;}).join('')}
+ <p class="foot">Causes run in the order the manual lists them, which is not ranked by likelihood. The links between symptoms replace the manual’s “See…” references.</p>`;
+}
+/* ---------- procedure drawer ---------- */
+function openProc(k){S.drawer=k;renderDrawer();}
+function procRef(p){if(p.pgFixed)return p.pgFixed;return p.pg?M().pdf[p.pg]:null;}
+function renderDrawer(){const old=$('.drawer');if(old)old.remove();if(!S.drawer)return;const p=PROCS[S.drawer];const borrowed=(S.drawer==='pumpoil'||S.drawer==='freeze')&&S.machine==='5355J';const borrowedUnl=S.drawer==='unloaderadj'&&S.machine==='8405HNL';
+ const d=document.createElement('aside');d.className='drawer';d.setAttribute('aria-label',p.t);const ck=S.drawerChecks[S.drawer]||{};
+ d.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:start"><div><div class="lab">Procedure, ${S.machine}${borrowed?', from the 8405HNL manual, PDF p.25':borrowedUnl?', from the 5355J manual, PDF p.37':procRef(p)?`, PDF p.${procRef(p)}`:''}</div><h2>${esc(p.t)}</h2></div><button class="btn" data-closedraw="1">Close</button></div>
+ ${p.warn?`<div class="warnbox"><b>Warning.</b> ${esc(p.warn)}</div>`:''}
+ ${borrowed?`<div class="note">The 5355J manual does not print this procedure. It comes from the 8405HNL manual, which uses a pump from the same maker family. Confirm with Alkota.</div>`:''}
+ ${borrowedUnl?`<div class="note">The 8405HNL manual prints only the heading. These steps were written for the unloader on the 5355J. Read them against your valve, and call Alkota before adjusting.</div>`:''}
+ ${p.lead?`<p style="margin:0">${esc(p.lead)}</p>`:''}
+ ${p.spec?`<table class="mini"><tbody>${p.spec.map(s=>`<tr><td>${esc(s[0])}</td><td class="pn">${esc(s[1])}</td></tr>`).join('')}</tbody></table>`:''}
+ <div class="note" style="background:var(--panel2);border-color:var(--line)"><b>Before you start (shop practice, not from the manual).</b> ${SAFETY.map(esc).join(' ')}</div>
+ <ol>${p.steps.map((s,i)=>`<li><label><input type="checkbox" id="st-${S.drawer}-${i}" data-step="${i}" ${ck[i]?'checked':''}><b>${i+1}</b><span>${esc(s)}</span></label></li>`).join('')}</ol>
+ <div style="display:flex;gap:6px;flex-wrap:wrap">${p.loc?`<button class="btn" data-locate="${p.loc}" data-closedraw="1">Show in 3D</button>`:''}<button class="btn pri" data-logproc="${S.drawer}">Log this as done</button></div>`;
+ document.body.appendChild(d);}
+
+/* ---------- parts ---------- */
+function renderParts(){const q=S.q.toLowerCase().trim();const m=M();
+ $('#asmSel').innerHTML=`<option value="all">All assemblies</option>`+m.assemblies.map(a=>`<option value="${a.id}" ${S.asm===a.id?'selected':''}>${esc(a.name)}</option>`).join('');
+ $('#sysChips').innerHTML=[['all','All systems']].concat(Object.entries(SYS).map(([k,v])=>[k,v.name])).map(([k,n])=>`<button class="chip" data-sys="${k}" aria-pressed="${S.sys===k}">${k!=='all'?`<span class="dot" style="background:var(--sys-${k})"></span>`:''}${n}</button>`).join('');
+ $('#kits').innerHTML=m.kits.filter(k=>!q||(k[0]+' '+k[1]).toLowerCase().includes(q)).map(k=>`<div class="kit"><div class="row"><span class="pn"><b>${esc(k[0])}</b></span><span style="display:flex;gap:4px"><button class="btn sm" data-locate="${k[2]}">Locate</button><button class="btn sm" data-order="${esc(k[0])}" aria-label="Add ${esc(k[0])} to order list">+</button></span></div><span>${esc(k[1])}</span></div>`).join('');
+ let count=0,html='';
+ m.assemblies.forEach(a=>{if(S.asm!=='all'&&S.asm!==a.id)return;if(S.sys!=='all'&&S.sys!==a.sys)return;const rows=a.parts.filter(r=>!q||(`${r[1]} ${r[2]} ${a.name}`).toLowerCase().includes(q));if(!rows.length)return;count+=rows.length;
+  html+=`<tr class="asm" style="--sysc:var(--sys-${a.sys})"><td colspan="6">${esc(a.name)} <span class="pn mute" style="font-size:.78rem;font-weight:400">${esc(a.pn)}, PDF p.${a.pg}</span></td></tr>`+rows.map(r=>{const other=otherMachine(r[1]);const ref=r[4]||a.n;return `<tr><td class="num">${esc(r[0])}</td><td class="pn">${r[1]?esc(r[1]):'<span class="mute">not printed</span>'}</td><td>${esc(r[2])} ${r[5]?`<span class="badge">${esc(r[5])}</span>`:''} ${other?`<span class="badge">also on ${other}</span>`:''}</td><td class="num">${esc(r[3])}</td><td><button class="btn sm" data-locate="${esc(ref)}">Locate</button></td><td>${r[1]?`<button class="btn sm" data-order="${esc(r[1])}" aria-label="Add ${esc(r[1])} to order list">+ Order</button>`:''}</td></tr>`;}).join('');});
+ $('#partsBody').innerHTML=html||`<tr><td colspan="6" class="mute" style="padding:18px">No parts match. Clear the search or pick All assemblies.</td></tr>`;
+ $('#partCount').textContent=count+' rows';renderOrder();}
+function renderOrder(){const box=$('#orderBox');if(!box)return;const rows=Object.entries(S.order).filter(([k,o])=>o.q>0);
+ box.innerHTML=`<h3>Order list</h3>`+(rows.length?rows.map(([k,o])=>`<div class="ord-row"><div><span class="pn"><b>${esc(o.pn)}</b></span> <span class="badge">${esc(o.machine)}</span><br>${esc(o.desc)}</div><div class="qty"><button data-qty="${esc(k)}" data-d="-1" aria-label="One less">-</button><span style="min-width:2ch;text-align:center">${o.q}</span><button data-qty="${esc(k)}" data-d="1" aria-label="One more">+</button></div></div>`).join('')+`<div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn pri" id="copyOrder">Copy list</button><button class="btn" id="clearOrder">Clear</button></div><textarea id="orderText" readonly hidden rows="5" style="width:100%"></textarea>`:`<p class="mute" style="margin:0">Press + on any part, kit or diagnosis to build a list for your dealer. It stays in this browser.</p>`)+
+ `<div><h3 style="margin-top:6px">Service tools</h3><ul style="list-style:none;padding:0;margin:6px 0 0;display:flex;flex-direction:column;gap:4px;font-size:.88rem">${TOOLS.map(t=>`<li><span class="pn">${esc(t[0])}</span> ${esc(t[1])}</li>`).join('')}</ul></div>`;}
+
+/* ---------- maintenance ---------- */
+const today=()=>new Date().toISOString().slice(0,10);
+function lastDone(id){const rows=S.log.filter(r=>r.machine===S.machine&&r.task===id).sort((a,b)=>(a.date<b.date?1:-1));return rows[0]||null;}
+function status(it){const h=S.hours[S.machine];const last=lastDone(it.id);
+ if(it.cond)return{c:'cond',t:'As needed',d:last?`Last logged ${last.date}, ${last.hours||'?'} h`:''};
+ const dayMs=864e5;let msg=[],c='ok',t='OK';
+ if(it.at){if(last)return{c:'ok',t:'Done',d:`Done ${last.date} at ${last.hours||'?'} h`};if(h==null)return{c:'cond',t:'Enter hours',d:`Due at ${it.at} h`};const left=it.at-h;return left<=0?{c:'over',t:'Overdue',d:`Was due at ${it.at} h`}:{c:left<=10?'due':'ok',t:left<=10?'Due soon':'OK',d:`${left} h left, due at ${it.at} h`};}
+ if(it.every){const base=last&&last.hours!=null&&last.hours!==''?+last.hours:(it.id==='oil'?50:0);const span=it.orDays?`Every ${it.every} h or ${it.orDays/30} months`:`Every ${it.every} h`;if(h==null&&!last)return{c:'cond',t:'Enter hours',d:span};const left=base+it.every-(h||0);
+  if(!last&&left<=0)return{c:'due',t:'No record',d:span+'. Log the last service to start the count'};
+  msg.push(`${left} h left`);if(left<=0){c='over';t='Overdue';}else if(left<=it.every*.1){c='due';t='Due soon';}
+  if(it.orDays&&last){const dl=it.orDays-Math.floor((Date.now()-new Date(last.date))/dayMs);msg.push(`${dl} days left`);if(dl<=0){c='over';t='Overdue';}else if(dl<=7&&c==='ok'){c='due';t='Due soon';}}
+  msg.push(span);return{c,t,d:msg.join('. ')};}
+ if(it.days){if(!last)return{c:'due',t:'Not logged',d:it.days===1?'Each day':it.days===7?'Each week':'Each year'};const age=Math.floor((Date.now()-new Date(last.date+'T12:00'))/dayMs);const left=it.days-age;return left<=0?{c:'over',t:'Due',d:`Last done ${last.date}`}:{c:'ok',t:'OK',d:`Last done ${last.date}`};}
+ return{c:'cond',t:''};}
+function renderMaint(){const box=$('#schedule');if(!box)return;const h=S.hours[S.machine];
+ const hi=$('#hourIn');if(hi&&document.activeElement!==hi)hi.value=h==null?'':h;
+ $('#storeNote').textContent=S.shared?'Saved for everyone who can edit this page.':'Saved in this browser only.';
+ let counts={over:0,due:0};
+ box.innerHTML=SCHEDULE.map(g=>{const items=g.items.filter(i=>!i.only||i.only===S.machine);if(!items.length)return'';return `<h3>${esc(g.group)}</h3>`+items.map(it=>{const st=status(it);if(st.c==='over')counts.over++;if(st.c==='due')counts.due++;const pg=it.pgFixed?it.pgFixed[S.machine]:it.src?M().pdf[it.src]:null;const borrowed=it.note&&it.note[S.machine];return `<div class="task"><span class="pillst ${st.c}">${esc(st.t)}</span><div>${esc(it.t)}<small>${[st.d,borrowed,pg&&!(borrowed&&it.proc)?`PDF p.${pg}`:''].filter(Boolean).map(x=>esc(x).replace(/\.$/,'')).join('. ')}</small></div><div class="acts2" style="display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end">${it.proc?`<button class="btn sm" data-proc="${it.proc}">Steps</button>`:''}${it.loc?`<button class="btn sm" data-locate="${it.loc}">3D</button>`:''}<button class="btn sm" data-done="${it.id}">Log done</button></div></div>`;}).join('');}).join('');
+ $('#dueSummary').innerHTML=counts.over||counts.due?`<b>${counts.over}</b> overdue, <b>${counts.due}</b> due soon or not yet logged`:'Nothing due right now';
+ const sel=$('#logTask');if(sel&&!sel.dataset.m||sel.dataset.m!==S.machine){const cur=sel.value;sel.innerHTML=SCHEDULE.flatMap(g=>g.items.filter(i=>!i.only||i.only===S.machine)).map(i=>`<option value="${i.id}">${esc(i.t)}</option>`).join('')+`<option value="other">Other service</option>`;sel.dataset.m=S.machine;if(cur)sel.value=cur;}
+ const rows=S.log.filter(r=>r.machine===S.machine).sort((a,b)=>(a.date<b.date?1:-1));
+ $('#logRows').innerHTML=rows.length?rows.map(r=>`<tr><td style="white-space:nowrap">${esc(r.date)}</td><td class="num">${esc(r.hours)}</td><td>${esc(r.label)}${r.notes?`<br><span class="mute">${esc(r.notes)}</span>`:''}</td><td>${esc(r.by||'')}</td><td><button class="btn sm" data-dellog="${esc(r.id)}" aria-label="Remove entry">Remove</button></td></tr>`).join(''):`<tr><td colspan="5" class="mute" style="padding:10px 6px">No service logged yet for the ${S.machine}. Enter the hour meter reading above, then log the first job.</td></tr>`;
+ $('#procLib').innerHTML=PROC_GROUPS.map(([g,keys])=>`<div><h3>${esc(g)}</h3><ul>${keys.map(k=>`<li><button class="linkish" data-proc="${k}">${esc(PROCS[k].t)}</button></li>`).join('')}</ul></div>`).join('');
+}
+function prefillLog(id,proc){setTab('maintenance');const sel=$('#logTask');if(id)sel.value=id;else sel.value='other';$('#logDate').value=today();const h=S.hours[S.machine];if(h!=null)$('#logHours').value=h;if(proc)$('#logNotes').value=PROCS[proc].t;$('#logForm').scrollIntoView({block:'center'});$('#logHours').focus();}
+
+/* ---------- specs ---------- */
+function renderSpecs(){const m=M();$('#specBox').innerHTML=`<div><h2>Check these in the manual</h2><p class="mute" style="margin:4px 0 0;max-width:75ch">The ${m.id} manual contradicts itself or leaves gaps in these places. This page keeps the printed values and marks the conflict.</p><div class="flags">${m.flags.map(f=>`<div class="flag"><b>${esc(f[0])}</b>${esc(f[1])}</div>`).join('')}</div></div>
+ <h2>Specifications</h2><p class="mute" style="margin:2px 0 10px">${esc(m.series)}, p/n ${esc(m.pn)}, revision ${esc(m.rev)}. Size ${esc(m.size)}.</p>
+ <div class="specs">${m.specs.map(([t,rows])=>`<div class="card"><h3>${esc(t)}</h3><table class="mini" style="margin-top:6px"><tbody>${rows.map(r=>`<tr><td class="mute" style="width:42%">${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table></div>`).join('')}
+ <div class="card"><h3>Pump torque, ft-lb</h3><table class="mini" style="margin-top:6px;font-variant-numeric:tabular-nums"><tbody>${m.torque.map(r=>`<tr><td>${esc(r[0])}</td><td class="num" style="text-align:right">${r[1]}</td></tr>`).join('')}</tbody></table><p class="mute" style="font-size:.85rem;margin:6px 0 0">${esc(m.torqueNote)}</p></div></div>`;}
+
+/* ---------- shell ---------- */
+function renderPlate(){const m=M();$$('.seg button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===S.machine));$('#plateSub').textContent=`${m.series}, ${m.size}`;
+ $('#stats').innerHTML=m.plate.map(p=>`<div><u>${esc(p[0])}</u><b>${esc(p[1])}</b><i>${esc(p[2])}</i></div>`).join('');}
+function setTab(t){S.tab=t;LS.set('tab',t);$$('main>section').forEach(s=>s.hidden=s.id!=='tab-'+t);$$('nav.tabs a').forEach(a=>{if(a.dataset.t===t)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});try{if(location.hash.slice(1)!==t)history.replaceState(null,'','#'+t);}catch(e){try{location.hash=t;}catch(_){}}
+ if(viewer)viewer.paused=t!=='view';if(t==='view'){ensureViewer();if(viewer)viewer.resize();}
+ if(t==='troubleshoot'){renderFinder();renderDiag();}if(t==='parts')renderParts();if(t==='maintenance')renderMaint();if(t==='specs')renderSpecs();}
+function setMachine(id){S.machine=id;LS.set('machine',id);S.trail=[];renderPlate();if(viewer)loadScene(S.scene);else renderNodePanel();setTab(S.tab);}
+
+document.addEventListener('click',e=>{const t=e.target.closest('button,a');if(!t)return;const d=t.dataset;
+ if(d.m){setMachine(d.m);return;}
+ if(d.scene){loadScene(d.scene);setTab('view');return;}
+ if(d.order){addOrder(d.order);return;}
+ if(d.locate){locate(d.locate);if(d.closedraw){S.drawer=null;renderDrawer();}return;}
+ if(d.closedraw){S.drawer=null;renderDrawer();return;}
+ if(d.proc){openProc(d.proc);return;}
+ if(d.logproc){const pr=d.logproc;S.drawer=null;renderDrawer();const task=SCHEDULE.flatMap(g=>g.items).find(i=>i.proc===pr&&!i.at);prefillLog(task?task.id:null,pr);return;}
+ if(d.sym){S.symptom=d.sym;S.trail=[];setTab('troubleshoot');return;}
+ if(d.follow){S.trail.push(S.symptom);S.symptom=d.follow;renderFinder();renderDiag();$('#diag').scrollIntoView({block:'start'});return;}
+ if(d.back!==undefined){const ix=+d.back;S.symptom=S.trail[ix];S.trail=S.trail.slice(0,ix);renderFinder();renderDiag();return;}
+ if(d.mark!==undefined){const all=allSym(),i=all[S.symptom],c=i.causes[+d.mark],k=S.machine+'|'+i.id+'|'+c.c;S.checks[k]=S.checks[k]===d.v?'':d.v;LS.set('checks',S.checks);renderDiag();return;}
+ if(d.reset){const i=allSym()[S.symptom];i.causes.forEach(c=>delete S.checks[S.machine+'|'+i.id+'|'+c.c]);LS.set('checks',S.checks);renderDiag();return;}
+ if(d.sys){S.sys=d.sys;renderParts();return;}
+ if(d.qty){const o=S.order[d.qty];o.q+=+d.d;if(o.q<=0)delete S.order[d.qty];LS.set('order',S.order);renderOrder();return;}
+ if(d.asmjump){S.asm=d.asmjump;S.q='';S.sys='all';const q=$('#pq');if(q)q.value='';setTab('parts');return;}
+ if(d.clear){S.sel=null;if(viewer)viewer.select(null,false);renderNodePanel();return;}
+ if(d.done){prefillLog(d.done);return;}
+ if(d.dellog){Store.delLog(d.dellog);return;}
+ if(t.id==='copyOrder'){const txt=Object.values(S.order).filter(o=>o.q>0).map(o=>`${o.q} x ${o.pn}  ${o.desc}  (${o.machine})`).join('\n');const ta=$('#orderText');ta.value=txt;const fb=()=>{ta.hidden=false;ta.select();toast('Select and copy the text below');};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(()=>toast('Order list copied'),fb);else fb();return;}
+ if(t.id==='clearOrder'){S.order={};LS.set('order',S.order);renderOrder();return;}
+ if(t.id==='run'&&viewer){viewer.state.rate=viewer.state.rate?0:1;syncRunLabel();return;}
+ if(t.id==='resetView'&&viewer){viewer.camera.position.set(...viewer.fit0.p);viewer.controls.target.set(...viewer.fit0.t);viewer.select(null,false);S.sel=null;renderNodePanel();return;}
+ if(t.id==='labels'&&viewer){viewer.state.labels=!viewer.state.labels;t.setAttribute('aria-pressed',viewer.state.labels);return;}
+ if(t.id==='gunBtn'&&viewer){viewer.state.gunClosed=!viewer.state.gunClosed;t.textContent=viewer.state.gunClosed?'Open gun':'Close gun';$('#gunState').textContent=viewer.state.gunClosed?'Gun closed: flow goes to bypass':'Gun open: flow goes to the wand';return;}
+ if(d.flow&&viewer){const on=viewer.state.flow.has(d.flow);if(on)viewer.state.flow.delete(d.flow);else viewer.state.flow.add(d.flow);t.setAttribute('aria-pressed',!on);return;}
+});
+document.addEventListener('input',e=>{const t=e.target;
+ if(t.id==='ex'&&viewer){viewer.setExplode(+t.value);}
+ if(t.id==='speed'&&viewer){const v=+t.value;viewer.state.rate=v;syncRunLabel();}
+ if(t.id==='tq')renderFinder();
+ if(t.id==='pq'){S.q=t.value;renderParts();}
+ if(t.id==='asmSel'){S.asm=t.value;renderParts();}
+ if(t.dataset&&t.dataset.step!==undefined&&S.drawer){(S.drawerChecks[S.drawer]=S.drawerChecks[S.drawer]||{})[t.dataset.step]=t.checked;}
+});
+document.addEventListener('submit',e=>{e.preventDefault();const f=e.target;
+ if(f.id==='hourForm'){const v=$('#hourIn').value;if(v===''||isNaN(+v)||+v<0){toast('Enter the reading from the hour meter, such as 412.5');return;}Store.setHours(S.machine,+v);renderMaint();toast('Hour meter saved');}
+ if(f.id==='logForm'){const task=$('#logTask').value,it=SCHEDULE.flatMap(g=>g.items).find(i=>i.id===task);const row={machine:S.machine,task,label:it?it.t:'Other service',date:$('#logDate').value||today(),hours:$('#logHours').value,by:$('#logBy').value.trim(),notes:$('#logNotes').value.trim()};Store.addLog(row);f.reset();$('#logDate').value=today();toast('Service logged');}
+});
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(['view','troubleshoot','parts','maintenance','specs'].includes(h)&&h!==S.tab)setTab(h);});
+try{const qm=new URLSearchParams(location.search).get('m');if(qm&&MACHINES[qm]){S.machine=qm;LS.set('machine',qm);}}catch(e){}
+Store.loadLocal();renderPlate();
+$('#sceneTabs').innerHTML=SCENES.map(s=>`<button class="chip" data-scene="${s[0]}" aria-pressed="${s[0]==='machine'}">${s[1]}</button>`).join('');
+$('#logDate').value=today();
+const h0=location.hash.slice(1);setTab(['view','troubleshoot','parts','maintenance','specs'].includes(h0)?h0:'view');
+Store.init();
+window.__viewer=()=>viewer;
+</script>
+</body></html>

@@ -1,0 +1,57 @@
+<title>Proline Washer Bench</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Big+Shoulders+Display:wght@700;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>/*CSS*/</style>
+<header class="plate gut"><div class="plate-in">
+ <div class="brand"><div class="lab"><!--HOME-->Proline Commercial Services, washer bench</div>
+  <h1><span class="seg" role="group" aria-label="Choose machine"><button type="button" data-m="5355J" aria-pressed="true">5355J</button><button type="button" data-m="8405HNL" aria-pressed="false">8405HNL</button></span><small id="plateSub"></small></h1></div>
+ <div class="stats" id="stats"></div>
+</div></header>
+<nav class="tabs gut" aria-label="Sections"><div>
+ <a href="#view" data-t="view">Exploded view</a><a href="#troubleshoot" data-t="troubleshoot">Troubleshoot</a><a href="#parts" data-t="parts">Parts</a><a href="#maintenance" data-t="maintenance">Maintenance</a><a href="#specs" data-t="specs">Specs and manual errors</a>
+</div></nav>
+<main class="gut">
+<section id="tab-view"><div class="bench"><div style="min-width:0">
+  <div class="scene-tabs" id="sceneTabs"></div>
+  <div class="stage" id="stage"><div id="gl"></div><div id="ov"><svg aria-hidden="true"></svg></div></div>
+  <div class="ctl">
+   <label class="sl" for="ex"><span class="lab">Assembled</span><input id="ex" type="range" min="0" max="1" step="0.005" value="0.55" aria-label="Explode amount"><span class="lab">Exploded</span></label>
+   <button class="btn pri" id="run" type="button">Stop motion</button>
+   <span style="display:flex;gap:4px"><button class="chip" data-flow="water" aria-pressed="true" type="button"><span class="dot" style="background:var(--sys-water)"></span>Water</button><button class="chip" data-flow="fuel" aria-pressed="false" type="button"><span class="dot" style="background:var(--sys-fuel)"></span>Fuel</button></span>
+   <button class="chip" id="labels" aria-pressed="true" type="button">Labels</button>
+   <button class="btn" id="resetView" type="button">Reset view</button>
+   <span id="gunRow" hidden style="display:inline-flex;gap:8px;align-items:center"><button class="btn" id="gunBtn" type="button">Close gun</button><span class="mute" id="gunState" style="font-size:.86rem">Gun open: flow goes to the wand</span></span>
+  </div><p class="hint">Drag to orbit, scroll or pinch to zoom. Schematic model laid out from the manual drawings and printed dimensions. Motion is slowed down.</p></div>
+  <aside class="side" id="nodePanel" aria-live="polite"></aside>
+ </div></section>
+<section id="tab-troubleshoot" hidden><div class="tshoot">
+  <div class="finder"><label class="lab" for="tq">What is the machine doing?</label><input id="tq" type="search" placeholder="Smoke, knocking, no heat, nozzle" style="margin-top:4px"><div id="symList" class="symlist"></div></div>
+  <div class="diag" id="diag"></div></div></section>
+<section id="tab-parts" hidden><div class="parts-grid"><div style="min-width:0">
+   <div class="toolbar"><input id="pq" type="search" placeholder="Search part number or description" aria-label="Search parts"><select id="asmSel" aria-label="Assembly"></select><span class="mute" id="partCount" style="font-size:.88rem;font-variant-numeric:tabular-nums"></span></div>
+   <div class="toolbar" id="sysChips"></div>
+   <h3 style="margin:6px 0">Kits and consumables</h3><div class="kits" id="kits"></div>
+   <div class="tablewrap" style="max-height:72vh;overflow:auto"><table class="parts"><thead><tr><th class="num">Item</th><th>Part number</th><th>Description</th><th class="num">Qty</th><th></th><th></th></tr></thead><tbody id="partsBody"></tbody></table></div>
+  </div><aside class="order" id="orderBox"></aside></div></section>
+<section id="tab-maintenance" hidden>
+ <form class="meter" id="hourForm"><div><label class="lab" for="hourIn">Hour meter reading</label><br><input id="hourIn" inputmode="decimal" autocomplete="off"></div><button class="btn" type="submit">Save reading</button><div style="flex:1;min-width:200px"><div id="dueSummary" style="font-size:1.05rem"></div><div style="font-size:.84rem;color:var(--plate-mute)" id="storeNote"></div></div></form>
+ <div class="maint"><div class="card sched"><h2>Schedule</h2><div id="schedule"></div></div>
+  <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+   <div class="card"><h2>Log service</h2><form class="log" id="logForm" style="margin-top:8px">
+     <label class="wide" for="logTask">Type of service<select id="logTask"></select></label>
+     <label for="logDate">Month/Day/Year<input id="logDate" type="date" required></label>
+     <label for="logHours">Operating hours<input id="logHours" inputmode="decimal"></label>
+     <label for="logBy">By<input id="logBy" placeholder="Initials"></label>
+     <label for="logNotes">Oil brand and type, notes<input id="logNotes"></label>
+     <div class="wide"><button class="btn pri" type="submit">Add to record</button></div></form>
+    <div class="tablewrap" style="margin-top:12px;border:0"><table class="mini"><thead><tr><th>Date</th><th>Hours</th><th>Service</th><th>By</th><th></th></tr></thead><tbody id="logRows"></tbody></table></div></div>
+   <div class="card"><h2>Procedures</h2><div class="proc-list" id="procLib"></div></div>
+  </div></div></section>
+<section id="tab-specs" hidden><div id="specBox"></div></section>
+<p class="foot">Built from the two Alkota service manuals for the 5355J and 8405HNL. PDF page numbers refer to those files. Unofficial shop reference, not an Alkota publication. The 3D models are schematic and are not manufacturer CAD. Follow the manuals and your safety program for any service.</p>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/environments/RoomEnvironment.js"></script>
+<script>/*JS*/</script>
