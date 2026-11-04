@@ -233,3 +233,43 @@ const SCHEDULE = [
 ];
 const PROC_GROUPS=[['Pump',['pumpoil','valve','headoff','plunger','packing','headon','freeze']],['Burner',['air','strainer','fuelpressure','blower','transformer','buss','gunsvc','electrode']],['Fuel filter',['prime','drainwater','element']],['Unloader and gun',['unloaderadj','gunrepair']]];
 const SAFETY=['Shut the engine off and let the coil and exhaust cool.','Squeeze the trigger with the engine off to bleed pressure before opening any fitting.','Disconnect the battery before electrical or burner work, except where a test needs power.','Shut off the fuel tank valves before opening the fuel system.'];
+
+/* Tool list. Part numbers come from the manuals where printed. src: listed, named, implied, supply.
+   gauge is a per-machine use note. only limits a row to one machine. */
+const TOOL_GROUPS=[
+ {id:'listed',t:'Listed in the manuals',note:'The manuals give these part numbers.',rows:[
+  {pn:'Z09-00021',t:'Complete pump tool kit',use:'Pump service',proc:'packing'},
+  {pn:'Z09-00028',t:'Packing extraction kit',use:'Pulling packings from the pump head',proc:'packing'},
+  {pn:'Y01-00041',t:'0-200 psi gauge',use:'Setting burner fuel pressure to 125 psi',proc:'fuelpressure'},
+  {pn:'Y01-00090',t:'1/8 in Allen wrench',use:'Fuel pump pressure adjustment',proc:'fuelpressure'},
+  {pn:'Z09-00004',t:'Bacharach smoke tester',use:'Setting air bands to #1 or #2 smoke',proc:'air'},
+  {pn:'Z01-00092',t:'Fuel nozzle changing wrench',use:'Burner nozzle replacement',proc:'gunsvc'}]},
+ {id:'named',t:'Named in the procedures',note:'The procedures call for these but give no part number.',rows:[
+  {t:'Soft mallet',use:'Removing and installing the pump head',proc:'headoff'},
+  {t:'Metric socket or wrench',use:'Pump head cap screws',proc:'headoff'},
+  {t:'Needle-nose pliers or a hook tool',use:'Pulling valve assemblies',proc:'valve'},
+  {t:'Extractor hammer',use:'Used with the packing extractor',proc:'packing'},
+  {t:'Packing insertion tool, sized to the packing',use:'Installing V-packings. Recommended, not required',proc:'packing'},
+  {t:'.030 in feeler gauge',use:'Setting the blower fan position',proc:'blower'},
+  {t:'Screwdriver with a well insulated handle',use:'Transformer spark test. High voltage',proc:'transformer'},
+  {t:'Brush',use:'Cleaning the fuel pump strainer',proc:'strainer'},
+  {t:'18 mm socket',use:'Trigger gun valve retainer',proc:'gunrepair'},
+  {t:'High-pressure gauge',use:{'5355J':'Unloader adjustment. Range twice operating pressure: at least 7,000 psi','8405HNL':'Unloader adjustment. Range twice operating pressure: at least 7,400 psi'},proc:'unloaderadj'}]},
+ {id:'implied',t:'Implied by the procedures',note:'The manuals do not name these, but the work needs them. Sizes are mostly not printed, so check them against the machine.',rows:[
+  {t:'Torque wrench covering about 7 to 96 ft-lb',use:'Pump torque specs, from the 7.3 ft-lb cover screws to the 95.9 ft-lb valve plugs or caps',proc:'headon'},
+  {t:'Fine rule or gap gauge',use:'Electrode settings: 5/32 in, 5/16 in and a 1/8 in gap',proc:'electrode'},
+  {t:'Wrenches',use:'Unloader lock nuts, fuel lines and pipe fittings'},
+  {t:'Screwdriver',use:'Trigger gun handle screws, burner covers and clips'},
+  {t:'Back-pressure gauge',use:'Coil check: 5 psi when new, descale at 50 psi'},
+  {t:'CO and draft test equipment',use:'Checking the 0.01 % CO and draft specs'},
+  {t:'Multimeter',use:'Checking voltage, switches and wiring'}]},
+ {id:'supply',t:'Consumables',note:'',rows:[
+  {pn:'N07-OILCA-1',t:'Pump oil, one pint',use:'Oil changes and lubricating O-rings and packings',proc:'pumpoil'},
+  {t:'Thread sealant',use:'Plunger retainer screw threads',proc:'plunger'},
+  {t:'Loctite 542',use:'Plunger bolt',only:'8405HNL',proc:'plunger'},
+  {t:'Solvent, or soap and water',use:'Cleaning plugs, adapters and flinger washers',proc:'valve'},
+  {t:'Water-resistant grease',use:'Unloader seals, every 400 hours',only:'5355J'},
+  {t:'Clean diesel or kerosene',use:'Priming the fuel filter and cleaning the strainer',proc:'prime'},
+  {t:'50 % RV or non-toxic antifreeze',use:'Freeze protection and storage',proc:'freeze'},
+  {t:'Drain pan',use:'Pump oil and fuel filter water. Shop addition, not in the manuals'}]}
+];
